@@ -4,19 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Orquestación calibrada · Gustavo Mora</title>
-<meta name="description" content="Orquestación calibrada: una regla para que un agente decida cuándo actuar, preguntar o abstenerse, con simulación en vivo.">
+<meta name="description" content="Propuesta de investigación (preprint no publicado, sin revisión por pares): cuándo un agente debería actuar, preguntar o abstenerse según su confianza calibrada y el costo de equivocarse. Simulaciones ilustrativas; validación empírica pendiente.">
 <link rel="canonical" href="https://gustavomora.github.io/Calibratedagent/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://gustavomora.github.io/Calibratedagent/">
-<meta property="og:title" content="Orquestación calibrada · Gustavo Mora">
-<meta property="og:description" content="Orquestación calibrada: una regla para que un agente decida cuándo actuar, preguntar o abstenerse, con simulación en vivo.">
+<meta property="og:title" content="Un agente capaz no siempre debería actuar · Gustavo Mora">
+<meta property="og:description" content="Propuesta de investigación (preprint no publicado, sin revisión por pares): cuándo un agente debería actuar, preguntar o abstenerse según su confianza calibrada y el costo de equivocarse. Simulaciones ilustrativas; validación empírica pendiente.">
 <meta property="og:image" content="https://gustavomora.github.io/Calibratedagent/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Un agente capaz no siempre debería actuar: una banda de confianza de 0 a 1 dividida en abstenerse, preguntar y actuar. Gustavo Mora, ORCID 0009-0004-5276-3066. Propuesta de investigación, preprint no publicado.">
+<meta name="twitter:image:alt" content="Un agente capaz no siempre debería actuar: una banda de confianza de 0 a 1 dividida en abstenerse, preguntar y actuar. Gustavo Mora, ORCID 0009-0004-5276-3066. Propuesta de investigación, preprint no publicado.">
 <meta property="og:locale" content="es_ES">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Orquestación calibrada · Gustavo Mora">
-<meta name="twitter:description" content="Orquestación calibrada: una regla para que un agente decida cuándo actuar, preguntar o abstenerse, con simulación en vivo.">
+<meta name="twitter:title" content="Un agente capaz no siempre debería actuar · Gustavo Mora">
+<meta name="twitter:description" content="Propuesta de investigación (preprint no publicado, sin revisión por pares): cuándo un agente debería actuar, preguntar o abstenerse según su confianza calibrada y el costo de equivocarse. Simulaciones ilustrativas; validación empírica pendiente.">
 <meta name="twitter:image" content="https://gustavomora.github.io/Calibratedagent/og.png">
 <style>
 <style>@font-face {
@@ -501,6 +503,108 @@ details summary{cursor:pointer;color:var(--muted);font-size:13.5px}.tres{display
 @media print{.prueba{display:none!important}}
 </style>
 
+<style id="ca-final-css">
+/* === Calibrated Agent · pulido final (capa aislada, prefijo ca-) · © 2026 Gustavo Mora === */
+#s0 .evidencia:not(.ca-ev){display:none}
+.ca-hero,.ca-ev,.ca-scope{width:100%;box-sizing:border-box}
+/* Hero: microvisualización */
+.ca-hero{margin:6px 0 4px;border:1px solid var(--line2);border-radius:14px;padding:16px 18px 14px;background:rgba(12,12,16,.55);display:grid;gap:14px}
+.ca-hero-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.ca-kicker{margin:0;font:600 12px/1.2 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.ca-replay{font-size:12.5px;padding:6px 12px;min-height:36px;white-space:nowrap;flex:none}
+.ca-req-txt:empty{display:none}
+.ca-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;counter-reset:castep}
+.ca-steps li{font:500 12.5px/1.3 var(--sans);color:var(--faint);border-top:2px solid var(--line2);padding-top:7px;transition:color .3s,border-color .3s}
+.ca-steps li b{font-weight:600;margin-right:4px}
+.ca-steps li.on{color:var(--ink);border-top-color:var(--acc)}
+.ca-req{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;min-height:30px}
+.ca-req-lbl{font:600 11px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.ca-req-txt{font:400 clamp(17px,1.6vw,20px)/1.35 var(--serif);color:var(--ink);quotes:"«" "»"}
+.ca-req-p{font:600 13px/1 var(--sans);color:var(--acc);font-variant-numeric:tabular-nums;opacity:0;transition:opacity .3s}
+.ca-req-p.on{opacity:1}
+.ca-band-wrap{position:relative;padding:22px 0 26px}
+.ca-band{position:relative;height:16px;border-radius:8px;overflow:hidden;display:flex;background:var(--line)}
+.ca-band span{display:block;height:100%}
+.ca-band .z-abs{background:repeating-linear-gradient(135deg,rgba(138,138,148,.38) 0 5px,rgba(138,138,148,.2) 5px 10px)}
+.ca-band .z-ask{background:rgba(228,185,110,.38)}
+.ca-band .z-act{background:rgba(134,207,168,.55)}
+.ca-tick{position:absolute;top:14px;bottom:18px;width:0;border-left:1.5px solid var(--ink)}
+.ca-tick em{position:absolute;top:-18px;transform:translateX(-50%);font:600 11.5px/1 var(--sans);font-style:normal;color:var(--ink);white-space:nowrap;font-variant-numeric:tabular-nums}
+.ca-tick.t-star em{transform:translateX(-85%)}
+.ca-axis{position:absolute;left:0;right:0;bottom:4px;display:flex;justify-content:space-between;font:500 11px/1 var(--sans);color:var(--faint)}
+.ca-mk{position:absolute;top:18px;width:24px;height:24px;margin-left:-12px;border-radius:50%;display:grid;place-items:center;font:700 11.5px/1 var(--sans);color:#050506;background:var(--ink);box-shadow:0 0 0 3px var(--bg);opacity:0;transform:translateY(-14px);transition:opacity .35s,transform .45s cubic-bezier(.2,.8,.2,1)}
+.ca-mk.on{opacity:1;transform:none}
+.ca-mk.m-act{background:var(--act)}.ca-mk.m-ask{background:var(--acc)}.ca-mk.m-abs{background:#B9B9C2}
+.ca-out{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.ca-card{border:1px solid var(--line2);border-radius:10px;padding:10px 12px;display:grid;gap:4px;align-content:start;transition:border-color .3s,background .3s}
+.ca-card h3{margin:0;display:flex;align-items:center;gap:7px;font:600 12.5px/1.2 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+.ca-card h3 i{width:10px;height:10px;border-radius:2px;display:inline-block;flex:none}
+.ca-card.c-act h3 i{background:var(--act)}.ca-card.c-ask h3 i{background:var(--acc)}.ca-card.c-abs h3 i{background:repeating-linear-gradient(135deg,#8A8A94 0 2px,transparent 2px 4px);border:1px solid #8A8A94}
+.ca-card p{margin:0;font-size:13.5px;line-height:1.4;color:var(--muted)}
+.ca-card .ca-why{color:var(--ink);opacity:0;transition:opacity .35s}
+.ca-card.on{border-color:var(--muted);background:rgba(255,255,255,.035)}
+.ca-card.on .ca-why,.ca-card.done .ca-why{opacity:1}
+.ca-hero figcaption{margin:0;display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+/* Estado de la evidencia */
+.ca-ev{border:1px solid #3a3428;border-radius:12px;padding:14px 16px 10px;background:rgba(12,12,16,.55);display:grid;gap:10px}
+.ca-ev h2{margin:0;font:600 12px/1.2 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.ca-ev-lead{margin:0;font-size:13.5px;color:var(--muted)}
+.ca-ev-list{list-style:none;margin:0;padding:0;display:grid}
+.ca-ev-row{display:grid;grid-template-columns:22px minmax(0,13rem) minmax(0,10.5rem) 1fr;gap:4px 14px;align-items:start;padding:9px 0;border-top:1px solid var(--line)}
+.ca-ev-row .ca-lbl{font-size:14.5px;color:var(--ink)}
+.ca-ev-row .ca-st{font:600 11px/1.5 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+.ca-ev-row .ca-mean{font-size:13.5px;line-height:1.45;color:var(--muted)}
+.ca-mark{width:16px;height:16px;margin-top:2px;border-radius:50%;box-sizing:border-box}
+.k-der{border:2px solid var(--ink)}
+.k-sim{border:2px dotted var(--ink)}
+.k-pil{border:2px solid var(--muted);background:linear-gradient(90deg,var(--muted) 50%,transparent 50%)}
+.k-dis{border:2px dashed var(--ink);border-radius:3px}
+.k-pen{border:2px dashed #A88A55}
+.k-exp{border:1px solid var(--faint)}
+.ca-ev-row.r-pen .ca-st{color:#D9B676}
+.ca-proto{margin-top:4px;border-top:1px solid var(--line);padding-top:10px;display:grid;gap:8px}
+.ca-proto h3{margin:0;font:600 12.5px/1.2 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ink)}
+.ca-proto-scroll{overflow-x:auto}
+.ca-proto table{width:100%;border-collapse:collapse;font-size:13.5px;line-height:1.4}
+.ca-proto th,.ca-proto td{text-align:left;vertical-align:top;padding:7px 10px 7px 0;border-bottom:1px solid var(--line)}
+.ca-proto th{font:600 11px/1.3 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.ca-proto td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+.ca-proto td{color:var(--muted)}
+.ca-proto p{margin:0;font-size:13px;color:var(--muted)}
+/* Alcance de p */
+.ca-scope{border-left:2px solid var(--acc);padding:4px 0 4px 14px;display:grid;gap:6px}
+.ca-scope h3{margin:0;font:600 12.5px/1.2 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ink)}
+.ca-scope p{margin:0;font-size:14px;line-height:1.5;color:var(--muted)}
+.ca-scope p b{color:var(--ink);font-weight:600}
+.ca-scope .ca-formula{font:400 17px/1.3 var(--serif);color:var(--ink)}
+/* S14 */
+.ca-pend{margin:0}
+.ca-pend-note{margin:6px 0 0;font-size:13.5px;color:var(--muted)}
+/* Firma académica */
+.ca-firma{display:grid;gap:3px;padding:14px 0 6px;border-top:1px solid var(--line);margin-bottom:6px}
+.ca-firma .nm{margin:0;font:400 24px/1.15 var(--serif);color:var(--ink)}
+.ca-firma p{margin:0}
+.ca-firma a{color:var(--ink);text-underline-offset:3px;display:inline-flex;align-items:center;min-height:44px}
+.ca-firma .ca-pub{font-size:13px;color:var(--faint)}
+.v3s,.step,#panels,.coda{scroll-margin-top:64px}
+@media (max-width:760px){
+  .ca-ev-row{grid-template-columns:22px 1fr;}
+  .ca-ev-row .ca-st,.ca-ev-row .ca-mean{grid-column:2}
+  .ca-out{grid-template-columns:1fr}
+  .ca-steps{grid-template-columns:repeat(2,1fr)}
+  .ca-hero{padding:14px 14px 12px}
+}
+@media (max-width:480px){
+  /* El sitio fuerza un mínimo de 14px en span/b/i/a en móvil: se respeta y se ajusta la jerarquía */
+  .ca-ev-row .ca-lbl{font-weight:600}
+  .ca-ev-row .ca-st{text-transform:none;letter-spacing:0;font-weight:500;color:#CFCFD6}
+  .ca-ev-row.r-pen .ca-st{color:#D9B676}
+  .ca-req-lbl{text-transform:none;letter-spacing:0;font-weight:600}
+}
+@media (pointer:coarse){.ca-replay{min-height:44px}}
+@media (prefers-reduced-motion:reduce){.ca-hero *{transition:none!important}}
+@media print{.ca-replay{display:none}}
+</style>
 </head>
 <body data-focus="none">
 <a class="skip" href="#controles" data-i="skip">Saltar a los controles</a>
@@ -4925,6 +5029,261 @@ ${He(e,"HIPOTETICO",`<p class="lbl">${we(t.rule)}</p><p class="val">${we(t.opts[
 <p class="eje">${Dt(e.leyEjeP)}</p><p>${Dt(e.pDef[0])}</p><p>${Dt(e.pDef[1])}</p>
 <!--fig--><div class="fig3" data-fig="SIMULADO"><p class="eje">${Dt(e.leyEjeA)}</p>${i}<span class="seal" data-seal="SIMULADO">${Dt(e.seals.SIMULADO)}</span></div><!--/fig-->
 <ul class="sellos">${t}</ul><p class="small"><a href="NOTA_METODOLOGICA.md">${Dt(e.notaLink)}</a></p></section>`}function fM(n){let e=se[n].s0,t=e.evK.map((i,s)=>`<li class="ev-row"><span>${Dt(i)}</span><span class="chip">${Dt(e.evV[s])}</span></li>`).join("");return`<section class="evidencia" aria-labelledby="evTitle"><h2 id="evTitle">${Dt(e.evTitle)}</h2><ul class="ev-list">${t}</ul></section>${dM(n)}`}function pM(n,e){let t=se[e],i=t.abre[n],s=Qp[n]?`<details class="teoria"><summary>${Dt(t.abre.teo)}</summary><p>${Dt(qs(t,Qp[n]))}</p></details>`:"",r=uM.has(n)?"":rm(n,e);if(n==="s0"){let o=`<div class="lede">${t.s0.lede.map(l=>`<p>${Dt(l)}</p>`).join("")}</div>`,a=`<div class="exec">${i.e.map(l=>`<p>${Dt(l)}</p>`).join("")}</div>`;return o+fM(e)+a+s+r}return`<p class="hook">${Dt(i.hook)}</p><div class="exec">${i.e.map(o=>`<p>${Dt(o)}</p>`).join("")}</div>${s}${r}`}var am="es",tm=0;async function mM(n){try{if(navigator.clipboard&&window.isSecureContext)return await navigator.clipboard.writeText(n),!0}catch{}let e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;top:0;left:0;width:2px;height:2px;font-size:16px",document.body.appendChild(e),e.focus(),e.select(),e.setSelectionRange(0,n.length);let t=!1;try{t=document.execCommand("copy")}catch{t=!1}return e.remove(),t}function om(n){if(am=n,!(typeof document>"u"))for(let e of oM){let t=document.querySelector(`[data-v3="capa-${e}"]`);t&&(t.innerHTML=pM(e,n));let i=document.querySelector(`[data-v3="prueba-${e}"]`);i&&(i.innerHTML=rm(e,n))}}function lm(){typeof document>"u"||(document.addEventListener("click",async n=>{let e=n.target.closest("[data-copy]"),t=n.target.closest(".prueba-cerrar");if(t){let l=t.closest("details.prueba");if(l){l.open=!1;let c=l.querySelector("summary");c&&c.focus()}return}if(!e)return;let i=e.closest(".prueba"),s=i&&(i.querySelector(".prueba-full")||i.querySelector(".prueba-txt")),r=i&&i.querySelector(".prueba-ok");if(!s)return;let o=await mM(s.textContent),a=se[am].prueba;r&&(r.textContent=o?a.done:a.fail),e.setAttribute("aria-pressed","true"),clearTimeout(tm),tm=setTimeout(()=>{r&&(r.textContent=""),e.removeAttribute("aria-pressed")},2e3)}),document.addEventListener("toggle",n=>{let e=n.target;!e.classList||!e.classList.contains("prueba")||!e.open||document.querySelectorAll("details.prueba[open]").forEach(t=>{t!==e&&(t.open=!1)})},!0),document.addEventListener("keydown",n=>{if(n.key!=="Escape"||document.documentElement.classList.contains("menu-open"))return;let e=document.querySelector("details.prueba[open]");if(!e)return;e.open=!1;let t=e.querySelector("summary");t&&t.focus()}))}var ym=!1,We=n=>document.getElementById(n),ps=document.documentElement;ps.classList.add("js");var bl=matchMedia("(prefers-reduced-motion: reduce)").matches,Hu=matchMedia("(pointer:coarse)").matches||Math.min(screen.width,screen.height)<700,gM=Hu?1800:3e3,_m={get(n){try{return localStorage.getItem(n)}catch{return null}},set(n,e){try{localStorage.setItem(n,e)}catch{}}},yl=new URLSearchParams(location.search),vt=yl.get("lang")==="en"||yl.get("lang")==="es"?yl.get("lang"):_m.get("oc-lang")==="en"?"en":"es",vM=n=>(n=Math.min(1,Math.max(0,n)),n*n*(3-2*n)),Yu={seed:vs.seed,delta:vs.delta,c:La.c,k:La.k,r:La.r,cal:vs.cal},Jt={...Yu},Zu=(()=>{let n=document.getElementById("datosReales");if(!n)return null;try{return JSON.parse(n.textContent)}catch{return null}})(),ri=Zu?"real":"sim",bm=n=>{let e=ri==="real"?ch(Zu,{c:n.c,k:n.k,r:n.r,cal:n.cal,seed:n.seed}):uh(n,gM);return e.cases=hh(e),e},cm={},Mm=()=>cm[ri]||(cm[ri]=bm(Yu)),Br=Mm(),zs=Br,Fi="none",Bu=(n,e)=>{let t=0;return n.forEach((i,s)=>{Math.abs(i-e)<Math.abs(n[t]-e)&&(t=s)}),t};function Ea(){Jt.delta=Pl[+We("inc").value],Jt.c=yi[+We("cc").value],Jt.k=qn[+We("kk").value],Jt.cal=We("calOn").checked;let n=parseInt(We("seed").value,10);Jt.seed=Number.isFinite(n)&&n>0?n:vs.seed}function Ml(){We("inc").value=Bu(Pl,Jt.delta),We("cc").value=Bu(yi,Jt.c),We("kk").value=Bu(qn,Jt.k),We("calOn").checked=Jt.cal,We("seed").value=String(Jt.seed)}var um=0;function hs(n){zs=bm(Jt),Em(),tn&&tn.setData(zs,!1),clearTimeout(um),n&&(um=setTimeout(()=>{We("liveMsg").textContent=Fa(zs,vt,Br).live},700))}var $u={cal:{delta:0,cal:!0,c:2,k:.2,r:.896},premio:{delta:.2,cal:!0,c:2,k:.2,r:.896},sincal:{delta:.2,cal:!1,c:2,k:.2,r:.896},caro:{delta:0,cal:!0,c:2,k:.5,r:.896},escalar:{delta:0,cal:!0,c:2,k:.2,r:.896,e:!0},explorar:{delta:0,cal:!0,c:2,k:.2,r:.5,libre:!0}},ds="cal",Hs="medio",Vu="ambos",Ma=1;function $s(){let n=se[vt].s13,e=We("s13esc");if(!e)return;e.innerHTML=Object.keys($u).map(u=>`<button type="button" class="opt" data-esc="${u}" aria-pressed="${u===ds}">${n.e[u]}</button>`).join("");let t=document.querySelector("#s13cls");[...t.options].forEach(u=>{u.value&&(u.textContent=se[vt].s1.cls[u.value])}),t.value=Hs;let i=We("s13mod");i.options[0].textContent=n.ambos,i.value=Vu;let s=Hs?fn(Hs):null,r=`<p class="small">${n.eTxt[ds]}${ds==="escalar"?` <a href="#s11">${n.irH5}</a>`:""}</p>`+He(vt,"PENDIENTE",`<p class="small muted">${n.modNota(Vu==="ambos"?n.ambos:i.options[i.selectedIndex].textContent)}</p>`)+($u[ds].libre?He(vt,"SIMULADO",`<p class="small muted">${n.explorarNota}</p>`):s?He(vt,"HIPOTETICO",`<p class="small muted">${n.clsNota(gt(s.c,vt),ct(s.r,3,vt))}</p>`):""),o=document.querySelector('[data-v3="s13nota"]');o&&(o.innerHTML=r);let a=JSON.parse(We("v3datos").textContent),l={...ga,ctl:{...ga.ctl,k:Jt.k},u:Ma,sel:-1},c=document.querySelector('[data-v3="s13dia"]');c&&(c.innerHTML=`<p class="lbl">${n.dia}</p>`+rl(a,l,vt).reloj.replace(/<ol class="marcas">[\s\S]*?<\/ol>/,""))}function Gu(n){ds=n;let e=$u[n];if(Object.assign(Jt,{delta:e.delta,cal:e.cal,c:e.c,k:e.k,r:e.r}),Hs&&!e.libre){let t=fn(Hs);Jt.c=t.c,Jt.r=t.r}e.e&&ol().setE&&ol().setE(qr[0]),Ml(),hs(!0),$s()}function xM(){if(bl){Ma=1,$s();return}let n=performance.now();Ma=0;let e=t=>{Ma=Math.min(1,(t-n)/1e3/6),$s(),Ma<1&&requestAnimationFrame(e)};requestAnimationFrame(e)}function Sm(){Object.assign(Jt,Yu),ds="cal",Hs="medio",Ml(),hs(!1),$s()}function Em(){let n=Fa(zs,vt,Br);document.querySelectorAll("[data-slot]").forEach(e=>{let t=e.dataset.slot;t in n&&(Ah.test(t)?e.innerHTML=n[t]:e.textContent=n[t])}),["inc","cc","kk"].forEach(e=>{let t=document.querySelector(`output[for=${e}]`);We(e).setAttribute("aria-valuetext",t.textContent)}),We("ctlInc").classList.toggle("on",Jt.delta>0),wm()}function zu(){let n=se[vt];ps.lang=vt,document.title=n.docTitle,document.querySelectorAll("[data-i]").forEach(t=>{let i=qs(n,t.dataset.i);typeof i=="string"&&(t.textContent=i)});let e=We("langBtn");e.lang=vt==="es"?"en":"es",We("modeBtn").textContent=ri==="real"?n.modeSim:n.modeReal,tn&&tn.setLabels(n,vt),Em(),ym&&(vu(vt),Nu(vt),Fu(vt),$s()),om(vt),ku(vt),eh(),Tm()}function Tm(){let n=se[vt];We("compHint").textContent=Fi==="none"?n.compHint:n.compAbout[Fi]+(Fi==="human"?" "+n.humanNote:"")}function wm(){document.querySelectorAll(".panel").forEach(n=>{let e=n.dataset.part.split(" ");n.classList.toggle("dim",Fi!=="none"&&!e.includes(Fi)),n.classList.toggle("on",Fi!=="none"&&e.includes(Fi))})}function _l(n){Fi=n,document.body.dataset.focus=n,document.querySelectorAll(".comp").forEach(e=>e.setAttribute("aria-pressed",String(e.dataset.comp===n))),wm(),Tm(),tn&&tn.setFocus(n)}var Sl=We("gl"),hm=We("labels");new IntersectionObserver(n=>{for(let e of n)ps.classList.toggle("gl-on",e.isIntersecting)},{rootMargin:"-30% 0px -30% 0px"}).observe(document.querySelector("main.story"));var ba=n=>getComputedStyle(ps).getPropertyValue(n).trim(),dm={ink:ba("--ink"),acc:ba("--acc"),act:ba("--act"),abs:ba("--abs"),src:ba("--src")},tn=null;function yM(){if(yl.get("gl")!=="0"&&Ff())try{tn=kf(Sl,hm,{COARSE:Hu,RM:bl,col:dm})}catch{tn=null}tn||(tn=Bf(Sl,hm,{COARSE:Hu,RM:bl,col:dm}),We("nogl").hidden=!1),ps.classList.add("stage-"+tn.kind),tn.onLost=()=>{location.reload()}}var Wu=location.hash==="#og";function fm(){let n=innerWidth,e=n<=480&&Sl.clientHeight?Sl.clientHeight:innerHeight,t=n>=900,s=[(Wu?n*.4:document.querySelector('.step[data-step="1"] .card').getBoundingClientRect().right)+24,n-16],r=s;if(n>=1180&&!Wu){let o=document.querySelector(".ctlcard").getBoundingClientRect().right,a=We("panels").getBoundingClientRect().left;r=[o+24,a-24]}tn.layout({W:n,H:e,wide:t,zA:s,zB:r}),ps.style.setProperty("--cap-x",(t?(r[0]+r[1])/2:n/2)+"px")}var xl=[...document.querySelectorAll(".step")],Am=We("dive"),_M=Am.querySelector(".card"),bM=[...document.querySelectorAll(".ph")],fs=0,Ju=0,pm="";function Sa(){let n=innerHeight,e=n*.5;for(let i=0;i<xl.length;i++){let s=xl[i].getBoundingClientRect();if(s.top<=e&&s.bottom>e){fs=i+Math.min(1,Math.max(0,(e-s.top)/s.height));break}i===xl.length-1&&s.bottom<=e&&(fs=xl.length)}let t=Am.getBoundingClientRect();Ju=Math.min(1,Math.max(0,(n*.62-t.top)/(t.height-n*.35))),ps.classList.toggle("scrolled",fs>.85)}addEventListener("scroll",Sa,{passive:!0});var qu=performance.now(),kr=0;function Xu(n,e){let i=tn.tick(n,{story:fs,morph:Ju,snap:e})<.5?"a":"b";i!==pm&&(pm=i,bM.forEach(s=>s.classList.toggle("on",s.dataset.ph===i))),_M.style.opacity=String(1-vM((fs-2.8)/.12))}function Ku(n){kr=requestAnimationFrame(Ku);let e=(n-qu)/1e3;qu=n,Xu(Math.min(.05,e)),tn.measure(e)}document.addEventListener("visibilitychange",()=>{document.hidden?(cancelAnimationFrame(kr),kr=0):kr||(qu=performance.now(),kr=requestAnimationFrame(Ku))});var mt={on:!1,manual:!1,step:0,timer:0,gen:0,last:performance.now(),first:!0},mm=[{cap:0,el:"#inc",slide:["inc",4]},{cap:1,act:()=>{}},{cap:2,el:"#calOn",act:()=>{We("calOn").checked=!1,Ea(),hs(!1)}},{cap:3,el:"#kk",slide:["kk",7]},{cap:4,el:"#resetBtn",act:()=>Sm()},...["cal","premio","sincal","caro","escalar","explorar"].map(n=>({capT:()=>se[vt].s13.e[n],el:`[data-esc="${n}"]`,act:()=>Gu(n)})),{capT:()=>se[vt].s13.dia,el:'[data-v3="s13dia"]',act:()=>xM()}],gm=()=>fs>=3.85&&fs<4.98;function Cm(n){let e=n.getBoundingClientRect();return e.top>=0&&e.bottom<=innerHeight&&e.left>=0&&e.right<=innerWidth}function Qu(n,e){let t=mt.gen;return setTimeout(()=>{mt.on&&t===mt.gen&&n()},e)}function MM(n,e){let t=We("cursor");if(!n||!Cm(n)){t.classList.remove("show"),e();return}let i=n.getBoundingClientRect(),s=i.left+i.width/2,r=i.top+i.height/2;n.type==="range"&&(s=i.left+8+(i.width-16)*+n.value/+n.max),t.style.transition="",t.classList.add("show"),t.style.transform=`translate(${s}px,${r}px)`,Qu(()=>{t.classList.remove("press"),t.offsetWidth,t.classList.add("press"),e()},950)}function SM(n,e){let t=We(n),i=We("cursor"),s=()=>{let r=+t.value;if(r!==e){if(t.value=r+(e>r?1:-1),Ea(),hs(!1),Cm(t)){let o=t.getBoundingClientRect();i.style.transition="transform .3s linear",i.style.transform=`translate(${o.left+8+(o.width-16)*+t.value/+t.max}px,${o.top+o.height/2}px)`}Qu(s,420)}};s()}function Rm(){if(!mt.on)return;let n=mm[mt.step];We("tourCap").textContent=n.capT?n.capT():se[vt].tour[n.cap],We("tourCap").style.opacity="1",MM(n.el?document.querySelector(n.el):null,()=>{n.slide?SM(...n.slide):n.act()}),mt.timer=Qu(()=>{mt.step=(mt.step+1)%mm.length,Rm()},n.slide?7200:5600)}function ju(){mt.on||(mt.on=!0,mt.first=!1,mt.gen++,mt.step=0,_l("none"),eh(),Rm())}function Ta(){mt.on&&(mt.on=!1,mt.gen++,clearTimeout(mt.timer),We("cursor").classList.remove("show"),We("tourCap").style.opacity="0",eh())}function vm(){let n=ri==="real";We("tourBtn").hidden=n,n?(mt.manual=!0,Ta()):mt.manual=!1}function eh(){let n=se[vt],e=We("tourBtn");e.textContent=mt.on?n.tourPause:n.tourPlay,e.setAttribute("aria-pressed",String(mt.on))}function EM(n){n.isTrusted&&(n.target&&n.target.id==="tourBtn"||(mt.last=performance.now(),mt.on&&Ta()))}setInterval(()=>{if(bl)return;let n=performance.now()-mt.last;mt.on&&!gm()?Ta():!mt.on&&!mt.manual&&gm()&&n>(mt.first?4e3:25e3)&&ju()},500);function xm(){if(document.querySelectorAll("[disabled]").forEach(n=>n.disabled=!1),["inc","cc","kk"].forEach(n=>We(n).addEventListener("input",()=>{Ea(),hs(!0)})),We("calOn").addEventListener("change",()=>{Ea(),hs(!0)}),We("s13esc").addEventListener("click",n=>{let e=n.target.closest("[data-esc]");if(e){Gu(e.dataset.esc);let t=document.querySelector(`[data-esc="${ds}"]`);t&&t.focus()}}),We("s13cls").addEventListener("change",n=>{Hs=n.target.value,Gu(ds)}),We("s13mod").addEventListener("change",n=>{Vu=n.target.value,$s()}),We("seed").addEventListener("change",()=>{Ea(),Ml(),hs(!0)}),We("resetBtn").addEventListener("click",n=>{Sm(),n.isTrusted&&(We("liveMsg").textContent=Fa(zs,vt,Br).live)}),document.querySelectorAll(".comp").forEach(n=>n.addEventListener("click",()=>_l(Fi===n.dataset.comp?"none":n.dataset.comp))),Zu){let n=We("modeBtn");n.hidden=!1,n.addEventListener("click",()=>{ri=ri==="real"?"sim":"real",Br=Mm(),We("inc").disabled=ri==="real",vm(),ri==="real"&&(Jt.delta=0),Ml(),hs(!0),zu()}),We("inc").disabled=ri==="real",vm()}if(We("langBtn").addEventListener("click",()=>{vt=vt==="es"?"en":"es",_m.set("oc-lang",vt),zu()}),We("tourBtn").addEventListener("click",()=>{mt.on?(mt.manual=!0,Ta()):(mt.manual=!1,ju())}),["pointerdown","keydown","wheel","touchstart"].forEach(n=>addEventListener(n,EM,{capture:!0,passive:!0})),addEventListener("resize",()=>{fm(),Sa()}),sp(vt),Bp(vt),Yp(vt),$s(),ym=!0,lm(),Kp(vt),yM(),fm(),tn.setData(zs,!0),zu(),_l("none"),Sa(),tn.warm(),kr=requestAnimationFrame(Ku),Wu){ps.classList.add("og"),mt.manual=!0;let n=We("dive");scrollTo(0,n.offsetTop+.5*(n.offsetHeight-.35*innerHeight)-.62*innerHeight+innerHeight*0),Sa();for(let e=0;e<40;e++)Xu(.05,!0)}window.OC={b3punto:bp,v3setTime:rp,v4:ol,get R(){return zs},S:Jt,get REF(){return Br},get MODE(){return ri},get stage(){return tn},setFocus:_l,startTour:ju,stopTour:Ta,tour:mt,get story(){return fs},get morph(){return Ju},snap(n=.6){Sa();for(let e=0;e<Math.round(n/.05);e++)Xu(.05,!0)}}}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",xm):xm();})();
+</script>
+<script id="ca-final-js">
+/* === Calibrated Agent · pulido final (capa aislada) · © 2026 Gustavo Mora === */
+/* Configuración editorial central del preprint. Mantener status "unpublished" hasta que Gus confirme el depósito.
+   Para activar: ver PUBLICATION_ACTIVATION.md. No inventar URL, versión, fecha ni DOI. */
+window.CA_PUBLICATION = Object.freeze({
+  status: "unpublished",           // "published" solo tras confirmación del autor
+  title: "Orquestación condicionada con decisión calibrada",
+  version: null,                   // p. ej. "v4.3"
+  url: null,                       // URL pública verificada del depósito
+  doi: null,                       // solo el DOI real, sin prefijo https://doi.org/
+  publishedAt: null                // AAAA-MM-DD
+});
+(function(){
+  "use strict";
+  var html=document.documentElement;
+  function L(){return (html.lang||"es").slice(0,2)==="en"?"en":"es";}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+  var ORCID="0009-0004-5276-3066";
+  // Umbrales de riesgo alto: los mismos que muestra S9 con los parámetros congelados (c = 4, r = 0,646). No se recalculan aquí.
+  var PA=0.548, PS=0.938;
+  var REQ=[
+    {id:"A",p:0.97,out:"act"},
+    {id:"B",p:0.80,out:"ask"},
+    {id:"C",p:0.40,out:"abs"}
+  ];
+  var T={
+    es:{
+      kicker:"Cómo decide · ilustración",replay:"Ver de nuevo",
+      steps:["Llega un pedido","Se estima la confianza p","La regla la compara con los umbrales","Decide"],
+      reqLbl:"Pedido",
+      req:{A:"Pagar la factura ya aprobada del proveedor habitual.",B:"Transferir el anticipo al proveedor.",C:"Firmar la renovación del alquiler en nombre del inquilino."},
+      reqEnd:"Tres pedidos, tres caminos.",
+      out:{act:["Actuar","Ejecuta sin interrumpir."],ask:["Preguntar","Consulta antes de ejecutar."],abs:["Abstenerse","No ejecuta: la decisión vuelve a la persona."]},
+      why:{A:"A · p = 0,97, arriba de p*. Aun con riesgo alto, el error es improbable.",B:"B · p = 0,80. Hay dos cuentas posibles: una pregunta corta resuelve la duda.",C:"C · p = 0,40, debajo de pₐ. Con riesgo alto preguntar aclara poco (r = 0,646): no conviene ejecutar."},
+      axis0:"0",axis1:"1",
+      cap:"Ilustración con tres pedidos inventados de riesgo alto (c = 4, r = 0,646, parámetros congelados): pₐ = 0,548 y p* = 0,938, como en Tres clases de riesgo. p es la probabilidad calibrada de haber entendido el pedido, no de que la ejecución salga bien.",
+      sr:"Ilustración. Tres pedidos inventados de riesgo alto pasan por la misma regla. A tiene p = 0,97, arriba de p* = 0,938: el agente actúa. B tiene p = 0,80, entre pₐ = 0,548 y p*: el agente pregunta. C tiene p = 0,40, debajo de pₐ: el agente se abstiene y la decisión vuelve a la persona.",
+      evTitle:"Estado de la evidencia",
+      evLead:"Qué está derivado, qué está simulado y qué falta. Cada fila es un tipo de evidencia distinto, no una etapa superada.",
+      ev:[
+        ["k-der","Modelo matemático","Derivado matemáticamente","Los umbrales salen de una derivación. Son correctos solo bajo sus supuestos declarados."],
+        ["k-sim","Simulaciones","Simulado","Generadas con datos hipotéticos. Ilustran la regla; no son evidencia sobre un agente real."],
+        ["k-pil","Piloto","Observado (piloto)","Ocho casos evaluables. Exploratorio: no confirma ni generaliza."],
+        ["k-dis","Diseño experimental","Preregistrado localmente","Protocolo congelado antes de los datos, todavía sin depósito público."],
+        ["k-pen","Validación empírica","Pendiente","El experimento confirmatorio no se ejecutó."],
+        ["k-exp","Extensiones H4–H7","Exploratorias","Ideas en desarrollo, fuera del núcleo H1–H3."]
+      ],
+      protoTitle:"Dos protocolos, dos preguntas",
+      protoHead:["Identificador","Objeto","Pregunta principal","Escala"],
+      proto:[
+        ["DG-E1","Diseño general del paper","H1b: ¿la calibración reduce el regret con umbrales derivados de costos?","650–700 casos propuestos"],
+        ["PO430","Protocolo operativo derivado","H1: ¿un incentivo de autonomía desplaza o infla la confianza declarada?","430 pedidos"]
+      ],
+      protoNote:"Los identificadores son etiquetas de lectura: no cambian las hipótesis congeladas. Ejecutar PO430 no valida por sí solo H1b, y ninguno de los dos produjo todavía resultados confirmatorios.",
+      scopeTitle:"Qué es p, y qué no",
+      scopeDef:"la probabilidad de interpretar bien los atributos críticos del pedido, con la información disponible al decidir. El resultado final del entregable es otra variable, Y.",
+      scopeAlc:"Alcance del modelo:",
+      scopeAlcTxt:"los umbrales ilustrados se derivan bajo supuestos idealizados que vinculan interpretar correctamente con ejecutar correctamente. En un agente real son eventos distintos: comprender el pedido no garantiza producir un entregable correcto. Las decisiones y utilidades efectivas pueden cambiar si falla la ejecución.",
+      scopePar:"Los valores b, c, k, r y los umbrales corresponden a esta parametrización. No son constantes universales ni garantías para cualquier agente o contexto.",
+      pendTitle:"Pendientes estadísticos conocidos",
+      pend:[
+        "Hay una discrepancia documentada sobre los bins del ECE (ancho igual o frecuencia igual). Todavía no está decidida.",
+        "Los análisis agregados de Fisher y Mantel-Haenszel no modelan directamente el pareo: los mismos pedidos pasan por los dos brazos.",
+        "El tamaño efectivo cerca del umbral y parte del análisis de potencia siguen pendientes.",
+        "El calibrador isotónico puede generar empates; un resultado que exige transformaciones estrictamente crecientes no se extiende a él sin matices.",
+        "El piloto tiene ocho casos evaluables: ilustra, no valida ni generaliza.",
+        "b, c, k, r y los umbrales pertenecen a esta parametrización; no son constantes universales."
+      ],
+      pendNote:"Gauss (matemática y estadística) y Turing (bibliografía y edición) hicieron revisiones internas. No son revisión por pares.",
+      firmaRole:"Investigador independiente · Buenos Aires, Argentina",
+      orcidAria:"Perfil ORCID de Gustavo Mora, "+ORCID+" (se abre en otra pestaña)",
+      pubPending:"Preprint en preparación, no revisado por pares. El enlace se activará cuando se deposite.",
+      pubRead:"Leer el preprint",pubDoi:"DOI"
+    },
+    en:{
+      kicker:"How it decides · illustration",replay:"Play again",
+      steps:["A request arrives","Confidence p is estimated","The rule compares it with the thresholds","It decides"],
+      reqLbl:"Request",
+      req:{A:"Pay the usual supplier’s already approved invoice.",B:"Transfer the advance payment to the supplier.",C:"Sign the lease renewal on the tenant’s behalf."},
+      reqEnd:"Three requests, three paths.",
+      out:{act:["Act","Executes without interrupting."],ask:["Ask","Checks before executing."],abs:["Abstain","Does not execute: the decision goes back to the person."]},
+      why:{A:"A · p = 0.97, above p*. Even at high risk, an error is unlikely.",B:"B · p = 0.80. There are two possible accounts: a short question settles it.",C:"C · p = 0.40, below pₐ. At high risk asking clarifies little (r = 0.646): executing does not pay off."},
+      axis0:"0",axis1:"1",
+      cap:"Illustration with three invented high-risk requests (c = 4, r = 0.646, frozen parameters): pₐ = 0.548 and p* = 0.938, as in Three risk classes. p is the calibrated probability of having understood the request, not of the execution going well.",
+      sr:"Illustration. Three invented high-risk requests go through the same rule. A has p = 0.97, above p* = 0.938: the agent acts. B has p = 0.80, between pₐ = 0.548 and p*: the agent asks. C has p = 0.40, below pₐ: the agent abstains and the decision goes back to the person.",
+      evTitle:"State of the evidence",
+      evLead:"What is derived, what is simulated and what is missing. Each row is a different kind of evidence, not a completed stage.",
+      ev:[
+        ["k-der","Mathematical model","Mathematically derived","The thresholds come from a derivation. They hold only under their stated assumptions."],
+        ["k-sim","Simulations","Simulated","Generated with hypothetical data. They illustrate the rule; they are not evidence about a real agent."],
+        ["k-pil","Pilot","Observed (pilot)","Eight evaluable cases. Exploratory: it neither confirms nor generalizes."],
+        ["k-dis","Experimental design","Locally preregistered","Protocol frozen before the data, not yet publicly deposited."],
+        ["k-pen","Empirical validation","Pending","The confirmatory experiment has not been run."],
+        ["k-exp","Extensions H4–H7","Exploratory","Ideas in development, outside the H1–H3 core."]
+      ],
+      protoTitle:"Two protocols, two questions",
+      protoHead:["Identifier","Object","Main question","Scale"],
+      proto:[
+        ["DG-E1","General design of the paper","H1b: does calibration reduce regret with cost-derived thresholds?","650–700 proposed cases"],
+        ["PO430","Derived operational protocol","H1: does an autonomy incentive shift or inflate declared confidence?","430 requests"]
+      ],
+      protoNote:"The identifiers are reading labels: they do not change the frozen hypotheses. Running PO430 does not by itself validate H1b, and neither has produced confirmatory results yet.",
+      scopeTitle:"What p is, and what it is not",
+      scopeDef:"the probability of correctly interpreting the request’s critical attributes, with the information available when deciding. The final outcome of the deliverable is a different variable, Y.",
+      scopeAlc:"Model scope:",
+      scopeAlcTxt:"the thresholds shown are derived under idealized assumptions that link interpreting correctly with executing correctly. In a real agent these are different events: understanding the request does not guarantee a correct deliverable. Actual decisions and utilities may change if execution fails.",
+      scopePar:"The values of b, c, k, r and the thresholds belong to this parametrization. They are not universal constants or guarantees for any agent or context.",
+      pendTitle:"Known statistical open issues",
+      pend:[
+        "There is a documented discrepancy about ECE bins (equal width or equal frequency). It has not been decided yet.",
+        "The aggregate Fisher and Mantel-Haenszel analyses do not directly model the pairing: the same requests go through both arms.",
+        "The effective sample size near the threshold and part of the power analysis are still pending.",
+        "The isotonic calibrator can produce ties; a result that requires strictly increasing transformations does not carry over to it without nuance.",
+        "The pilot has eight evaluable cases: it illustrates, it does not validate or generalize.",
+        "b, c, k, r and the thresholds belong to this parametrization; they are not universal constants."
+      ],
+      pendNote:"Gauss (mathematics and statistics) and Turing (bibliography and editing) carried out internal reviews. They are not peer review.",
+      firmaRole:"Independent researcher · Buenos Aires, Argentina",
+      orcidAria:"Gustavo Mora’s ORCID profile, "+ORCID+" (opens in a new tab)",
+      pubPending:"Preprint in preparation, not peer reviewed. The link will be enabled once it is deposited.",
+      pubRead:"Read the preprint",pubDoi:"DOI"
+    }
+  };
+  function fmt(x){var s=x.toFixed(2);return L()==="es"?s.replace(".",","):s;}
+  function seal(){return '<span class="seal" data-seal="HIPOTETICO">'+(L()==="es"?"HIPOTÉTICO":"HYPOTHETICAL")+'</span>';}
+
+  /* ---------- Hero ---------- */
+  var heroTimer=[], heroState="idle"; /* idle | playing | done */
+  function heroHTML(t){
+    var s=t.steps.map(function(x,i){return '<li data-k="'+i+'"><b>'+(i+1)+'</b>'+esc(x)+'</li>';}).join("");
+    var mk=REQ.map(function(r){return '<span class="ca-mk m-'+r.out+'" data-r="'+r.id+'" style="left:'+(r.p*100)+'%">'+r.id+'</span>';}).join("");
+    var cards=["abs","ask","act"].map(function(o){var c=t.out[o];return '<div class="ca-card c-'+o+'" data-o="'+o+'"><h3><i></i>'+esc(c[0])+'</h3><p>'+esc(c[1])+'</p><p class="ca-why"></p></div>';}).join("");
+    return '<div class="ca-hero-top"><p class="ca-kicker">'+esc(t.kicker)+'</p><button type="button" class="ghost ca-replay">'+esc(t.replay)+'</button></div>'+
+      '<ol class="ca-steps" aria-hidden="true">'+s+'</ol>'+
+      '<div class="ca-req" aria-hidden="true"><span class="ca-req-lbl">'+esc(t.reqLbl)+'</span><q class="ca-req-txt"></q><span class="ca-req-p"></span></div>'+
+      '<div class="ca-band-wrap" aria-hidden="true"><div class="ca-band"><span class="z-abs" style="width:'+(PA*100)+'%"></span><span class="z-ask" style="width:'+((PS-PA)*100)+'%"></span><span class="z-act" style="width:'+((1-PS)*100)+'%"></span></div>'+
+        '<span class="ca-tick t-a" style="left:'+(PA*100)+'%"><em>pₐ = '+(L()==="es"?"0,548":"0.548")+'</em></span><span class="ca-tick t-star" style="left:'+(PS*100)+'%"><em>p* = '+(L()==="es"?"0,938":"0.938")+'</em></span>'+mk+
+        '<div class="ca-axis"><span>'+t.axis0+'</span><span>'+t.axis1+'</span></div></div>'+
+      '<div class="ca-out" aria-hidden="true">'+cards+'</div>'+
+      '<figcaption id="caHeroCap" class="small muted"><span>'+esc(t.cap)+'</span>'+seal()+'</figcaption>'+
+      '<p class="sr">'+esc(t.sr)+'</p>';
+  }
+  function clearT(){heroTimer.forEach(clearTimeout);heroTimer=[];}
+  function q(el,s){return el.querySelector(s);}
+  function heroFinal(el){
+    clearT(); var t=T[L()];
+    el.querySelectorAll(".ca-steps li").forEach(function(li){li.classList.remove("on");});
+    q(el,".ca-req-txt").textContent=""; q(el,".ca-req-lbl").textContent=t.reqEnd; q(el,".ca-req-p").classList.remove("on");
+    el.querySelectorAll(".ca-mk").forEach(function(m){m.classList.add("on");});
+    REQ.forEach(function(r){var c=q(el,'.ca-card[data-o="'+r.out+'"]');c.classList.remove("on");c.classList.add("done");q(c,".ca-why").textContent=t.why[r.id];});
+  }
+  function heroPlay(el){
+    var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if(reduce){heroFinal(el);heroState="done";return;}
+    clearT(); var t=T[L()];
+    el.querySelectorAll(".ca-mk").forEach(function(m){m.classList.remove("on");});
+    el.querySelectorAll(".ca-card").forEach(function(c){c.classList.remove("on","done");q(c,".ca-why").textContent="";});
+    q(el,".ca-req-lbl").textContent=t.reqLbl;
+    var steps=el.querySelectorAll(".ca-steps li");
+    function step(i){steps.forEach(function(li,j){li.classList.toggle("on",j===i);});}
+    var T0=0, D=1900;
+    REQ.forEach(function(r,k){
+      var b=T0+k*D;
+      heroTimer.push(setTimeout(function(){step(0);q(el,".ca-req-txt").textContent=T[L()].req[r.id];q(el,".ca-req-p").classList.remove("on");el.querySelectorAll(".ca-card").forEach(function(c){c.classList.remove("on");});},b));
+      heroTimer.push(setTimeout(function(){step(1);var pe=q(el,".ca-req-p");pe.textContent="p = "+fmt(r.p);pe.classList.add("on");},b+450));
+      heroTimer.push(setTimeout(function(){step(2);q(el,'.ca-mk[data-r="'+r.id+'"]').classList.add("on");},b+900));
+      heroTimer.push(setTimeout(function(){step(3);var c=q(el,'.ca-card[data-o="'+r.out+'"]');c.classList.add("on");q(c,".ca-why").textContent=T[L()].why[r.id];},b+1350));
+    });
+    heroState="playing";
+    heroTimer.push(setTimeout(function(){heroFinal(el);heroState="done";},T0+REQ.length*D+300));
+  }
+  function buildHero(){
+    var s0=document.getElementById("s0"); if(!s0)return;
+    var old=document.getElementById("caHero"); if(old)old.remove();
+    var anchor=s0.querySelector(".lede")||document.getElementById("s0t"); if(!anchor)return;
+    var fig=document.createElement("figure"); fig.id="caHero"; fig.className="ca-hero"; fig.setAttribute("aria-labelledby","caHeroCap");
+    fig.innerHTML=heroHTML(T[L()]); anchor.insertAdjacentElement("afterend",fig);
+    q(fig,".ca-replay").addEventListener("click",function(){heroPlay(fig);});
+    if(heroState==="done"){heroFinal(fig);return;}
+    if(heroState==="playing"){heroPlay(fig);return;} /* la página re-renderizó el bloque: reinicia sobre el nodo nuevo */
+    if("IntersectionObserver" in window){
+      var io=new IntersectionObserver(function(es){if(es.some(function(e){return e.isIntersecting;})){io.disconnect();heroPlay(fig);}},{threshold:.35});
+      io.observe(fig); heroFinal(fig); /* estado estable visible hasta que empieza */
+    } else heroFinal(fig);
+  }
+
+  /* ---------- Estado de la evidencia + protocolos ---------- */
+  function buildEvidence(){
+    var s0=document.getElementById("s0"); if(!s0)return;
+    var old=document.getElementById("caEv"); if(old)old.remove();
+    var t=T[L()];
+    var rows=t.ev.map(function(r){return '<li class="ca-ev-row r-'+r[0].slice(2)+'"><span class="ca-mark '+r[0]+'" aria-hidden="true"></span><span class="ca-lbl">'+esc(r[1])+'</span><span class="ca-st">'+esc(r[2])+'</span><span class="ca-mean">'+esc(r[3])+'</span></li>';}).join("");
+    var th=t.protoHead.map(function(h){return '<th scope="col">'+esc(h)+'</th>';}).join("");
+    var tr=t.proto.map(function(r){return '<tr><td>'+esc(r[0])+'</td><td>'+esc(r[1])+'</td><td>'+esc(r[2])+'</td><td>'+esc(r[3])+'</td></tr>';}).join("");
+    var sec=document.createElement("section"); sec.id="caEv"; sec.className="evidencia ca-ev"; sec.setAttribute("aria-labelledby","caEvTitle");
+    sec.innerHTML='<h2 id="caEvTitle">'+esc(t.evTitle)+'</h2><p class="ca-ev-lead">'+esc(t.evLead)+'</p><ul class="ca-ev-list">'+rows+'</ul>'+
+      '<div class="ca-proto"><h3 id="caProtoT">'+esc(t.protoTitle)+'</h3><div class="ca-proto-scroll" role="region" tabindex="0" aria-labelledby="caProtoT"><table><thead><tr>'+th+'</tr></thead><tbody>'+tr+'</tbody></table></div><p>'+esc(t.protoNote)+'</p></div>';
+    var orig=s0.querySelector(".evidencia:not(.ca-ev)"), hero=document.getElementById("caHero");
+    if(orig) orig.insertAdjacentElement("beforebegin",sec);
+    else if(hero) hero.insertAdjacentElement("afterend",sec);
+  }
+
+  /* ---------- Qué es p (alcance) ---------- */
+  function buildScope(){
+    var old=document.getElementById("caScope"); if(old)old.remove();
+    var ley=document.getElementById("leyenda-sellos"); var t=T[L()];
+    var d=document.createElement("aside"); d.id="caScope"; d.className="ca-scope"; d.setAttribute("aria-labelledby","caScopeT");
+    d.innerHTML='<h3 id="caScopeT">'+esc(t.scopeTitle)+'</h3><p><span class="ca-formula">p = P(Y₁ = 1 | x)</span>: '+esc(t.scopeDef)+'</p><p><b>'+esc(t.scopeAlc)+'</b> '+esc(t.scopeAlcTxt)+'</p><p>'+esc(t.scopePar)+'</p>';
+    if(ley) ley.insertAdjacentElement("afterend",d);
+    else { var ev=document.getElementById("caEv"); if(ev) ev.insertAdjacentElement("afterend",d); }
+  }
+
+  /* ---------- S14: pendientes ---------- */
+  function buildPend(){
+    var old=document.getElementById("caPend"); if(old)old.remove();
+    var lim=document.querySelector("#s14 ul.lim"); if(!lim)return; var t=T[L()];
+    var w=document.createElement("div"); w.id="caPend";
+    w.innerHTML='<h3>'+esc(t.pendTitle)+'</h3><ul class="lim ca-pend">'+t.pend.map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul><p class="ca-pend-note">'+esc(t.pendNote)+'</p>';
+    lim.insertAdjacentElement("afterend",w);
+  }
+
+  /* ---------- Firma + preprint ---------- */
+  function pubHTML(t){
+    var P=window.CA_PUBLICATION||{};
+    if(P.status==="published"&&typeof P.url==="string"&&/^https:\/\//.test(P.url)){
+      var meta=[P.version,P.publishedAt].filter(Boolean).join(" · ");
+      var doi=P.doi?' · '+t.pubDoi+' <a href="https://doi.org/'+esc(P.doi)+'" rel="noopener" target="_blank">'+esc(P.doi)+'</a>':'';
+      return '<a href="'+esc(P.url)+'" rel="noopener" target="_blank">'+esc(t.pubRead)+(meta?' ('+esc(meta)+')':'')+'</a>'+doi;
+    }
+    return esc(t.pubPending);
+  }
+  function buildFirma(){
+    var old=document.getElementById("caFirma"); if(old)old.remove();
+    var coda=document.querySelector("footer.coda"); if(!coda)return; var t=T[L()];
+    var d=document.createElement("div"); d.id="caFirma"; d.className="ca-firma";
+    d.innerHTML='<p class="nm">Gustavo Mora</p><p>'+esc(t.firmaRole)+'</p><p><a href="https://orcid.org/'+ORCID+'" rel="me noopener" target="_blank" aria-label="'+esc(t.orcidAria)+'">ORCID '+ORCID+'</a></p><p class="ca-pub" data-status="'+esc((window.CA_PUBLICATION||{}).status||"unpublished")+'">'+pubHTML(t)+'</p>';
+    var aut=coda.querySelector(".autoria"); if(aut) aut.insertAdjacentElement("beforebegin",d); else coda.appendChild(d);
+  }
+
+  function buildAll(){buildHero();buildEvidence();buildScope();buildPend();buildFirma();}
+  function ensure(){
+    if(!document.getElementById("caHero"))buildHero();
+    if(!document.getElementById("caEv"))buildEvidence();
+    if(!document.getElementById("caScope"))buildScope();
+    if(!document.getElementById("caPend"))buildPend();
+    if(!document.getElementById("caFirma"))buildFirma();
+  }
+  buildAll();
+  var lastLang=L();
+  new MutationObserver(function(){ if(L()!==lastLang){lastLang=L(); setTimeout(buildAll,0);} }).observe(html,{attributes:true,attributeFilter:["lang"]});
+  var pend=false;
+  function watch(el){ if(!el)return; new MutationObserver(function(){ if(pend)return; pend=true; requestAnimationFrame(function(){pend=false;ensure();}); }).observe(el,{childList:true,subtree:true}); }
+  watch(document.getElementById("s0")); watch(document.getElementById("s14")); watch(document.querySelector("footer.coda"));
+})();
 </script>
 </body>
 </html>
