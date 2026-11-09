@@ -1,0 +1,120 @@
+.site-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 50;
+  height: var(--header-h);
+  background: rgba(9, 10, 13, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.hdr-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  height: 100%;
+  padding: 0 var(--gutter);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+  text-decoration: none;
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  white-space: nowrap;
+}
+.hdr-nav {
+  margin-left: auto;
+}
+.hdr-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+}
+.hdr-nav a {
+  display: block;
+  padding: 8px 10px;
+  color: var(--ink-2);
+  text-decoration: none;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+.hdr-nav a:hover {
+  color: var(--ink);
+}
+.hdr-nav a[aria-current] {
+  color: var(--ink);
+  box-shadow: inset 0 -2px 0 var(--gold);
+  border-radius: 0;
+}
+.hdr-nav .nav-research {
+  color: var(--gold-2);
+  border: 1px solid rgba(212, 175, 99, 0.4);
+  border-radius: 999px;
+  margin-left: 6px;
+}
+.hdr-nav .nav-research[aria-current] {
+  box-shadow: none;
+  background: var(--gold-dim);
+  border-radius: 999px;
+}
+.hdr-tools {
+  display: flex;
+  gap: 8px;
+}
+.menu-btn {
+  display: none;
+}
+.fab {
+  position: fixed;
+  right: 16px;
+  bottom: max(16px, env(safe-area-inset-bottom));
+  z-index: 40;
+  display: none;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 1020px) {
+  .menu-btn {
+    display: inline-flex;
+  }
+  .hdr-nav {
+    position: fixed;
+    top: var(--header-h);
+    left: 0;
+    right: 0;
+    background: rgba(9, 10, 13, 0.98);
+    border-bottom: 1px solid var(--line);
+    padding: 8px var(--gutter) 20px;
+    display: none;
+  }
+  .hdr-nav.is-open {
+    display: block;
+  }
+  .hdr-nav ul {
+    flex-direction: column;
+  }
+  .hdr-nav a {
+    padding: 14px 6px;
+    font-size: 1.05rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .hdr-nav a[aria-current] {
+    box-shadow: inset 3px 0 0 var(--gold);
+    padding-left: 14px;
+  }
+  .hdr-nav .nav-research {
+    margin: 12px 0 0;
+    text-align: center;
+  }
+  .fab {
+    display: inline-flex;
+  }
+}
