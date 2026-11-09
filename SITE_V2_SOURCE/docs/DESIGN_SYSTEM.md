@@ -1,4 +1,47 @@
-# Sistema visual · Calibrated Agent v2
+# Sistema visual · Calibrated Agent v3 «Carbón / Papel»
+
+Fuente: `src/styles/global.css`. Dos temas (`:root` = Carbón; `:root[data-theme='light']` = Papel). La sección v2 queda más abajo como referencia histórica.
+
+## Regla de color
+
+1. Fondo y texto **sin croma**.
+2. El acento es la tinta misma (blanco en Carbón, negro en Papel): botón primario, foco, aguja, `p*`.
+3. **Solo las decisiones tienen color.** Actuar verde, preguntar ámbar, abstenerse rojo. Escalar (magenta) y recordar (violeta) existen como tokens para la franja de cinco opciones.
+4. Nunca solo color: cada decisión lleva icono (✓ ? ⊘) y, en el gráfico de umbral, patrón.
+5. Los sellos de evidencia son neutros, en monoespaciado; «pendiente» va con borde punteado.
+
+| Token | Carbón | Papel | Uso |
+|---|---|---|---|
+| `--bg` / `--bg-2` | `#0A0A0A` / `#0F0F0F` | `#F3EFE6` / `#ECE7DC` | Página, pozos |
+| `--surface` / `--surface-2` | `#151515` / `#1D1D1D` | `#FBF9F4` / `#EFEADF` | Tarjetas, paneles |
+| `--line` / `--line-2` | `#272727` / `#3D3D3D` | `#D9D2C3` / `#B9B1A0` | Bordes |
+| `--ink` / `--ink-2` / `--muted` | `#F5F5F5` / `#BDBDBD` / `#8F8F8F` | `#15130F` / `#48443C` / `#6C675C` | Texto |
+| `--accent` / `--on-accent` | `#FFFFFF` / `#0A0A0A` | `#15130F` / `#F7F4EC` | Primario, foco, aguja |
+| `--act` / `--ask` / `--abstain` (texto) | `#3DDC84` / `#FFB84D` / `#FF5A4F` | `#116634` / `#965400` / `#B5301F` | Chips, etiquetas |
+| `--act-g` / `--ask-g` / `--abstain-g` (gráfico) | iguales al texto | `#1C874E` / `#BD7A00` / `#D8483A` | Arcos, barras, partículas |
+| `--escalate` / `--remind` | `#E879C7` / `#B79CFF` | `#A02F82` / `#5B3FC4` | Franja de cinco opciones |
+
+Contraste (lo comprueba `tests/v3.test.ts` en cada build): texto ≥ 4,5:1 sobre `--bg`, `--bg-2`, `--surface` y `--surface-2` en ambos temas; colores gráficos ≥ 3:1 sobre `--bg`; texto sobre acento ≥ 7:1.
+
+`.dark-scope` re-declara los tokens de Carbón: lo usa el escenario 3D, que es oscuro en ambos temas.
+
+## Piezas nuevas
+
+- **Instrumento** (`components/ui/Gauge.tsx`): semicírculo 0–1 con las zonas del modelo (`regions()`), rayita en `p*`, aguja en `p`. Está en el hero (canvas), en cada tarjeta de caso (SVG) y, en vertical, en el riel.
+- **Riel de decisión** (`components/ui/Rail.tsx`): 64 px fijos a la derecha desde 1100 px de ancho; 248 px al pasar el mouse o con foco. Barra inferior por debajo de 1100 px.
+- **Figuras** (`components/research/Figures.tsx`): mapa de decisión por clase, franjas de auditoría, barra de reparto simulado.
+
+## Movimiento
+
+- Hero: ensamblaje de la esfera 2,4 s → pausa 1,3 s → apertura al instrumento 1,7 s. Después, la aguja y los colores siguen al caso. Solo se dibuja mientras está en pantalla.
+- Secciones: aparición escalonada al entrar en pantalla (`.reveal`), una sola vez.
+- Agujas de las tarjetas: viajan de 0 a `p` al aparecer.
+- `prefers-reduced-motion`: sin animaciones; el hero muestra el instrumento quieto.
+- Controles táctiles: mínimo 44 px de alto con puntero grueso.
+
+---
+
+# (Histórico) Sistema visual · Calibrated Agent v2
 
 Fuente: `src/styles/global.css` (tokens en `:root`). Modo único oscuro: es la identidad del proyecto.
 

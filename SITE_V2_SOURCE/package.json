@@ -1,15 +1,16 @@
 {
   "name": "calibrated-agent-site-v2",
   "private": true,
-  "version": "2.0.0-proto.1",
-  "description": "Calibrated Agent · rediseño de experiencia v2 (Explorar + Investigación). © 2026 Gustavo Mora.",
+  "version": "3.0.0",
+  "description": "Calibrated Agent · sitio v3 «Carbón / Papel» (Explorar + Investigación). © 2026 Gustavo Mora.",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run validate && tsc --noEmit && vite build",
+    "build": "npm run validate && tsc --noEmit && vite build && node scripts/prerender.mjs",
     "preview": "vite preview",
     "test": "vitest run",
-    "validate": "vitest run tests/data.test.ts"
+    "validate": "vitest run tests/data.test.ts",
+    "og": "python3 scripts/make-og.py"
   },
   "dependencies": {
     "@react-three/fiber": "8.18.0",
@@ -19,6 +20,7 @@
     "zustand": "4.5.7"
   },
   "devDependencies": {
+    "@types/node": "20.19.43",
     "@types/react": "18.3.31",
     "@types/react-dom": "18.3.7",
     "@types/three": "0.160.0",

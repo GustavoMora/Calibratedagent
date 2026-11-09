@@ -4,7 +4,7 @@
     {
       "id": "entrada",
       "center": [0, 0.15, 1.02],
-      "color": "#E9E3D6",
+      "color": "#F2F2F2",
       "label": { "es": "Entrada", "en": "Input" },
       "summary": {
         "es": "Lo que llega: el pedido y la información disponible al decidir.",
@@ -14,7 +14,7 @@
     {
       "id": "calibracion",
       "center": [0, 0.82, -0.02],
-      "color": "#8FB8D8",
+      "color": "#B9A7F5",
       "label": { "es": "Confianza", "en": "Confidence" },
       "summary": {
         "es": "Cuánto confía el sistema en haber entendido, y cómo se corrige ese número.",
@@ -25,7 +25,7 @@
     {
       "id": "politica",
       "center": [0, 0.42, -0.78],
-      "color": "#D4AF63",
+      "color": "#F2D0A4",
       "label": { "es": "Regla", "en": "Rule" },
       "summary": {
         "es": "El centro de mando: compara la confianza con los costos y elige.",
@@ -35,7 +35,7 @@
     {
       "id": "salidas",
       "center": [0, -0.22, -1.02],
-      "color": "#B7C9A8",
+      "color": "#9AD7C9",
       "label": { "es": "Decisiones", "en": "Decisions" },
       "summary": {
         "es": "Las tres salidas posibles y la persona que recibe preguntas.",
@@ -45,7 +45,7 @@
     {
       "id": "evidencia",
       "center": [-1.12, -0.18, 0.12],
-      "color": "#C9A6D9",
+      "color": "#E3A6C8",
       "label": { "es": "Fuentes", "en": "Sources" },
       "summary": {
         "es": "De dónde vienen las ideas: referencias externas y el preregistro.",
@@ -55,7 +55,7 @@
     {
       "id": "construccion",
       "center": [1.12, -0.18, 0.12],
-      "color": "#9FB3C8",
+      "color": "#A8A8A8",
       "label": { "es": "Construcción", "en": "Making of" },
       "summary": {
         "es": "Quién y con qué herramientas se construyó esta investigación.",

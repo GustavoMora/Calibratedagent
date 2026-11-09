@@ -3,10 +3,10 @@
   inset: 0 0 auto 0;
   z-index: 50;
   height: var(--header-h);
-  background: rgba(9, 10, 13, 0.82);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid var(--line);
 }
 .hdr-inner {
   max-width: 1320px;
@@ -30,6 +30,11 @@
 .hdr-nav {
   margin-left: auto;
 }
+@media (max-width: 1020px) {
+  .hdr-tools {
+    margin-left: auto;
+  }
+}
 .hdr-nav ul {
   list-style: none;
   display: flex;
@@ -51,18 +56,18 @@
 }
 .hdr-nav a[aria-current] {
   color: var(--ink);
-  box-shadow: inset 0 -2px 0 var(--gold);
+  box-shadow: inset 0 -2px 0 var(--accent);
   border-radius: 0;
 }
 .hdr-nav .nav-research {
-  color: var(--gold-2);
-  border: 1px solid rgba(212, 175, 99, 0.4);
+  color: var(--accent-2);
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
   border-radius: 999px;
   margin-left: 6px;
 }
 .hdr-nav .nav-research[aria-current] {
   box-shadow: none;
-  background: var(--gold-dim);
+  background: var(--accent-dim);
   border-radius: 999px;
 }
 .hdr-tools {
@@ -72,13 +77,13 @@
 .menu-btn {
   display: none;
 }
-.fab {
-  position: fixed;
-  right: 16px;
-  bottom: max(16px, env(safe-area-inset-bottom));
-  z-index: 40;
-  display: none;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+.theme-btn {
+  width: 44px;
+  padding: 0;
+  justify-content: center;
+}
+.hdr-tools .btn {
+  min-height: 44px;
 }
 
 @media (max-width: 1020px) {
@@ -90,7 +95,7 @@
     top: var(--header-h);
     left: 0;
     right: 0;
-    background: rgba(9, 10, 13, 0.98);
+    background: color-mix(in srgb, var(--bg) 98%, transparent);
     border-bottom: 1px solid var(--line);
     padding: 8px var(--gutter) 20px;
     display: none;
@@ -107,14 +112,11 @@
     border-bottom: 1px solid var(--line);
   }
   .hdr-nav a[aria-current] {
-    box-shadow: inset 3px 0 0 var(--gold);
+    box-shadow: inset 3px 0 0 var(--accent);
     padding-left: 14px;
   }
   .hdr-nav .nav-research {
     margin: 12px 0 0;
     text-align: center;
-  }
-  .fab {
-    display: inline-flex;
   }
 }

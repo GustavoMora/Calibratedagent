@@ -60,6 +60,32 @@ function initialLang(): Lang {
   return 'es';
 }
 
+export type Theme = 'dark' | 'light';
+
+/** Tema: elección guardada del lector; si no hay, la preferencia del sistema. */
+function initialTheme(): Theme {
+  try {
+    const s = window.localStorage.getItem('ca-theme');
+    if (s === 'dark' || s === 'light') return s;
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) return 'light';
+  } catch {
+    /* ignore */
+  }
+  return 'dark';
+}
+
+/** Refleja el idioma en la URL (?lang=en) para que la versión en inglés se pueda enlazar. */
+function syncLangUrl(lang: Lang): void {
+  try {
+    const url = new URL(window.location.href);
+    if (lang === 'en') url.searchParams.set('lang', 'en');
+    else url.searchParams.delete('lang');
+    window.history.replaceState(null, '', url.toString());
+  } catch {
+    /* ignore */
+  }
+}
+
 function initialCase(): string {
   try {
     const s = window.localStorage.getItem('ca-case');
@@ -72,10 +98,12 @@ function initialCase(): string {
 
 interface State {
   lang: Lang;
+  theme: Theme;
   caseId: string;
   view: BrainView;
   flow: FlowState;
   setLang: (l: Lang) => void;
+  setTheme: (t: Theme) => void;
   setCase: (id: string) => void;
   go: (v: BrainView) => void;
   back: () => void;
@@ -90,6 +118,7 @@ interface State {
 
 export const useStore = create<State>((set, get) => ({
   lang: typeof window === 'undefined' ? 'es' : initialLang(),
+  theme: typeof window === 'undefined' ? 'dark' : initialTheme(),
   caseId: typeof window === 'undefined' ? 'compras' : initialCase(),
   view: { level: 'brain' },
   flow: initialFlow(),
@@ -100,7 +129,17 @@ export const useStore = create<State>((set, get) => ({
       /* ignore */
     }
     document.documentElement.lang = lang;
+    syncLangUrl(lang);
     set({ lang });
+  },
+  setTheme: (theme) => {
+    try {
+      window.localStorage.setItem('ca-theme', theme);
+    } catch {
+      /* ignore */
+    }
+    document.documentElement.dataset.theme = theme;
+    set({ theme });
   },
   setCase: (caseId) => {
     try {

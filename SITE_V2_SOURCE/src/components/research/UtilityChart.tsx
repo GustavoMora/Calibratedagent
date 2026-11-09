@@ -55,10 +55,11 @@ export function UtilityChart() {
             y={PAD.t}
             width={x(r.to) - x(r.from)}
             height={H - PAD.t - PAD.b}
-            fill={{ act: 'rgba(111,194,139,0.07)', ask: 'rgba(126,182,232,0.07)', abstain: 'rgba(232,138,122,0.07)' }[r.action]}
+            fill={{ act: 'var(--act-g)', ask: 'var(--ask-g)', abstain: 'var(--abstain-g)' }[r.action]}
+            fillOpacity="0.09"
           />
         ))}
-        <line x1={x(0)} x2={x(1)} y1={y(0)} y2={y(0)} stroke="#3A3E46" />
+        <line x1={x(0)} x2={x(1)} y1={y(0)} y2={y(0)} stroke="var(--line-2)" />
         {[0, 0.5, 1].map((v) => (
           <text key={v} x={x(v)} y={H - 14} textAnchor="middle" className="uc-tick">
             {fmt(v, v === 0.5 ? 1 : 0, lang)}
@@ -67,40 +68,40 @@ export function UtilityChart() {
         <text x={x(0.5)} y={H - 1} textAnchor="middle" className="uc-tick">
           p
         </text>
-        <path d={line((p) => uAct(p, P))} stroke="#6FC28B" strokeWidth="2.5" fill="none" />
-        <path d={line((p) => uAsk(p, P))} stroke="#7EB6E8" strokeWidth="2.5" fill="none" strokeDasharray="7 4" />
-        <path d={`M${x(0)},${y(0)} L${x(1)},${y(0)}`} stroke="#E88A7A" strokeWidth="2.5" fill="none" strokeDasharray="2 4" />
+        <path d={line((p) => uAct(p, P))} stroke="var(--act-g)" strokeWidth="2.5" fill="none" />
+        <path d={line((p) => uAsk(p, P))} stroke="var(--ask-g)" strokeWidth="2.5" fill="none" strokeDasharray="7 4" />
+        <path d={`M${x(0)},${y(0)} L${x(1)},${y(0)}`} stroke="var(--abstain-g)" strokeWidth="2.5" fill="none" strokeDasharray="2 4" />
         {th.pStar > 0 && th.pStar < 1 && (
           <g>
-            <line x1={x(th.pStar)} x2={x(th.pStar)} y1={PAD.t} y2={H - PAD.b} stroke="#F0D48F" strokeWidth="1.5" />
-            <text x={x(th.pStar) - 4} y={PAD.t + 14} textAnchor="end" className="uc-lbl" fill="#F0D48F">
+            <line x1={x(th.pStar)} x2={x(th.pStar)} y1={PAD.t} y2={H - PAD.b} stroke="var(--accent)" strokeWidth="1.5" />
+            <text x={x(th.pStar) - 4} y={PAD.t + 14} textAnchor="end" className="uc-lbl" fill="var(--accent)">
               p* {fmt(th.pStar, 3, lang)}
             </text>
           </g>
         )}
         {th.hasAbstainZone && (
           <g>
-            <line x1={x(th.pA)} x2={x(th.pA)} y1={PAD.t} y2={H - PAD.b} stroke="#E88A7A" strokeWidth="1.5" />
-            <text x={x(th.pA) + 4} y={PAD.t + 14} className="uc-lbl" fill="#E88A7A">
+            <line x1={x(th.pA)} x2={x(th.pA)} y1={PAD.t} y2={H - PAD.b} stroke="var(--abstain-g)" strokeWidth="1.5" />
+            <text x={x(th.pA) + 4} y={PAD.t + 14} className="uc-lbl" fill="var(--abstain-g)">
               pₐ {fmt(th.pA, 3, lang)}
             </text>
           </g>
         )}
         {th.p0 > 0 && th.p0 < 1 && (
-          <text x={x(th.p0)} y={y(0) - 8} textAnchor="middle" className="uc-lbl" fill="#B9B3A6">
+          <text x={x(th.p0)} y={y(0) - 8} textAnchor="middle" className="uc-lbl" fill="var(--ink-2)">
             p₀ {fmt(th.p0, 3, lang)}
           </text>
         )}
       </svg>
       <ul className="uc-legend">
         <li>
-          <span className="sw" style={{ borderTop: '3px solid #6FC28B' }} /> U({L('actuar', 'act')}) = p·b − (1−p)·c
+          <span className="sw" style={{ borderTop: '3px solid var(--act-g)' }} /> U({L('actuar', 'act')}) = p·b − (1−p)·c
         </li>
         <li>
-          <span className="sw" style={{ borderTop: '3px dashed #7EB6E8' }} /> U({L('preguntar', 'ask')}) = −k + r·b + (1−r)·U({L('actuar', 'act')})
+          <span className="sw" style={{ borderTop: '3px dashed var(--ask-g)' }} /> U({L('preguntar', 'ask')}) = −k + r·b + (1−r)·U({L('actuar', 'act')})
         </li>
         <li>
-          <span className="sw" style={{ borderTop: '3px dotted #E88A7A' }} /> U({L('abstenerse', 'abstain')}) = 0
+          <span className="sw" style={{ borderTop: '3px dotted var(--abstain-g)' }} /> U({L('abstenerse', 'abstain')}) = 0
         </li>
       </ul>
       <div className="uc-sliders">

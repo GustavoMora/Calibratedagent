@@ -51,9 +51,10 @@ function shotFor(view: BrainView): Shot {
     }
     case 'flow':
       // vista lateral: la ruta entrada (frente) → decisiones (atrás) se ve completa
-      return { target: new THREE.Vector3(0, 0.25, 0), dir: new THREE.Vector3(0.93, 0.32, 0.18).normalize(), radius: 1.55 };
+      return { target: new THREE.Vector3(0, 0.25, 0), dir: new THREE.Vector3(0.93, 0.32, 0.18).normalize(), radius: 1.32 };
     default:
-      return { target: new THREE.Vector3(0, 0.08, 0), dir: new THREE.Vector3(0.82, 0.42, 0.55).normalize(), radius: 1.7 };
+      // v3: encuadre más cerrado (antes 1,7): el cerebro ocupa el escenario
+      return { target: new THREE.Vector3(0, 0.02, 0), dir: new THREE.Vector3(0.82, 0.42, 0.55).normalize(), radius: 1.36 };
   }
 }
 
@@ -136,8 +137,8 @@ void main() {
   vec3 col = uColors[0];
   for (int j = 0; j < 6; j++) { if (j == ri) col = uColors[j]; }
   float focus = (uFocus < -0.5 || abs(aRegion - uFocus) < 0.5) ? 1.0 : uDim;
-  vColor = mix(vec3(0.925, 0.902, 0.847), col, 0.85 * k);
-  vAlpha = (0.16 + 0.3 * aSeed) * focus * uGlobal * (0.5 + 0.5 * k);
+  vColor = mix(vec3(0.96, 0.96, 0.96), col, 0.85 * k);
+  vAlpha = (0.2 + 0.34 * aSeed) * focus * uGlobal * (0.5 + 0.5 * k);
   gl_PointSize = uSize * uPixelRatio * (0.7 + aSeed * 0.6) / -mv.z;
 }`;
 
@@ -178,7 +179,7 @@ function Cloud({ view }: { view: BrainView }) {
           uFocus: { value: -1 },
           uDim: { value: 0.16 },
           uGlobal: { value: 1 },
-          uSize: { value: 22 },
+          uSize: { value: 27 },
           uPixelRatio: { value: gl.getPixelRatio() },
           uColors: { value: brain.regions.map((r) => new THREE.Color(r.color)) },
         },
@@ -216,11 +217,12 @@ function Cloud({ view }: { view: BrainView }) {
 }
 
 // ───────────────────────── anillo de marca ─────────────────────────
+const RING_R = 1.5;
 function Ring({ level }: { level: BrainView['level'] }) {
   const mat = useRef<THREE.MeshBasicMaterial>(null);
   useFrame((state, dt) => {
     if (!mat.current) return;
-    const target = level === 'brain' ? 0.75 : 0.28;
+    const target = level === 'brain' ? 0.6 : 0.22;
     const o = mat.current.opacity;
     if (Math.abs(o - target) > 0.01) {
       mat.current.opacity = o + (target - o) * Math.min(1, dt * 3);
@@ -230,12 +232,12 @@ function Ring({ level }: { level: BrainView['level'] }) {
   return (
     <group rotation={[1.32, 0.12, -0.18]}>
       <mesh>
-        <torusGeometry args={[1.95, 0.0065, 8, 220]} />
-        <meshBasicMaterial ref={mat} color="#D4AF63" transparent opacity={0.75} />
+        <torusGeometry args={[RING_R, 0.005, 8, 220]} />
+        <meshBasicMaterial ref={mat} color="#FFFFFF" transparent opacity={0.75} />
       </mesh>
-      <mesh position={[1.95 * Math.cos(-0.6), 1.95 * Math.sin(-0.6), 0]}>
+      <mesh position={[RING_R * Math.cos(-0.6), RING_R * Math.sin(-0.6), 0]}>
         <sphereGeometry args={[0.03, 16, 16]} />
-        <meshBasicMaterial color="#F0D48F" />
+        <meshBasicMaterial color="#FFFFFF" />
       </mesh>
     </group>
   );
@@ -259,6 +261,8 @@ function getHalo(): THREE.Texture {
 }
 
 // ───────────────────────── nodos, enlaces y regiones ─────────────────────────
+/** Regla de color v3: solo las decisiones tienen color de semáforo (valores del tema oscuro: la sala 3D siempre es oscura). */
+const DECISION_COLOR: Record<string, string> = { actuar: '#3DDC84', preguntar: '#FFB84D', abstenerse: '#FF5A4F' };
 function nodeState(id: string, region: string, view: BrainView, flow: FlowState): { scale: number; opacity: number; gold: boolean } {
   const onPath = flow.steps.slice(0, flow.index + 1).some((s) => s.node === id);
   const current = flow.steps[flow.index]?.node === id;
@@ -284,7 +288,7 @@ function Nodes({ view, flow }: { view: BrainView; flow: FlowState }) {
     <group>
       {brain.nodes.map((n) => {
         const st = nodeState(n.id, n.region, view, flow);
-        const color = st.gold ? '#F0D48F' : regionById.get(n.region)?.color ?? '#ECE6D8';
+        const color = DECISION_COLOR[n.id] ?? (st.gold ? '#FFFFFF' : regionById.get(n.region)?.color ?? '#F5F5F5');
         return (
           <group key={n.id} position={n.pos as [number, number, number]} scale={st.scale}>
             <mesh
@@ -347,10 +351,10 @@ function Links({ view, flow }: { view: BrainView; flow: FlowState }) {
   return (
     <>
       <lineSegments geometry={base}>
-        <lineBasicMaterial color="#B9B3A6" transparent opacity={baseOpacity} depthWrite={false} />
+        <lineBasicMaterial color="#BDBDBD" transparent opacity={baseOpacity} depthWrite={false} />
       </lineSegments>
       <lineSegments geometry={hi}>
-        <lineBasicMaterial color="#F0D48F" transparent opacity={0.9} depthWrite={false} />
+        <lineBasicMaterial color="#FFFFFF" transparent opacity={0.9} depthWrite={false} />
       </lineSegments>
     </>
   );
@@ -429,16 +433,16 @@ function Request() {
       <group ref={head} visible={false}>
         <mesh>
           <sphereGeometry args={[0.05, 20, 20]} />
-          <meshBasicMaterial color="#FFF3D0" />
+          <meshBasicMaterial color="#FFFFFF" />
         </mesh>
         <sprite scale={[0.5, 0.5, 1]}>
-          <spriteMaterial map={halo} color="#F0D48F" transparent opacity={0.95} depthWrite={false} blending={THREE.AdditiveBlending} />
+          <spriteMaterial map={halo} color="#FFFFFF" transparent opacity={0.95} depthWrite={false} blending={THREE.AdditiveBlending} />
         </sprite>
       </group>
       {Array.from({ length: 7 }, (_, i) => (
         <mesh key={i} ref={(m) => (trail.current[i] = m)} visible={false}>
           <sphereGeometry args={[0.028 * (1 - i / 9), 10, 10]} />
-          <meshBasicMaterial color="#F0D48F" transparent opacity={0.55 * (1 - i / 8)} depthWrite={false} />
+          <meshBasicMaterial color="#FFFFFF" transparent opacity={0.55 * (1 - i / 8)} depthWrite={false} />
         </mesh>
       ))}
     </>

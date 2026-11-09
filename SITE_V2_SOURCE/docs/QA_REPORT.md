@@ -67,3 +67,45 @@ Todos los tokens de texto ≥ 4,5:1 sobre `--bg` y `--surface` (mínimo: `--mute
 5. «¿Dónde están los límites del experimento? ¿Y la investigación completa?»
 
 Criterio: ≥ 4/5 completan cada tarea sin ayuda. Registrar confusiones; no sustituir por simulaciones de agentes.
+
+---
+
+# QA · v3 «Carbón / Papel» (09/11/2026)
+
+Entorno: macOS (Darwin 25.6), servidor de desarrollo de Vite, navegador del panel de Claude (Chromium) con emulación de viewport. **Pruebas con personas: no realizadas.**
+
+## 1. Automatizado (ejecución real)
+
+| Prueba | Resultado |
+|---|---|
+| `npm run test` (Vitest) | **35/35** ✓ — `decisionModel` 14, `data` 4, `flow` 7, `v3` 10 |
+| Contraste AA del texto en Carbón y Papel (6 colores × 4 fondos × 2 temas) | ✓ (el test detectó tres valores fuera de norma en Papel; se corrigieron) |
+| Colores gráficos ≥ 3:1; texto sobre acento ≥ 7:1 | ✓ |
+| Franjas de auditoría derivadas = las publicadas | ✓ |
+| Zonas del instrumento: solo riesgo alto tiene abstención | ✓ |
+| El sitio no promete depósito ni cita «versión 3» | ✓ |
+| `tsc --noEmit` estricto | ✓ |
+| `npm run build` (valida → tsc → vite → prerender) | ✓ — prerender: Explorar 35 010 caracteres, Investigación 35 288 |
+| sha256 del PDF incluido = `SHA256SUMS` del paquete v4.2 | ✓ |
+
+## 2. Navegador (inspección real)
+
+| Qué | 1440×900 | 375×812 |
+|---|---|---|
+| Hero: esfera → instrumento, aguja en la p del caso | ✓ Carbón y Papel | ✓ |
+| Riel: compacto, expandido, cambio de caso | ✓ | barra inferior ✓ |
+| Tres casos con instrumento y desplegable | ✓ ambos temas | ✓ |
+| Umbral: lectura única de p*, etiqueta «Actuar» sin pisarse | ✓ | no revisado en detalle |
+| Cerebro más grande; recorrido con explicación por estación | ✓ (oscuro también en Papel) | ✓ nivel cerebro |
+| Evidencia: grilla 8/25 | ✓ | no revisado |
+| Investigación: figuras nuevas, PDF, cita v4.2 | ✓ | sin desborde horizontal (375 = 375) ✓ |
+| Inglés con `?lang=en`: idioma, descripción y comillas | — | ✓ |
+| Consola | sin errores (un aviso de `createRoot` duplicado aparece solo con recarga en caliente del servidor de desarrollo) | — |
+
+## 3. No probado
+
+- Dispositivo táctil real, Safari, Firefox.
+- Lector de pantalla y navegación completa por teclado.
+- Lighthouse / rendimiento medido.
+- El build de producción servido desde `/Calibratedagent/` (se inspeccionó el servidor de desarrollo y se validó el HTML de `dist/`).
+- Anchos intermedios (768–1100 px) más allá de una captura a 1180 px.

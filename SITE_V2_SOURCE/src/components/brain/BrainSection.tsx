@@ -3,7 +3,7 @@ import { brain, nodeById, regionById, scenarioById, scenarios } from '../../data
 import { useLang, useT } from '../../app/i18n';
 import { useStore } from '../../store/navigation';
 import { currentNode, type FlowState } from '../../simulation/requestFlow';
-import { fmt } from '../../domain/decisionModel';
+import { FROZEN, fmt, thresholds } from '../../domain/decisionModel';
 import { ActionChip } from '../ui/ActionChip';
 import type { Orbit, Safe } from './BrainScene';
 import './brain.css';
@@ -162,13 +162,33 @@ function FlowFeed({ flow }: { flow: FlowState }) {
   const lang = useLang();
   const sc = scenarioById(useStore((s) => s.caseId));
   const stageLabel = (id: string) => brain.flow.stages.find((s) => s.id === id)?.label[lang] ?? id;
+  const p = fmt(sc.p, 2, lang);
+  const pstar = fmt(thresholds(FROZEN[sc.riskClass]).pStar, 3, lang);
+  /** Qué pasa en cada estación, con los números del caso (hipotéticos). */
+  const say = (node: string): string | null => {
+    switch (node) {
+      case 'pedido':
+        return sc.request[lang];
+      case 'contexto':
+        return sc.knows[lang];
+      case 'agente':
+        return t.flowSay.agente(p);
+      case 'calibrador':
+        return t.flowSay.calibrador();
+      case 'regla':
+        return t.flowSay.regla(p, pstar, t.thClass[sc.riskClass]);
+      case 'veto':
+        return t.flowSay.veto();
+      case 'humano':
+        return t.flowSay.humano();
+      default:
+        return null;
+    }
+  };
   return (
     <div className="feed">
-      <p className="feed-req">
-        <span className="note">{t.caseFields.request}:</span> {sc.request[lang]}
-      </p>
       <p className="note">
-        {t.thClass[sc.riskClass]} · p = <span className="mono">{fmt(sc.p, 2, lang)}</span> <span className="tag tag-hypo">{t.hypothetical}</span>
+        {sc.label[lang]} · {t.thClass[sc.riskClass]} · p = <span className="mono">{p}</span> <span className="tag tag-hypo">{t.hypothetical}</span>
       </p>
       {flow.status === 'idle' ? (
         <p className="feed-idle">{t.brainFlowIdle}</p>
@@ -177,10 +197,14 @@ function FlowFeed({ flow }: { flow: FlowState }) {
           {flow.steps.map((s, i) => {
             const n = nodeById.get(s.node);
             const state = i < flow.index ? 'done' : i === flow.index ? 'now' : 'next';
+            const name = n?.label[lang] ?? s.node;
+            const stage = s.node === 'humano' ? t.flowBack : stageLabel(s.stage);
+            const line = say(s.node);
             return (
               <li key={`${s.node}-${i}`} data-state={state}>
-                <span className="feed-stage">{stageLabel(s.stage)}</span>
-                <span className="feed-node">{n?.label[lang]}</span>
+                {stage !== name && <span className="feed-stage">{stage}</span>}
+                <span className="feed-node">{name}</span>
+                {line && state !== 'next' && <span className="feed-say">{line}</span>}
               </li>
             );
           })}
@@ -220,7 +244,8 @@ function Panel() {
         <h3 ref={headRef} tabIndex={-1}>
           {t.brainTitle}
         </h3>
-        <p className="note">{t.brainHint}</p>
+        <p className="note brain-hint-mouse">{t.brainHint}</p>
+        <p className="note brain-hint-touch">{t.brainHintTouch}</p>
         <ul className="region-list">
           {brain.regions.map((r) => (
             <li key={r.id}>
@@ -520,7 +545,7 @@ export function BrainSection() {
         </header>
       </div>
 
-      <div className={`brain-stage mode-${mode} level-${view.level}`} ref={stageRef}>
+      <div className={`brain-stage dark-scope mode-${mode} level-${view.level}`} ref={stageRef}>
         <div className="stage-top">
           <Breadcrumb />
           <div className="stage-tools">

@@ -5,10 +5,11 @@
   position: relative;
   max-width: 1320px;
   margin: 0 auto;
-  height: min(86vh, 780px);
-  min-height: 560px;
+  height: min(94vh, 940px);
+  min-height: 660px;
   /* mismo negro que la página: sin rectángulo gris aislado */
-  background: radial-gradient(ellipse at 40% 50%, rgba(212, 175, 99, 0.06), transparent 60%), var(--bg);
+  background: radial-gradient(ellipse at 40% 50%, color-mix(in srgb, var(--accent) 5%, transparent), transparent 60%), var(--bg);
+  color: var(--ink);
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   overflow: hidden;
@@ -57,7 +58,7 @@
   gap: 4px;
   margin: 0;
   padding: 6px 10px;
-  background: rgba(9, 10, 13, 0.75);
+  background: color-mix(in srgb, var(--bg) 75%, transparent);
   border: 1px solid var(--line);
   border-radius: 999px;
   font-size: 0.86rem;
@@ -70,7 +71,7 @@
 .bc button {
   background: none;
   border: 0;
-  color: var(--gold-2);
+  color: var(--accent-2);
   cursor: pointer;
   font: inherit;
   padding: 2px 4px;
@@ -101,7 +102,7 @@
   min-height: 34px;
   border-radius: 999px;
   border: 1px solid var(--line-2);
-  background: rgba(9, 10, 13, 0.7);
+  background: color-mix(in srgb, var(--bg) 70%, transparent);
   color: var(--ink-2);
   font: 500 0.84rem var(--sans);
   cursor: pointer;
@@ -113,15 +114,15 @@
 .chip[aria-pressed='true'] {
   color: var(--ink);
   border-color: var(--rc);
-  background: rgba(255, 255, 255, 0.06);
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
 }
 .dot {
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  background: var(--rc, var(--gold));
+  background: var(--rc, var(--accent));
   flex: none;
-  box-shadow: 0 0 8px var(--rc, var(--gold));
+  box-shadow: 0 0 8px var(--rc, var(--accent));
 }
 
 .labels {
@@ -143,19 +144,19 @@
   transform-origin: center;
 }
 .lbl-region {
-  background: rgba(9, 10, 13, 0.55);
+  background: color-mix(in srgb, var(--bg) 55%, transparent);
   color: var(--ink);
   padding: 4px 10px;
   border-radius: 999px;
   font-size: 0.95rem;
   font-weight: 600;
-  border: 1px solid rgba(236, 230, 216, 0.18);
+  border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
 }
 .lbl-region:hover {
-  border-color: var(--gold);
+  border-color: var(--accent);
 }
 .lbl-node {
-  background: rgba(9, 10, 13, 0.72);
+  background: color-mix(in srgb, var(--bg) 72%, transparent);
   color: var(--ink-2);
   padding: 2px 8px;
   border-radius: 6px;
@@ -166,8 +167,8 @@
   color: var(--ink);
 }
 .lbl-node.is-current {
-  color: #15120a;
-  background: var(--gold-2);
+  color: var(--on-accent);
+  background: var(--accent-2);
   font-weight: 600;
 }
 
@@ -190,10 +191,10 @@
   top: 14px;
   right: 14px;
   bottom: 14px;
-  width: 370px;
+  width: 336px;
   overflow-y: auto;
   overscroll-behavior: contain;
-  background: rgba(21, 23, 27, 0.9);
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
@@ -205,7 +206,7 @@
   outline: none;
 }
 .panel-body h3:focus-visible {
-  outline: 2px solid var(--gold-2);
+  outline: 2px solid var(--accent-2);
 }
 .panel-sub {
   font: 600 0.75rem var(--sans);
@@ -273,7 +274,7 @@
   min-height: 40px;
 }
 .node-list button:hover {
-  border-color: var(--gold);
+  border-color: var(--accent);
 }
 .node-desc {
   margin-top: 12px;
@@ -282,7 +283,7 @@
   font-size: 0.92rem;
   color: var(--ink-2);
   padding: 10px 12px;
-  border-left: 2px solid var(--gold);
+  border-left: 2px solid var(--accent);
   background: var(--bg-2);
   border-radius: 0 8px 8px 0;
 }
@@ -358,13 +359,13 @@
   opacity: 0.45;
 }
 .feed-steps li[data-state='done']::before {
-  background: var(--gold);
-  border-color: var(--gold);
+  background: var(--accent);
+  border-color: var(--accent);
 }
 .feed-steps li[data-state='now']::before {
-  background: var(--gold-2);
-  border-color: var(--gold-2);
-  box-shadow: 0 0 10px var(--gold-2);
+  background: var(--accent-2);
+  border-color: var(--accent-2);
+  box-shadow: 0 0 10px var(--accent-2);
 }
 .feed-stage {
   font-size: 0.72rem;
@@ -376,7 +377,7 @@
   font-weight: 600;
 }
 .feed-steps li[data-state='now'] .feed-node {
-  color: var(--gold-2);
+  color: var(--accent-2);
 }
 .feed-out {
   padding: 12px 14px;
@@ -448,23 +449,23 @@
 .b2-region li button[aria-pressed='true'],
 .b2-region li button.is-visited {
   color: var(--ink);
-  border-color: var(--gold);
+  border-color: var(--accent);
 }
 
 /* móvil: hoja inferior */
 @media (max-width: 759px) {
   .brain-stage {
-    height: 88vh;
-    min-height: 600px;
+    height: 96vh;
+    min-height: 680px;
   }
   .chips {
     max-width: calc(100% - 32px);
     top: 56px;
   }
   .chip {
-    padding: 4px 10px;
-    min-height: 32px;
-    font-size: 0.8rem;
+    padding: 6px 12px;
+    min-height: 40px;
+    font-size: 0.82rem;
   }
   .brain-panel {
     top: auto;
@@ -472,7 +473,7 @@
     right: 8px;
     bottom: 8px;
     width: auto;
-    max-height: 44%;
+    max-height: 40%;
     border-radius: 16px 16px 12px 12px;
   }
   .brain-panel::before {
@@ -498,4 +499,26 @@
     font-size: 0.82rem;
     padding: 3px 8px;
   }
+}
+
+/* v3 */
+.feed-say {
+  font-size: 0.86rem;
+  color: var(--ink-2);
+  line-height: 1.4;
+  margin-top: 2px;
+}
+.brain-hint-touch {
+  display: none;
+}
+@media (hover: none) and (pointer: coarse) {
+  .brain-hint-mouse {
+    display: none;
+  }
+  .brain-hint-touch {
+    display: block;
+  }
+}
+.dot {
+  box-shadow: none;
 }

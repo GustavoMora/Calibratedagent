@@ -4,17 +4,57 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Investigación completa · Calibrated Agent</title>
-    <meta name="description" content="Modelo, supuestos, simulaciones, protocolos, hipótesis, límites y fuentes de Orquestación calibrada. Preprint no publicado; resultados empíricos pendientes." />
+    <meta name="description" content="Modelo, supuestos, simulaciones, protocolos, hipótesis, límites y fuentes de «Orquestación condicionada con decisión calibrada». Preprint v4.2 candidata, sin revisión por pares; experimentos no ejecutados." />
+    <meta name="author" content="Gustavo Mora" />
     <link rel="canonical" href="https://gustavomora.github.io/Calibratedagent/investigacion/" />
-    <meta name="theme-color" content="#090A0D" />
+    <link rel="alternate" hreflang="es" href="https://gustavomora.github.io/Calibratedagent/investigacion/" />
+    <link rel="alternate" hreflang="en" href="https://gustavomora.github.io/Calibratedagent/investigacion/?lang=en" />
+    <link rel="alternate" hreflang="x-default" href="https://gustavomora.github.io/Calibratedagent/investigacion/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Calibrated Agent" />
+    <meta property="og:title" content="Investigación completa · Calibrated Agent" />
+    <meta property="og:description" content="Modelo, supuestos, simulaciones, protocolos, hipótesis, límites y fuentes de «Orquestación condicionada con decisión calibrada». Preprint v4.2 candidata, sin revisión por pares; experimentos no ejecutados." />
+    <meta property="og:url" content="https://gustavomora.github.io/Calibratedagent/investigacion/" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:image" content="https://gustavomora.github.io/Calibratedagent/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ScholarlyArticle",
+        "headline": "Orquestación condicionada con decisión calibrada: cuándo actuar, preguntar, escalar, abstenerse o recordar",
+        "author": { "@type": "Person", "name": "Gustavo Mora", "identifier": "https://orcid.org/0009-0004-5276-3066" },
+        "inLanguage": "es",
+        "version": "4.2 candidata editorial",
+        "creativeWorkStatus": "Preprint candidato, no revisado por pares, no depositado",
+        "url": "https://gustavomora.github.io/Calibratedagent/"
+      }
+    </script>
+    <meta name="theme-color" content="#0A0A0A" />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
-    <style>html,body{background:#090A0D;color:#ECE6D8}</style>
+    <style>html,body{background:#0A0A0A;color:#F5F5F5}html[data-theme=light],html[data-theme=light] body{background:#F3EFE6;color:#15130F}</style>
+    <noscript><style>.reveal>*{opacity:1!important;transform:none!important}.hero-read{opacity:1!important}.pilot-grid span{opacity:1!important;transform:none!important}</style></noscript>
+    <script>
+      // Tema antes del primer pintado: elección guardada o preferencia del sistema.
+      (function () {
+        try {
+          var t = localStorage.getItem('ca-theme');
+          if (t !== 'dark' && t !== 'light') t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+          document.documentElement.dataset.theme = t;
+          var q = new URLSearchParams(location.search).get('lang');
+          var l = q === 'en' || q === 'es' ? q : localStorage.getItem('ca-lang');
+          if (l === 'en') document.documentElement.lang = 'en';
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
-    <div id="root"></div>
-    <noscript><p style="max-width:720px;margin:40px auto;padding:0 16px">Esta página necesita JavaScript.</p></noscript>
+    <div id="root"><!--prerender--></div>
     <script type="module" src="/src/pages/investigacion.tsx"></script>
   </body>
 </html>

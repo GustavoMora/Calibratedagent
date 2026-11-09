@@ -87,17 +87,6 @@ export function HowItDecides() {
           <h2>{t.howTitle}</h2>
         </header>
 
-        {/* navegación visible de capítulo: tres tarjetas, nada escondido */}
-        <nav className="how-cards" aria-label={t.nav.how}>
-          {(['idea', 'try', 'assume'] as const).map((key, i) => (
-            <a key={key} className="how-card card" href={`#how-${key}`}>
-              <span className="how-num mono">0{i + 1}</span>
-              <span className="how-name">{t.howTabs[key]}</span>
-              <span className="note">{t.howTabsSub[key]}</span>
-            </a>
-          ))}
-        </nav>
-
         <div className="how-grid">
           <article id="how-idea" className="how-idea">
             <h3>{t.howTabs.idea}</h3>
@@ -138,19 +127,14 @@ export function HowItDecides() {
             <ThresholdChart params={params} baseline={frozen} caseP={sc.p} caseLabel={sc.label[lang]} caseAction={action} />
 
             <div className="th-readout" aria-live="polite">
-              <div className="th-ba">
-                <div>
-                  <span className="note">{t.thBefore}</span>
-                  <span className="mono th-big th-dim">p* = {fmt(base.pStar, 3, lang)}</span>
-                </div>
-                <span className="th-ba-arrow" aria-hidden="true">
-                  {moved ? (th.pStar > base.pStar ? '↗' : '↘') : '→'}
-                </span>
-                <div>
-                  <span className="note">{t.thAfter}</span>
-                  <span className="mono th-big">p* = {th.pStar > 0 && th.pStar < 1 ? fmt(th.pStar, 3, lang) : fmt(th.pStar, 2, lang)}</span>
-                </div>
-              </div>
+              <p className="th-now">
+                <span className="mono th-big">p* = {th.pStar > 0 && th.pStar < 1 ? fmt(th.pStar, 3, lang) : fmt(th.pStar, 2, lang)}</span>
+                {moved && (
+                  <span className="th-was mono">
+                    <span aria-hidden="true">{th.pStar > base.pStar ? '↗' : '↘'}</span> {t.thBefore.toLowerCase()} {fmt(base.pStar, 3, lang)}
+                  </span>
+                )}
+              </p>
               <p className="th-moved">
                 {moved ? t.thMoved(fmt(base.pStar, 3, lang), fmt(th.pStar, 3, lang), th.pStar > base.pStar) : t.thNoMove}
               </p>

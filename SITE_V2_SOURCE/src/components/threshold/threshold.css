@@ -14,12 +14,12 @@
   transition: border-color 0.2s, transform 0.2s var(--ease);
 }
 .how-card:hover {
-  border-color: var(--gold);
+  border-color: var(--accent);
   color: var(--ink);
   transform: translateY(-2px);
 }
 .how-num {
-  color: var(--gold);
+  color: var(--accent);
   font-size: 0.8rem;
 }
 .how-name {
@@ -84,15 +84,15 @@
   align-self: center;
 }
 .th-legend [data-a='act'] .sw {
-  background: rgba(111, 194, 139, 0.45);
+  background: color-mix(in srgb, var(--act) 45%, transparent);
   border: 1px solid var(--act);
 }
 .th-legend [data-a='ask'] .sw {
-  background: repeating-linear-gradient(45deg, rgba(126, 182, 232, 0.6) 0 3px, rgba(126, 182, 232, 0.15) 3px 7px);
+  background: repeating-linear-gradient(45deg, color-mix(in srgb, var(--ask) 60%, transparent) 0 3px, color-mix(in srgb, var(--ask) 15%, transparent) 3px 7px);
   border: 1px solid var(--ask);
 }
 .th-legend [data-a='abstain'] .sw {
-  background: radial-gradient(circle, rgba(232, 138, 122, 0.85) 1.5px, rgba(232, 138, 122, 0.15) 2px) 0 0 / 6px 6px;
+  background: radial-gradient(circle, color-mix(in srgb, var(--abstain) 85%, transparent) 1.5px, color-mix(in srgb, var(--abstain) 15%, transparent) 2px) 0 0 / 6px 6px;
   border: 1px solid var(--abstain);
 }
 .th-legend strong[data-a],
@@ -147,27 +147,27 @@
 }
 .th-tick {
   font-size: 22px;
-  fill: #8e897e;
+  fill: var(--muted);
 }
 .th-p0 {
   font-size: 20px;
-  fill: #b9b3a6;
+  fill: var(--ink-2);
 }
 .th-pstar {
   font-size: 27px;
   font-weight: 600;
-  fill: #f0d48f;
+  fill: var(--accent);
   font-family: var(--mono) !important;
 }
 .th-pa {
   font-size: 23px;
   font-weight: 600;
-  fill: #e88a7a;
+  fill: var(--abstain);
   font-family: var(--mono) !important;
 }
 .th-case {
   font-size: 23px;
-  fill: #ece6d8;
+  fill: var(--ink);
 }
 
 .th-readout {
@@ -189,14 +189,14 @@
 }
 .th-big {
   font-size: 1.35rem;
-  color: var(--gold-2);
+  color: var(--accent-2);
 }
 .th-dim {
   color: var(--muted);
 }
 .th-ba-arrow {
   font-size: 1.6rem;
-  color: var(--gold);
+  color: var(--accent);
 }
 .th-moved {
   margin: 10px 0 6px;
@@ -226,7 +226,7 @@
 }
 .th-val {
   font-size: 1.15rem;
-  color: var(--gold-2);
+  color: var(--accent-2);
   min-width: 3.5ch;
   text-align: right;
 }
@@ -249,7 +249,7 @@
   border-left: 2px solid var(--line-2);
 }
 .th-slider.is-changed .th-cause {
-  border-left-color: var(--gold);
+  border-left-color: var(--accent);
   color: var(--ink);
 }
 
@@ -277,20 +277,20 @@ input[type='range']::-webkit-slider-thumb {
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: var(--gold);
+  background: var(--accent);
   border: 3px solid var(--bg);
-  box-shadow: 0 0 0 1px var(--gold);
+  box-shadow: 0 0 0 1px var(--accent);
   margin-top: -10px;
 }
 input[type='range']::-moz-range-thumb {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: var(--gold);
+  background: var(--accent);
   border: 3px solid var(--bg);
 }
 input[type='range']:focus-visible {
-  outline: 2px solid var(--gold-2);
+  outline: 2px solid var(--accent-2);
   outline-offset: 2px;
 }
 
@@ -332,4 +332,24 @@ input[type='range']:focus-visible {
   .th-pa {
     font-size: 32px;
   }
+}
+
+/* v3: lectura única de p* (el «antes» aparece solo cuando el umbral se movió) */
+.th-now {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.th-was {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.th-zone-out {
+  font-size: 22px;
+}
+.th-case-pick .btn,
+.how-try > .btn {
+  min-height: 44px;
 }

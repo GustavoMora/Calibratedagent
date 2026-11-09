@@ -6,6 +6,8 @@ import '../components/research/research.css';
 import { Header } from '../components/ui/Header';
 import { DataErrors } from '../components/ui/DataErrors';
 import { UtilityChart } from '../components/research/UtilityChart';
+import { AuditBands, DecisionMap, SplitBar } from '../components/research/Figures';
+import { PREPRINT_DATE, PREPRINT_PDF, PREPRINT_TITLE, PREPRINT_VERSION, SHOW_PREPRINT_PDF } from '../app/site';
 import { useStore } from '../store/navigation';
 import { useLang } from '../app/i18n';
 import { FROZEN, fmt, pAbstain, pStar, pZero, type RiskClass } from '../domain/decisionModel';
@@ -127,8 +129,10 @@ const BIB = `@article{pauker1980,
   howpublished = {arXiv preprint arXiv:2601.09001}, doi = {10.48550/arXiv.2601.09001}
 }
 @misc{mora2026orquestacion,
-  author = {Mora, Gustavo}, title = {Orquestación calibrada}, year = {2026},
-  url = {https://gustavomora.github.io/Calibratedagent/}, note = {Versión 3}
+  author = {Mora, Gustavo}, year = {2026},
+  title = {Orquestaci{\\'o}n condicionada con decisi{\\'o}n calibrada: cu{\\'a}ndo actuar, preguntar, escalar, abstenerse o recordar},
+  url = {https://gustavomora.github.io/Calibratedagent/},
+  note = {Versi{\\'o}n 4.2 candidata editorial. Preprint no revisado por pares}
 }`;
 
 function CopyBib({ lang }: { lang: Lang }) {
@@ -157,6 +161,14 @@ function Research() {
   useEffect(() => {
     document.documentElement.lang = lang;
     document.title = lang === 'es' ? 'Investigación completa · Calibrated Agent' : 'Full research · Calibrated Agent';
+    document
+      .querySelector('meta[name="description"]')
+      ?.setAttribute(
+        'content',
+        lang === 'es'
+          ? 'Modelo, supuestos, simulaciones, protocolos, hipótesis, límites y fuentes de «Orquestación condicionada con decisión calibrada». Preprint v4.2 candidata, sin revisión por pares; experimentos no ejecutados.'
+          : 'Model, assumptions, simulations, protocols, hypotheses, limits and sources of “Orquestación condicionada con decisión calibrada”. Preprint v4.2 candidate, not peer reviewed; experiments not run.',
+      );
   }, [lang]);
 
   useEffect(() => {
@@ -185,13 +197,20 @@ function Research() {
             ← {L('Volver a Explorar', 'Back to Explore')}
           </a>
           <span className="kicker">{L('Investigación completa', 'Full research')}</span>
-          <h1>{L('Orquestación calibrada: método, supuestos y evidencia', 'Calibrated orchestration: method, assumptions and evidence')}</h1>
+          <h1>{L('Orquestación condicionada con decisión calibrada: método, supuestos y evidencia', 'Conditioned orchestration with calibrated decision: method, assumptions and evidence')}</h1>
           <p className="lead">
             {L(
-              'Todo el detalle técnico en un solo lugar: ecuaciones, simulaciones, protocolos, límites y fuentes. Preprint no publicado, sin revisión por pares. No hay resultados empíricos confirmatorios.',
-              'All the technical detail in one place: equations, simulations, protocols, limits and sources. Unpublished preprint, not peer reviewed. There are no confirmatory empirical results.',
+              `Todo el detalle técnico en un solo lugar: ecuaciones, simulaciones, protocolos, límites y fuentes. Manuscrito v${PREPRINT_VERSION} candidata editorial (${PREPRINT_DATE}): no depositado, sin DOI y sin revisión por pares. No hay resultados empíricos confirmatorios.`,
+              `All the technical detail in one place: equations, simulations, protocols, limits and sources. Manuscript v${PREPRINT_VERSION}, editorial candidate (${PREPRINT_DATE}): not deposited, no DOI, not peer reviewed. There are no confirmatory empirical results.`,
             )}
           </p>
+          {SHOW_PREPRINT_PDF && (
+            <p>
+              <a className="btn btn-primary" href={`../${PREPRINT_PDF}`}>
+                {L('Leer el manuscrito (PDF, 22 páginas)', 'Read the manuscript (PDF, 22 pages, in Spanish)')} <span aria-hidden="true">↓</span>
+              </a>
+            </p>
+          )}
         </div>
 
         <div className="wrap rs-layout">
@@ -216,6 +235,33 @@ function Research() {
                   'An agent receiving a request can act, ask or abstain. Always acting turns misreadings into costly errors; always asking interrupts without adding information. The proposal compares the three actions by expected utility, using the calibrated confidence p of having understood the request, the cost of being wrong and the cost and clarifying power of a question.',
                 )}
               </p>
+              <h3>{L('Qué aporta', 'What it contributes')}</h3>
+              <p>
+                {L(
+                  'La regla de umbral es clásica (Pauker y Kassirer, 1980; Chow, 1970) y ya se aplica a agentes de lenguaje. No se reclama novedad matemática. El manuscrito propone tres elementos de integración y de diseño de evaluación:',
+                  'The threshold rule is classical (Pauker and Kassirer, 1980; Chow, 1970) and is already applied to language agents. No mathematical novelty is claimed. The manuscript proposes three elements of integration and evaluation design:',
+                )}
+              </p>
+              <ol className="rs-contrib">
+                <li>
+                  <strong>{L('Recordar como parte de la regla.', 'Reminding as part of the rule.')}</strong>{' '}
+                  {L('Mostrarle al usuario un recurso propio se trata dentro de la misma decisión, con sus interacciones de utilidad declaradas.', 'Showing the user a resource of their own is handled inside the same decision, with its utility interactions stated.')}
+                </li>
+                <li>
+                  <strong>{L('Separar discriminación de calibración.', 'Separating discrimination from calibration.')}</strong>{' '}
+                  {L('Con presupuesto de interrupciones igualado, recalibrar no cambia ninguna decisión. Por eso la calibración se evalúa con umbrales derivados de costos y se mide como regret.', 'With a matched interruption budget, recalibrating changes no decision. So calibration is evaluated with cost-derived thresholds and measured as regret.')}
+                </li>
+                <li>
+                  <strong>{L('Proteger la probabilidad que entra a la decisión.', 'Protecting the probability that enters the decision.')}</strong>{' '}
+                  {L('Separación de roles y una auditoría de acumulación en el umbral, ante el riesgo de que un componente premiado por autonomía infle su confianza.', 'Role separation and an audit of accumulation at the threshold, against the risk that a component rewarded for autonomy inflates its confidence.')}
+                </li>
+              </ol>
+              <p className="note">
+                {L(
+                  'Esta página desarrolla en detalle la regla actuar / preguntar / abstenerse y el protocolo PO430. Escalar y recordar están formalizadas en el manuscrito (§3.5) y no se simulan acá.',
+                  'This page develops in detail the act / ask / abstain rule and the PO430 protocol. Escalating and reminding are formalized in the manuscript (§3.5) and are not simulated here.',
+                )}
+              </p>
               <ul className="rs-status">
                 <li>
                   <Tag k="int">{L('DERIVADO', 'DERIVED')}</Tag> {L('Modelo matemático y umbrales.', 'Mathematical model and thresholds.')}
@@ -227,16 +273,16 @@ function Research() {
                   <Tag k="int">{L('FIJADO LOCALMENTE', 'FIXED LOCALLY')}</Tag> {L('Preregistro y plan de análisis, sin depósito público.', 'Preregistration and analysis plan, not publicly deposited.')}
                 </li>
                 <li>
-                  <Tag k="pilot">{L('OBSERVADO EN PILOTO', 'OBSERVED IN PILOT')}</Tag> {L('25 pedidos registrados, 8 evaluables. Exploratorio.', '25 requests recorded, 8 evaluable. Exploratory.')}
+                  <Tag k="pilot">{L('OBSERVADO EN PILOTO', 'OBSERVED IN PILOT')}</Tag> {L('25 decisiones registradas, 8 evaluables. Exploratorio y autoevaluado.', '25 decisions recorded, 8 evaluable. Exploratory and self-evaluated.')}
                 </li>
                 <li>
-                  {PEND} {L('Experimento confirmatorio: no ejecutado.', 'Confirmatory experiment: not run.')}
+                  {PEND} {L('DG-E1 y PO430: no ejecutados.', 'DG-E1 and PO430: not run.')}
                 </li>
               </ul>
             </Section>
 
             <Section id="modelo" title={L('El modelo', 'The model') as string}>
-              <p>{L('Definiciones (preprint §3.2, implementadas en src/domain/decisionModel.ts):', 'Definitions (preprint §3.2, implemented in src/domain/decisionModel.ts):')}</p>
+              <p>{L('Definiciones (manuscrito §3.2; en este sitio las calcula un único módulo, decisionModel.ts):', 'Definitions (manuscript §3.2; on this site a single module, decisionModel.ts, computes them):')}</p>
               <dl className="rs-defs">
                 <dt>p</dt>
                 <dd>{L('P(Y₁ = 1 | x): probabilidad de interpretar bien los atributos críticos del pedido con la información disponible. No es la probabilidad de que el entregable final salga bien (Y).', 'P(Y₁ = 1 | x): probability of correctly interpreting the request’s critical attributes with the available information. It is not the probability of the final deliverable going well (Y).')}</dd>
@@ -259,7 +305,7 @@ function Research() {
               </div>
               <p className="note">
                 {L(
-                  'pₐ es una derivación desde §3.4; no figura literal en la propuesta. La decisión en vivo usa el argmax de utilidades: la regla por umbrales coincide con él en las tres clases congeladas (0 desacuerdos en pasos de 0,0001), pero no en toda combinación de parámetros (NOTA_METODOLOGICA §6).',
+                  'pₐ es una derivación desde §3.4; no figura literal en la propuesta. La decisión en vivo usa el argmax de utilidades: la regla por umbrales coincide con él en las tres clases congeladas (0 desacuerdos en pasos de 0,0001), pero no en toda combinación de parámetros (nota metodológica interna, §6).',
                   'pₐ is derived from §3.4; it does not appear verbatim in the proposal. The live decision uses the utility argmax: the threshold rule matches it in the three frozen classes (0 disagreements in 0.0001 steps), but not for every parameter combination (NOTA_METODOLOGICA §6).',
                 )}
               </p>
@@ -275,6 +321,7 @@ function Research() {
                 )}
               </p>
               <ClassesTable lang={lang} />
+              <DecisionMap lang={lang} />
               <p className="note">
                 {L(
                   'El banco cuenta 62/67, 60/67 y 62/96 aclaraciones; el preregistro congela el redondeo a tres decimales (0,925 / 0,896 / 0,646), no la fracción. El banco de alto incluye 30 pedidos irreducibles, sin acción correcta.',
@@ -347,6 +394,7 @@ function Research() {
               <p>
                 {L('Franjas con los r congelados: bajo {0,85; 0,90}, medio {0,90; 0,95}, alto {0,90; 0,95}. Ningún p* cae en un punto de la grilla de 0,05.', 'Bands with the frozen r: low {0.85; 0.90}, medium {0.90; 0.95}, high {0.90; 0.95}. No p* falls on a 0.05 grid point.')}
               </p>
+              <AuditBands lang={lang} />
               <p>
                 {L('Para detectar un paso de 0,50 a 0,65 arriba del umbral (unilateral, α = 0,05, potencia 0,8) hacen falta unos 131 casos por brazo dentro de la franja.', 'To detect a shift from 0.50 to 0.65 above the threshold (one-sided, α = 0.05, power 0.8) about 131 cases per arm inside the band are needed.')} {HYP}
               </p>
@@ -365,6 +413,7 @@ function Research() {
                   {SIM}
                   <h3>{L('Qué decide la regla', 'What the rule decides')}</h3>
                   <p>{L('Riesgo medio: pregunta 4.378 de 5.000 (88 %), actúa 622 (12 %), se abstiene 0.', 'Medium risk: asks 4,378 of 5,000 (88%), acts 622 (12%), abstains 0.')}</p>
+                  <SplitBar lang={lang} total={5000} parts={[{ action: 'ask', n: 4378 }, { action: 'act', n: 622 }, { action: 'abstain', n: 0 }]} />
                   <p className="note">
                     {L(
                       'Semilla 20261025, N = 5000, b = 1, c = 2, k = 0,2, r = 0,896, δ = 0, calibrador activo. p latente Beta(3; 1,3). No es «preguntar siempre»: eso sería 100 % e incluiría casos donde actuar conviene.',
@@ -374,7 +423,7 @@ function Research() {
                 </div>
                 <div className="card rs-sim">
                   {SIM}
-                  <h3>{L('El 97 %', 'The 97%')}</h3>
+                  <h3>{L('Qué cuenta el 97 % de «aciertos» simulados', 'What the simulated 97% “hit rate” counts')}</h3>
                   <p>{L('Suma aciertos al actuar (haber entendido) o al preguntar (entender o que la pregunta aclare).', 'Adds successes when acting (understood) or asking (understood or the question clarified).')}</p>
                   <p className="note">{L('Abstenerse queda afuera. No es P(Y = 1), ni acierto de la acción, ni ejecución, ni seguridad.', 'Abstaining is excluded. It is not P(Y = 1), nor action correctness, execution or safety.')}</p>
                 </div>
@@ -405,12 +454,6 @@ function Research() {
                   <p className="note">{L('m = 0,5 y el 10 % residual son supuestos. Semilla 20261102. Hipótesis H7.', 'm = 0.5 and the 10% residual are assumptions. Seed 20261102. Hypothesis H7.')}</p>
                 </div>
               </div>
-              <p className="note">
-                {L(
-                  'La consola «un día delegado» del sitio anterior mostraba «8/8» en su reloj: eran 8 pedidos simulados procesados en la jornada, no 8 éxitos. Se retiró de Explorar para evitar esa lectura.',
-                  'The “delegated day” console of the previous site showed “8/8” on its clock: those were 8 simulated requests processed during the day, not 8 successes. It was removed from Explore to avoid that reading.',
-                )}
-              </p>
             </Section>
 
             <Section id="protocolos" title={L('Protocolos y preregistro', 'Protocols and preregistration') as string}>
@@ -493,8 +536,15 @@ function Research() {
                 <li>{L('Los costos b, c y k son supuestos, no medidos.', 'The costs b, c and k are assumed, not measured.')}</li>
                 <li>{L('La inflación del experimento viene de una instrucción, no de entrenamiento: un nulo no descarta inflación por entrenamiento.', 'The experiment’s inflation comes from an instruction, not training: a null does not rule out training-induced inflation.')}</li>
                 <li>
-                  {L('Piloto: 25 pedidos registrados, 8 evaluables. Ilustra; no valida ni generaliza.', 'Pilot: 25 requests recorded, 8 evaluable. It illustrates; it does not validate or generalize.')} <Tag k="pilot">{L('OBSERVADO EN PILOTO', 'OBSERVED IN PILOT')}</Tag>
+                  {L('Piloto: 25 decisiones registradas de un sistema personal del autor, 8 evaluables (7 éxitos). Es autoevaluado y no independiente. Ilustra; no valida ni generaliza.', 'Pilot: 25 decisions recorded from the author’s personal system, 8 evaluable (7 successes). Self-evaluated and not independent. It illustrates; it does not validate or generalize.')} <Tag k="pilot">{L('OBSERVADO EN PILOTO', 'OBSERVED IN PILOT')}</Tag>
                 </li>
+              </ul>
+              <h3>{L('Estado del manuscrito', 'Status of the manuscript')}</h3>
+              <ul>
+                <li>{L('La v4.2 es una candidata editorial: no es final ni está publicada.', 'v4.2 is an editorial candidate: neither final nor published.')}</li>
+                <li>{L('Falta el cotejo matemático interno de esta versión exacta sobre dos puntos: la idealización que iguala entender con ejecutar bien, y la línea de base del valor de la aclaración.', 'An internal mathematical check of this exact version is still pending on two points: the idealization that equates understanding with executing well, and the baseline of the value of clarification.')}</li>
+                <li>{L('DG-E1 no tiene preregistro propio y su diseño no está íntegramente congelado. PO430 se firmó localmente; no hay registro público verificable de esa fecha.', 'DG-E1 has no preregistration of its own and its design is not fully frozen. PO430 was signed locally; there is no verifiable public record of that date.')}</li>
+                <li>{L('No se promete un depósito futuro de código ni de datos. El registro del piloto es personal y no se publica.', 'No future deposit of code or data is promised. The pilot log is personal and is not published.')}</li>
               </ul>
               <h3>{L('Pendientes estadísticos conocidos', 'Known statistical open issues')}</h3>
               <ul>
@@ -504,7 +554,7 @@ function Research() {
                 <li>{L('El calibrador isotónico puede generar empates; un resultado que exige transformaciones estrictamente crecientes no se extiende sin matices.', 'The isotonic calibrator can create ties; a result requiring strictly increasing transformations does not carry over without nuance.')}</li>
                 <li>{L('Bootstrap por familia: 18 familias en los 400 más 6 nuevas en los irreducibles (24); con pocos conglomerados el intervalo es inestable.', 'Family bootstrap: 18 families in the 400 plus 6 new ones in the irreducibles (24); with few clusters the interval is unstable.')}</li>
               </ul>
-              <p className="note">{L('Gauss (matemática y estadística) y Turing (bibliografía y edición) hicieron revisiones internas. No son revisión por pares.', 'Gauss (mathematics and statistics) and Turing (bibliography and editing) did internal reviews. They are not peer review.')}</p>
+              <p className="note">{L('Gauss (matemática y estadística) y Turing (bibliografía y edición) son agentes de IA del equipo del autor e hicieron revisiones internas. No son revisión por pares.', 'Gauss (mathematics and statistics) and Turing (bibliography and editing) are AI agents on the author’s team and did internal reviews. They are not peer review.')}</p>
             </Section>
 
             <Section id="fuentes" title={L('Fuentes y cita', 'Sources and citation') as string}>
@@ -530,14 +580,16 @@ function Research() {
                 </li>
               </ol>
               <h3>{L('Cómo citar esta pieza', 'How to cite this piece')}</h3>
-              <p className="cite mono">Mora, G. (2026). Orquestación calibrada ({L('versión 3', 'version 3')}). https://gustavomora.github.io/Calibratedagent/</p>
+              <p className="cite mono">
+                Mora, G. (2026). {PREPRINT_TITLE} ({L('versión 4.2 candidata editorial', 'version 4.2, editorial candidate')}). {L('Preprint no revisado por pares.', 'Preprint, not peer reviewed.')} https://gustavomora.github.io/Calibratedagent/
+              </p>
               <details className="rs-bib">
                 <summary>BibTeX</summary>
                 <pre>{BIB}</pre>
               </details>
               <CopyBib lang={lang} />
               <p className="paper-pending">
-                <Tag k="pending">PREPRINT</Tag> {L('Preprint en preparación, no revisado por pares. El enlace y el DOI se activarán cuando se deposite.', 'Preprint in preparation, not peer reviewed. The link and DOI will be enabled once deposited.')}
+                <Tag k="pending">PREPRINT</Tag> {L('Manuscrito v4.2 candidata editorial. No está depositado, no tiene DOI y no fue revisado por pares.', 'Manuscript v4.2, editorial candidate. It is not deposited, has no DOI and has not been peer reviewed.')}
               </p>
             </Section>
 
@@ -564,7 +616,7 @@ function Research() {
           </article>
         </div>
       </main>
-      <Author />
+      <Author page="investigacion" />
     </>
   );
 }
@@ -574,8 +626,12 @@ function Root() {
   return <Research />;
 }
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <Root />
-  </StrictMode>,
-);
+export { Root };
+
+if (typeof document !== 'undefined') {
+  createRoot(document.getElementById('root')!).render(
+    <StrictMode>
+      <Root />
+    </StrictMode>,
+  );
+}

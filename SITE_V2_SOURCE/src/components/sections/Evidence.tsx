@@ -1,10 +1,14 @@
 import { useT } from '../../app/i18n';
+import { PILOT_EVALUABLE, PILOT_TOTAL, PREPRINT_PDF, SHOW_PREPRINT_PDF } from '../../app/site';
+import { useReveal } from '../../app/useReveal';
 
 const TAG: Record<string, string> = { derived: 'tag-int', simulated: 'tag-sim', protocol: 'tag-int', pending: 'tag-pending' };
 const ICON: Record<string, string> = { derived: '∑', simulated: '≈', protocol: '§', pending: '…' };
 
 export function Evidence() {
   const t = useT();
+  const [gridRef, seen] = useReveal<HTMLOListElement>();
+  const [pilotRef, pilotSeen] = useReveal<HTMLDivElement>();
   return (
     <section id="evidencia" className="chapter">
       <div className="wrap">
@@ -13,9 +17,9 @@ export function Evidence() {
           <h2>{t.evTitle}</h2>
           <p className="lead">{t.evLead}</p>
         </header>
-        <ol className="ev-grid">
-          {t.ev.map(([key, state, what, desc]) => (
-            <li key={key} className={`ev card ev-${key}`}>
+        <ol className={`ev-grid reveal ${seen ? 'is-in' : ''}`} ref={gridRef}>
+          {t.ev.map(([key, state, what, desc], i) => (
+            <li key={key} className={`ev card ev-${key}`} style={{ ['--i' as string]: i }}>
               <span className="ev-icon" aria-hidden="true">
                 {ICON[key!]}
               </span>
@@ -25,9 +29,26 @@ export function Evidence() {
             </li>
           ))}
         </ol>
-        <p className="pilot card">
-          <span className="tag tag-pilot">{t.pilotTag}</span> <span>{t.pilot}</span>
-        </p>
+        <div className={`pilot card ${pilotSeen ? 'is-in' : ''}`} ref={pilotRef}>
+          <div className="pilot-grid" role="img" aria-label={t.pilotGridAlt}>
+            {Array.from({ length: PILOT_TOTAL }, (_, i) => (
+              <span key={i} className={i < PILOT_EVALUABLE ? 'is-on' : ''} style={{ ['--i' as string]: i }} />
+            ))}
+          </div>
+          <div className="pilot-text">
+            <p className="pilot-num mono">
+              {PILOT_EVALUABLE}
+              <span className="note"> / {PILOT_TOTAL}</span>
+            </p>
+            <p className="pilot-legend note" aria-hidden="true">
+              <span className="pilot-key is-on" /> {t.pilotLegend[0]}
+              <span className="pilot-key" /> {t.pilotLegend[1]}
+            </p>
+            <p>
+              <span className="tag tag-pilot">{t.pilotTag}</span> {t.pilot}
+            </p>
+          </div>
+        </div>
         <a className="btn" href="./investigacion/#limites">
           {t.evCta} →
         </a>
@@ -36,8 +57,9 @@ export function Evidence() {
   );
 }
 
-export function Author() {
+export function Author({ page = 'explorar' }: { page?: 'explorar' | 'investigacion' }) {
   const t = useT();
+  const base = page === 'explorar' ? './' : '../';
   return (
     <footer className="author" id="autor">
       <div className="wrap author-grid">
@@ -55,12 +77,21 @@ export function Author() {
         <div>
           <h3 className="author-h">{t.cite}</h3>
           <p className="cite mono">{t.citeText}</p>
-          <p className="paper-pending" aria-disabled="true">
+          <p className="paper-pending">
             <span className="tag tag-pending">PREPRINT</span> {t.paper}
           </p>
-          <a className="btn btn-primary" href="./investigacion/">
-            {t.nav.research} →
-          </a>
+          <div className="author-ctas">
+            {SHOW_PREPRINT_PDF && (
+              <a className="btn btn-primary" href={`${base}${PREPRINT_PDF}`}>
+                {t.paperPdf} <span aria-hidden="true">↓</span>
+              </a>
+            )}
+            {page === 'explorar' && (
+              <a className="btn" href="./investigacion/">
+                {t.nav.research} →
+              </a>
+            )}
+          </div>
         </div>
       </div>
       <p className="wrap note foot">{t.footer}</p>
