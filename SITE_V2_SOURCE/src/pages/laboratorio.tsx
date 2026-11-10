@@ -1,3 +1,4 @@
+import { LabExtras, DecisionFeedback } from '../components/lab/LabExtras';
 import { StrictMode, useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import '../styles/global.css';
@@ -8,7 +9,7 @@ import { useStore, withLang } from '../store/navigation';
 import { ActionChip } from '../components/ui/ActionChip';
 import { Gauge } from '../components/ui/Gauge';
 import { decideScenario } from '../simulation/requestFlow';
-import { LAB_VERSION, generateScenario, isRiskClass, type LabScenario } from '../simulation/scenarioGenerator';
+import { LAB_VERSION, generateScenario, generateLegacyScenario, GENERATOR_REVISION, isRiskClass, type LabScenario } from '../simulation/scenarioGenerator';
 
 const ACTS: Action[] = ['act', 'ask', 'abstain'];
 
@@ -25,13 +26,23 @@ export function parseLabSearch(search: string): { warning: boolean; scenario: La
     return { warning: true, scenario: null, lang };
   }
   if (riesgo !== null && !isRiskClass(riesgo)) return { warning: true, scenario: null, lang };
-  return { warning: false, scenario: generateScenario(Number(seedRaw), riesgo ?? undefined), lang };
+  const revision = q.get('g');
+  const level = q.get('nivel');
+  if (!Number.isSafeInteger(Number(seedRaw)) || Number(seedRaw) > 0xffffffff ||
+      (revision !== null && revision !== String(GENERATOR_REVISION)) ||
+      (revision === null && level !== null) ||
+      (revision !== null && (level === null || !/^[1-5]$/.test(level)))) return { warning: true, scenario: null, lang };
+  if (revision !== null && riesgo !== null && generateScenario(Number(seedRaw), undefined, Number(level)).riskClass !== riesgo) return { warning: true, scenario: null, lang };
+  return { warning: false, scenario: revision === null
+    ? generateLegacyScenario(Number(seedRaw), riesgo ?? undefined)
+    : generateScenario(Number(seedRaw), riesgo ?? undefined, Number(level)), lang };
 }
 
 export function labHref(s: LabScenario, lang: 'es' | 'en'): string {
   const q = new URLSearchParams();
   q.set('s', String(s.seed));
   q.set('v', String(s.version));
+  if (s.revision) { q.set('g', String(s.revision)); q.set('nivel', String(s.level)); }
   q.set('pol', 'manuscrito');
   q.set('riesgo', s.riskClass);
   if (lang === 'en') q.set('lang', 'en');
@@ -202,12 +213,14 @@ export function LabView({
   warning: boolean;
   choice: Action | null;
   revealed: boolean;
-  onGenerate: () => void;
+  onGenerate: (level: number) => void;
   onChoose: (a: Action) => void;
   onSkip: () => void;
   onCopy: () => void;
   copied: boolean;
 }) {
+  const [level, setLevel] = useState(scenario?.level ?? 1);
+  useEffect(() => { if (scenario?.level) setLevel(scenario.level); }, [scenario?.level]);
   const t = copy[lang];
   const site = useT();
   const show = scenario !== null && revealed;
@@ -241,10 +254,12 @@ export function LabView({
           className="lab-gen"
           onSubmit={(e) => {
             e.preventDefault();
-            onGenerate();
+            onGenerate(level);
           }}
         >
-          <button type="submit" className="btn btn-primary">
+          <label>{lang === 'es' ? 'Complejidad' : 'Complexity'} <select value={level} onChange={e => setLevel(Number(e.target.value))}>
+            {(lang === 'es' ? ['Operación simple', 'Tarea contextual', 'Coordinación', 'Proyecto por etapas', 'Estrategia multietapa'] : ['Simple operation', 'Contextual task', 'Coordination', 'Staged project', 'Multistage strategy']).map((name, i) => <option key={name} value={i + 1}>{i + 1} · {name}</option>)}
+          </select></label><button type="submit" className="btn btn-primary">
             {t.generate}
           </button>
         </form>
@@ -261,10 +276,13 @@ export function LabView({
               </p>
               <h1 id="lab-a">{t.situation}</h1>
               <p className="mono lab-id">
-                {t.scenarioWord} #s={scenario.seed} · gen v{scenario.version}
+                {t.scenarioWord} #s={scenario.seed} · gen v{scenario.version}{scenario.revision ? ` · rev ${scenario.revision}` : ''}
               </p>
               <h2>{scenario.label[lang]}</h2>
               <p>{scenario.request[lang]}</p>
+              {scenario.level && <p>{lang === 'es' ? 'Complejidad' : 'Complexity'}: {scenario.level}/5</p>}
+              {scenario.missing && <p><strong>{lang === 'es' ? 'Información faltante: ' : 'Missing information: '}</strong>{scenario.missing[lang]}</p>}
+              {scenario.dependencies && <p><strong>{lang === 'es' ? 'Dependencias: ' : 'Dependencies: '}</strong>{scenario.dependencies[lang]}</p>}
               <p>
                 <span className="note">{t.knows}. </span>
                 {scenario.knows[lang]}
@@ -287,7 +305,7 @@ export function LabView({
               <button type="button" className="btn btn-sm" onClick={onSkip}>
                 {t.skip}
               </button>
-              {choice && show && action && <p>{choice === action ? t.coincides : t.differs}</p>}
+              {choice && show && action && u && <DecisionFeedback choice={choice} best={action} u={u} lang={lang} />}
             </section>
 
             {show && action && params && th && u && (
@@ -338,7 +356,7 @@ export function LabView({
             )}
           </div>
         )}
-        <p className="note">{t.notYet}</p>
+        {show && scenario && <LabExtras key={`${scenario.seed}-${scenario.revision}-${scenario.level}-${scenario.riskClass}`} scenario={scenario} lang={lang} />}
         <details className="lab-foot" open>
           <summary>{t.hidden}</summary>
           <ul>
@@ -358,7 +376,7 @@ export function LabView({
         {scenario && show && action && params && (
           <section className="card lab-record" aria-labelledby="lab-reg">
             <h2 id="lab-reg">{t.record}</h2>
-            <pre className="mono">{`s=${scenario.seed} v=${scenario.version} pol=manuscrito riesgo=${scenario.riskClass}
+            <pre className="mono">{`s=${scenario.seed} v=${scenario.version} g=${scenario.revision ?? 1} nivel=${scenario.level ?? "legacy"} pol=manuscrito riesgo=${scenario.riskClass}
 ${t.policyName}
 p=${fmt(scenario.p, 3, lang)} ${site.act[action]}
 U(act)=${fmt(utilities(scenario.p, params).act, 3, lang)} U(ask)=${fmt(utilities(scenario.p, params).ask, 3, lang)} U(abstain)=0`}</pre>
@@ -408,9 +426,9 @@ function LabPage() {
       choice={choice}
       revealed={revealed}
       copied={copied}
-      onGenerate={() => {
+      onGenerate={(level) => {
         const seed = Math.floor(Math.random() * 0x7fffffff);
-        publish(generateScenario(seed), lang);
+        publish(generateScenario(seed, undefined, level), lang);
       }}
       onChoose={(a) => {
         setChoice(a);

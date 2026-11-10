@@ -1,0 +1,38 @@
+[
+  {
+    "lang": "es",
+    "viewport": "1440x1000",
+    "levels": 5,
+    "overflow": false,
+    "errors": [],
+    "sensitivityIsolated": true,
+    "reloadStable": true
+  },
+  {
+    "lang": "es",
+    "viewport": "390x844",
+    "levels": 5,
+    "overflow": false,
+    "errors": [],
+    "sensitivityIsolated": true,
+    "reloadStable": true
+  },
+  {
+    "lang": "en",
+    "viewport": "1440x1000",
+    "levels": 5,
+    "overflow": false,
+    "errors": [],
+    "sensitivityIsolated": true,
+    "reloadStable": true
+  },
+  {
+    "lang": "en",
+    "viewport": "390x844",
+    "levels": 5,
+    "overflow": false,
+    "errors": [],
+    "sensitivityIsolated": true,
+    "reloadStable": true
+  }
+]
