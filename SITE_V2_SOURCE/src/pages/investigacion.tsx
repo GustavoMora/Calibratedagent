@@ -204,8 +204,8 @@ function Research() {
           <h1>{L('Orquestación condicionada con decisión calibrada: método, supuestos y evidencia', 'Conditioned orchestration with calibrated decision: method, assumptions and evidence')}</h1>
           <p className="lead">
             {L(
-              `Todo el detalle técnico en un solo lugar: ecuaciones, simulaciones, protocolos, límites y fuentes. v4.2, publicada en Zenodo (DOI 10.5281/zenodo.24095743); preprint, sin revisión por pares`,
-              `All the technical detail in one place: equations, simulations, protocols, limits and sources. v4.2, published on Zenodo (DOI 10.5281/zenodo.24095743); preprint, not peer-reviewed`,
+              `Todo el detalle técnico en un solo lugar: ecuaciones, simulaciones, protocolos, límites y fuentes. v4.2, publicada en Zenodo (DOI 10.5281/zenodo.24095743); preprint, sin revisión por pares. No hay resultados empíricos confirmatorios.`,
+              `All the technical detail in one place: equations, simulations, protocols, limits and sources. v4.2, published on Zenodo (DOI 10.5281/zenodo.24095743); preprint, not peer-reviewed. There are no confirmatory empirical results.`,
             )}
           </p>
           {SHOW_PREPRINT_PDF && (
@@ -588,7 +588,7 @@ function Research() {
               </ol>
               <h3>{L('Cómo citar esta pieza', 'How to cite this piece')}</h3>
               <p className="cite mono">
-                Mora, G. (2026). {PREPRINT_TITLE} ({L('versión 4.2', 'version 4.2')}). {L('Preprint no revisado por pares.', 'Preprint, not peer reviewed.')} doi = {'{'}10.5281/zenodo.24095743{'}'}. https://gustavomora.github.io/Calibratedagent/
+                Mora, G. (2026). {PREPRINT_TITLE} ({L('versión 4.2', 'version 4.2')}). {L('Preprint no revisado por pares.', 'Preprint, not peer reviewed.')} https://doi.org/10.5281/zenodo.24095743. https://gustavomora.github.io/Calibratedagent/
               </p>
               <details className="rs-bib">
                 <summary>BibTeX</summary>

@@ -1,4 +1,7 @@
+import { createElement } from 'react';
+import { renderToString } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
+import { DecisionMap } from '../src/components/research/Figures';
 import {
   FROZEN,
   askGainVsAct,
@@ -66,6 +69,28 @@ describe('umbrales congelados', () => {
         const expected = p > ps ? 'act' : p > pa ? 'ask' : 'abstain';
         expect(decide(p, P)).toBe(expected);
       }
+    }
+  });
+
+  it('las fronteras a 1000 pasos se leen 0,892 / 0,926 / 0,548 / 0,938 y el aria-label coincide con las etiquetas', () => {
+    const cuts = (cls: 'bajo' | 'medio' | 'alto') => regions(FROZEN[cls], 1000).slice(1).map((r) => r.from);
+    expect(cuts('bajo').map((v) => fmt(v, 3, 'en'))).toEqual(['0.892']);
+    expect(cuts('medio').map((v) => fmt(v, 3, 'en'))).toEqual(['0.926']);
+    expect(cuts('alto').map((v) => fmt(v, 3, 'en'))).toEqual(['0.548', '0.938']);
+    for (const lang of ['es', 'en'] as const) {
+      const html = renderToString(createElement(DecisionMap, { lang }));
+      const aria = html.match(/aria-label="([^"]*)"/)?.[1] ?? '';
+      const labels = [...html.matchAll(/class="fig-num">([\s\S]*?)<\/text>/g)].map((m) =>
+        m[1]!.replace(/<!-- -->/g, ' ').replace(/\s+/g, ' ').trim().split(' ').pop()!,
+      );
+      expect(labels.length).toBeGreaterThan(0);
+      for (const num of labels) expect(aria).toContain(num);
+      const shown = lang === 'es' ? ['0,892', '0,926', '0,548', '0,938'] : ['0.892', '0.926', '0.548', '0.938'];
+      for (const num of shown) {
+        expect(labels).toContain(num);
+        expect(aria).toContain(num);
+      }
+      expect(aria).not.toMatch(/0[,.]549|0[,.]939/);
     }
   });
 

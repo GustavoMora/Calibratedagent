@@ -115,7 +115,10 @@ export function regions(P: Params, steps = 2000): Region[] {
   for (let i = 1; i < out.length; i++) {
     const prev = out[i - 1]!;
     const cur = out[i]!;
-    const mid = (prev.to + cur.from) / 2;
+    const pair = [prev.action, cur.action].sort().join('|');
+    const exact = pair === 'abstain|ask' ? pAbstain(P) : pair === 'act|ask' ? pStar(P) : pZero(P);
+    const mid0 = (prev.to + cur.from) / 2;
+    const mid = Math.abs(exact - mid0) <= 1 / steps ? exact : mid0;
     prev.to = mid;
     cur.from = mid;
   }

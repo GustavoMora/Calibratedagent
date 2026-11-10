@@ -14,7 +14,7 @@ mono = lambda px: ImageFont.truetype("/System/Library/Fonts/Menlo.ttc", px * S)
 d.text((72 * S, 64 * S), "Calibrated Agent", font=serif(30), fill="#F5F5F5")
 for i, line in enumerate(["Un agente capaz", "no siempre", "debería actuar."]):
     d.text((72 * S, (170 + i * 92) * S), line, font=serif(80), fill="#F5F5F5")
-d.text((72 * S, 500 * S), "Propuesta de investigación · preprint v4.2 candidata", font=mono(21), fill="#8F8F8F")
+d.text((72 * S, 500 * S), "Propuesta de investigación · preprint v4.2", font=mono(21), fill="#8F8F8F")
 d.text((72 * S, 534 * S), "sin revisión por pares · experimentos no ejecutados", font=mono(21), fill="#8F8F8F")
 
 cx, cy, R, T = 905 * S, 400 * S, 210 * S, 30 * S
