@@ -22,8 +22,8 @@ function App() {
       ?.setAttribute(
         'content',
         lang === 'es'
-          ? 'Propuesta de investigación (preprint v4.2 candidata, sin revisión por pares): cuándo un agente debería actuar, preguntar o abstenerse según su confianza calibrada y el costo de equivocarse. Experimentos no ejecutados.'
-          : 'Research proposal (preprint v4.2 candidate, not peer reviewed): when an agent should act, ask or abstain given its calibrated confidence and the cost of being wrong. Experiments not run.',
+          ? 'Propuesta de investigación (preprint v4.2, sin revisión por pares): cuándo un agente debería actuar, preguntar o abstenerse según su confianza calibrada y el costo de equivocarse. Experimentos no ejecutados.'
+          : 'Research proposal (preprint v4.2, not peer reviewed): when an agent should act, ask or abstain given its calibrated confidence and the cost of being wrong. Experiments not run.',
       );
   }, [lang]);
   void DICT;

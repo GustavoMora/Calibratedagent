@@ -52,6 +52,7 @@ const copy = {
     warning: 'Este enlace se generó con otra versión del generador. No se reinterpreta.',
     how: 'Primero se genera una situación con semilla. Después usted elige actuar, preguntar o abstenerse. Recién entonces aparece la decisión de la regla, el instrumento y la expectativa matemática.',
     situation: 'Situación',
+    scenarioWord: 'Escenario',
     hypo: 'HIPOTÉTICO',
     knows: 'Qué se sabe',
     risk: 'Clase de riesgo',
@@ -68,11 +69,11 @@ const copy = {
     policy: 'Regla usada: la del modelo del manuscrito (§3). Si la pregunta no aclara, el agente actúa igual.',
     abstainWhy: 'Se abstiene porque, con esta regla, si la pregunta no aclara se actúa igual, y con riesgo alto eso no compensa.',
     reopt: '¿Y si después de una pregunta fallida reconsiderara? Es otra política: ver Investigación',
-    veto: 'Regla de seguridad ilustrativa, fuera de la política: pediría confirmación.',
+    veto: 'Veto del manuscrito (§3.6): la acción es irreversible, así que antes de actuar se pediría confirmación. El laboratorio muestra la regla de utilidad sin aplicar los vetos.',
     instruments: 'Instrumentos',
     pName: 'p · probabilidad de haber entendido bien el pedido · supuesto del generador',
     fixed: 'Parámetros fijos de la clase, sin controles.',
-    actFrom: 'Actuar exige p mayor o igual que este umbral',
+    actFrom: 'Actuar exige p mayor que este umbral',
     thisP: 'Esta situación tiene',
     utilities: 'Expectativa matemática · supuestos del generador · no ocurrió',
     notYet: 'Recorrido en el cerebro: próxima versión.',
@@ -84,8 +85,10 @@ const copy = {
       'Éxito al ejecutar: no modelado. Se supone que entender bien implica ejecutar bien.',
       'La decisión es la acción de mayor utilidad esperada con estos costos. No es una garantía.',
       'El bloque de utilidades es una expectativa matemática. No ocurrió.',
-      'No hay resultados empíricos en este laboratorio. El único registro del proyecto es un piloto de 8 decisiones, autoevaluado. Ver Evidencia.',
+      'No hay resultados empíricos en este laboratorio. El único registro del proyecto es un piloto de 8 decisiones, autoevaluado.',
+      'El veto de §3.6, que exige probabilidad calibrada y validada, alcanzaría a todos los escenarios, porque el laboratorio no tiene calibrador.',
     ],
+    evidenceLink: 'Ver Evidencia.',
     record: 'Registro',
     copyLink: 'Copiar enlace',
     copied: 'Enlace copiado',
@@ -101,6 +104,7 @@ const copy = {
     warning: 'This link was generated with another version of the generator. It is not reinterpreted.',
     how: 'First a seeded situation is generated. Then you choose to act, ask or abstain. Only then do the rule’s decision, the instrument and the mathematical expectation appear.',
     situation: 'Situation',
+    scenarioWord: 'Scenario',
     hypo: 'HYPOTHETICAL',
     knows: 'What is known',
     risk: 'Risk class',
@@ -117,11 +121,11 @@ const copy = {
     policy: 'Rule used: the one in the manuscript model (§3). If the question does not clarify, the agent acts anyway.',
     abstainWhy: 'It abstains because, under this rule, if the question does not clarify the agent acts anyway, and at high risk that does not pay off.',
     reopt: 'What if it reconsidered after a failed question? That is another policy: see Research',
-    veto: 'Illustrative safety rule, outside the policy: it would ask for confirmation.',
+    veto: 'Manuscript veto (§3.6): the action is irreversible, so confirmation would be requested before acting. The lab shows the utility rule without applying vetoes.',
     instruments: 'Instruments',
     pName: 'p · probability of having understood the request · generator assumption',
     fixed: 'Parameters fixed for the class, with no controls.',
-    actFrom: 'Acting requires p at least this threshold',
+    actFrom: 'Acting requires p greater than this threshold',
     thisP: 'This situation has',
     utilities: 'Mathematical expectation · generator assumptions · it did not happen',
     notYet: 'Path through the brain: a later version.',
@@ -133,8 +137,10 @@ const copy = {
       'Success when executing: not modeled. Understanding well is assumed to mean executing well.',
       'The decision is the action with the highest expected utility at these costs. It is not a guarantee.',
       'The utility block is a mathematical expectation. It did not happen.',
-      'There are no empirical results in this lab. The only project record is a self-evaluated pilot of 8 decisions. See Evidence.',
+      'There are no empirical results in this lab. The only project record is a self-evaluated pilot of 8 decisions.',
+      'The §3.6 veto, which requires calibrated and validated probability, would apply to every scenario, because the lab has no calibrator.',
     ],
+    evidenceLink: 'See Evidence.',
     record: 'Record',
     copyLink: 'Copy link',
     copied: 'Link copied',
@@ -243,7 +249,7 @@ export function LabView({
               </p>
               <h1 id="lab-a">{t.situation}</h1>
               <p className="mono lab-id">
-                Escenario #s={scenario.seed} · gen v{scenario.version}
+                {t.scenarioWord} #s={scenario.seed} · gen v{scenario.version}
               </p>
               <h2>{scenario.label[lang]}</h2>
               <p>{scenario.request[lang]}</p>
@@ -322,8 +328,16 @@ export function LabView({
         <details className="lab-foot" open>
           <summary>{t.hidden}</summary>
           <ul>
-            {t.magnitudes.map((m) => (
-              <li key={m}>{m}</li>
+            {t.magnitudes.map((m, i) => (
+              <li key={m}>
+                {m}
+                {i === 6 ? (
+                  <>
+                    {' '}
+                    <a href="../#evidencia">{t.evidenceLink}</a>
+                  </>
+                ) : null}
+              </li>
             ))}
           </ul>
         </details>

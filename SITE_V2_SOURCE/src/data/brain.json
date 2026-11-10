@@ -160,7 +160,7 @@
     {
       "id": "dong", "region": "evidencia", "pos": [-0.95, 0.3, -0.25], "tag": "EXTERNAL",
       "label": { "es": "Dong et al. (2026)", "en": "Dong et al. (2026)" },
-      "desc": { "es": "Dong, Y. R., Hu, T., Hui, Z., Zhang, C., Vulić, I., Bobu, A., y Collier, N. (2026). Value of information: A framework for human–agent communication. Proceedings of ACL 2026 (Long Papers), 42879–42896. https://doi.org/10.18653/v1/2026.acl-long.1987", "en": "Dong, Y. R., Hu, T., Hui, Z., Zhang, C., Vulić, I., Bobu, A., y Collier, N. (2026). Value of information: A framework for human–agent communication. Proceedings of ACL 2026 (Long Papers), 42879–42896. https://doi.org/10.18653/v1/2026.acl-long.1987" },
+      "desc": { "es": "Dong, Y. R., Hu, T., Hui, Z., Zhang, C., Vulić, I., Bobu, A., y Collier, N. (2026). Value of information: A framework for human–agent communication. Proceedings of ACL 2026 (Long Papers), 42879–42896. https://doi.org/10.18653/v1/2026.acl-long.1987", "en": "Dong, Y. R., Hu, T., Hui, Z., Zhang, C., Vulić, I., Bobu, A., and Collier, N. (2026). Value of information: A framework for human–agent communication. Proceedings of ACL 2026 (Long Papers), 42879–42896. https://doi.org/10.18653/v1/2026.acl-long.1987" },
       "example": { "es": "https://doi.org/10.18653/v1/2026.acl-long.1987", "en": "https://doi.org/10.18653/v1/2026.acl-long.1987" },
       "url": "https://doi.org/10.18653/v1/2026.acl-long.1987"
     },

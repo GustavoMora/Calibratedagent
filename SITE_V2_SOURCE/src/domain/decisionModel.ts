@@ -82,12 +82,12 @@ export function thresholds(P: Params): Thresholds {
   return { p0: pZero(P), pStar: pStar(P), pA, hasAbstainZone: pA > 0 && pA < 1 };
 }
 
-const ORDER: Action[] = ['act', 'ask', 'abstain'];
+const ORDER: Action[] = ['abstain', 'ask', 'act'];
 
-/** Decisión por argmax de utilidad esperada. Empates: act > ask > abstain (orden fijo, documentado). */
+/** Decisión por argmax de utilidad esperada. Empates: abstain > ask > act (§3.4: gana la opción más conservadora). */
 export function decide(p: number, P: Params): Action {
   const u = utilities(p, P);
-  let best: Action = 'act';
+  let best: Action = 'abstain';
   for (const a of ORDER) if (u[a] > u[best] + 1e-12) best = a;
   return best;
 }
@@ -147,6 +147,7 @@ export function evsiPolicy(p: number, P: Params): number {
 
 // ───────────── Formato ─────────────
 export function fmt(x: number, digits = 3, lang: 'es' | 'en' = 'es'): string {
-  const s = x.toFixed(digits);
+  const m = Math.round(Math.abs(x) * 10 ** digits + 1e-9) / 10 ** digits;
+  const s = (x < 0 && m !== 0 ? '-' : '') + m.toFixed(digits);
   return lang === 'es' ? s.replace('.', ',').replace('-', '−') : s.replace('-', '−');
 }

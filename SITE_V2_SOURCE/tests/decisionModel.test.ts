@@ -4,6 +4,7 @@ import {
   askGainVsAct,
   decide,
   evsiPolicy,
+  fmt,
   pAbstain,
   pStar,
   pStarGeneral,
@@ -81,6 +82,31 @@ describe('umbrales congelados', () => {
     expect(pStar(P)).toBeLessThan(0);
     expect(uAct(0.1, P)).toBeLessThan(0);
     expect(decide(0.1, P)).toBe('abstain');
+  });
+});
+
+describe('empates y redondeo', () => {
+  it('el empate lo gana la opción más conservadora: abstenerse > preguntar > actuar (§3.4)', () => {
+    const askAct = FROZEN.bajo;
+    const atStar = pStar(askAct);
+    expect(uAct(atStar, askAct)).toBeCloseTo(uAsk(atStar, askAct), 12);
+    expect(uAct(atStar, askAct)).toBeGreaterThan(0);
+    expect(decide(atStar, askAct)).toBe('ask');
+
+    const actAbstain = { b: 1, c: 1, k: 10, r: 0.5 };
+    expect(uAct(0.5, actAbstain)).toBeCloseTo(0, 12);
+    expect(uAsk(0.5, actAbstain)).toBeLessThan(0);
+    expect(decide(0.5, actAbstain)).toBe('abstain');
+
+    const allThree = { b: 1, c: 1, k: 0.5, r: 0.5 };
+    expect(uAct(0.5, allThree)).toBeCloseTo(0, 12);
+    expect(uAsk(0.5, allThree)).toBeCloseTo(0, 12);
+    expect(decide(0.5, allThree)).toBe('abstain');
+  });
+
+  it('fmt(−0.3505) da −0.351', () => {
+    expect(fmt(-0.3505, 3, 'en')).toBe('−0.351');
+    expect(fmt(-0.3505, 3, 'es')).toBe('−0,351');
   });
 });
 

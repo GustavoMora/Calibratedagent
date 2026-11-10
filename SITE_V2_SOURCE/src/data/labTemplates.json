@@ -1,41 +1,49 @@
 {
-  "$comment": "Plantillas genéricas del laboratorio. No son pedidos reales ni datos personales. p, clase y reversibilidad las sortea el generador.",
+  "$comment": "Plantillas genéricas del laboratorio. No son pedidos reales ni datos personales. p, clase y reversibilidad las sortea el generador. «Qué se sabe» sale de la ambigüedad sorteada y no agrega datos.",
+  "knowsByAmbiguity": {
+    "clara": {
+      "es": "La ambigüedad sorteada es clara. Este texto no agrega datos fuera del pedido.",
+      "en": "The sampled ambiguity is clear. This text adds no facts beyond the request."
+    },
+    "ambigua": {
+      "es": "La ambigüedad sorteada admite más de una lectura. Este texto no agrega datos fuera del pedido.",
+      "en": "The sampled ambiguity allows more than one reading. This text adds no facts beyond the request."
+    },
+    "irreducible": {
+      "es": "La ambigüedad sorteada es irreducible: falta un dato que el pedido no trae. Este texto no lo inventa.",
+      "en": "The sampled ambiguity is irreducible: a fact the request does not carry is missing. This text does not invent it."
+    }
+  },
   "templates": [
     {
       "id": "archivo",
       "label": { "es": "Archivar un documento", "en": "File a document" },
-      "request": { "es": "Archivar el documento en la carpeta que corresponda.", "en": "File the document in the folder that fits." },
-      "knows": { "es": "Hay una carpeta habitual y el nombre del documento no es ambiguo.", "en": "There is a usual folder and the document name is not ambiguous." }
+      "request": { "es": "Archivar el documento en la carpeta que corresponda.", "en": "File the document in the folder that fits." }
     },
     {
       "id": "mensaje",
       "label": { "es": "Enviar un mensaje", "en": "Send a message" },
-      "request": { "es": "Enviar el mensaje a la persona indicada en el pedido.", "en": "Send the message to the person named in the request." },
-      "knows": { "es": "El pedido nombra a la persona, pero hay dos cuentas con un nombre parecido.", "en": "The request names the person, but two accounts have a similar name." }
+      "request": { "es": "Enviar el mensaje a la persona indicada en el pedido.", "en": "Send the message to the person named in the request." }
     },
     {
       "id": "resumen",
       "label": { "es": "Resumir una nota", "en": "Summarize a note" },
-      "request": { "es": "Resumir la nota interna en cinco líneas.", "en": "Summarize the internal note in five lines." },
-      "knows": { "es": "La nota está completa y el formato pedido está explícito.", "en": "The note is complete and the requested format is explicit." }
+      "request": { "es": "Resumir la nota interna en cinco líneas.", "en": "Summarize the internal note in five lines." }
     },
     {
       "id": "pago",
       "label": { "es": "Registrar un pago", "en": "Record a payment" },
-      "request": { "es": "Registrar el pago en la cuenta que corresponda.", "en": "Record the payment in the account that applies." },
-      "knows": { "es": "El monto está escrito, pero la cuenta de destino no está en el pedido.", "en": "The amount is written, but the destination account is not in the request." }
+      "request": { "es": "Registrar el pago en la cuenta que corresponda.", "en": "Record the payment in the account that applies." }
     },
     {
       "id": "cita",
       "label": { "es": "Mover una cita", "en": "Move an appointment" },
-      "request": { "es": "Mover la cita al horario que el pedido menciona.", "en": "Move the appointment to the time the request mentions." },
-      "knows": { "es": "El horario nuevo está en el pedido y el calendario tiene ese hueco.", "en": "The new time is in the request and the calendar has that slot." }
+      "request": { "es": "Mover la cita al horario que el pedido menciona.", "en": "Move the appointment to the time the request mentions." }
     },
     {
       "id": "contrato",
       "label": { "es": "Enviar un contrato", "en": "Send a contract" },
-      "request": { "es": "Enviar el contrato firmado a la otra parte.", "en": "Send the signed contract to the other party." },
-      "knows": { "es": "El contrato está firmado y el pedido no confirma el destinatario.", "en": "The contract is signed and the request does not confirm the recipient." }
+      "request": { "es": "Enviar el contrato firmado a la otra parte.", "en": "Send the signed contract to the other party." }
     }
   ]
 }

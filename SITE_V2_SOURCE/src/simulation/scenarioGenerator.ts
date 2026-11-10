@@ -16,10 +16,14 @@ export interface LabTemplate {
   id: string;
   label: { es: string; en: string };
   request: { es: string; en: string };
-  knows: { es: string; en: string };
 }
 
-const TEMPLATES = (templatesRaw as { templates: LabTemplate[] }).templates;
+const RAW = templatesRaw as {
+  knowsByAmbiguity: Record<Ambiguity, { es: string; en: string }>;
+  templates: LabTemplate[];
+};
+const TEMPLATES = RAW.templates;
+const KNOWS = RAW.knowsByAmbiguity;
 const RISKS: RiskClass[] = ['bajo', 'medio', 'alto'];
 const AMBIGUITIES: Ambiguity[] = ['clara', 'ambigua', 'irreducible'];
 const BAND: Record<Ambiguity, [number, number]> = {
@@ -60,7 +64,7 @@ export function generateScenario(seed: number, riskOverride?: RiskClass): LabSce
     irreversible,
     label: template.label,
     request: template.request,
-    knows: template.knows,
+    knows: KNOWS[ambiguity],
   };
 }
 

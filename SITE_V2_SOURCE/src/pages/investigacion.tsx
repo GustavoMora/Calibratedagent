@@ -7,7 +7,7 @@ import { Header } from '../components/ui/Header';
 import { DataErrors } from '../components/ui/DataErrors';
 import { UtilityChart } from '../components/research/UtilityChart';
 import { AuditBands, DecisionMap, SplitBar } from '../components/research/Figures';
-import { PREPRINT_DATE, PREPRINT_DOI, PREPRINT_DOI_URL, PREPRINT_PDF, PREPRINT_TITLE, PREPRINT_VERSION, SHOW_PREPRINT_PDF } from '../app/site';
+import { PREPRINT_DOI, PREPRINT_DOI_URL, PREPRINT_PDF, PREPRINT_TITLE, SHOW_PREPRINT_PDF } from '../app/site';
 import { useStore } from '../store/navigation';
 import { useLang } from '../app/i18n';
 import { FROZEN, fmt, pAbstain, pStar, pZero, type RiskClass } from '../domain/decisionModel';
@@ -135,7 +135,8 @@ const BIB = `@article{pauker1980,
   author = {Mora, Gustavo}, year = {2026},
   title = {Orquestaci{\\'o}n condicionada con decisi{\\'o}n calibrada: cu{\\'a}ndo actuar, preguntar, escalar, abstenerse o recordar},
   url = {https://gustavomora.github.io/Calibratedagent/},
-  note = {Versi{\\'o}n 4.2 candidata editorial. Preprint no revisado por pares}
+  doi = {10.5281/zenodo.24095743},
+  note = {Versi{\\'o}n 4.2. Preprint no revisado por pares}
 }`;
 
 function CopyBib({ lang }: { lang: Lang }) {
@@ -169,8 +170,8 @@ function Research() {
       ?.setAttribute(
         'content',
         lang === 'es'
-          ? 'Modelo, supuestos, simulaciones, protocolos, hipótesis, límites y fuentes de «Orquestación condicionada con decisión calibrada». Preprint v4.2 candidata, sin revisión por pares; experimentos no ejecutados.'
-          : 'Model, assumptions, simulations, protocols, hypotheses, limits and sources of “Orquestación condicionada con decisión calibrada”. Preprint v4.2 candidate, not peer reviewed; experiments not run.',
+          ? 'Modelo, supuestos, simulaciones, protocolos, hipótesis, límites y fuentes de «Orquestación condicionada con decisión calibrada». Preprint v4.2, sin revisión por pares; experimentos no ejecutados.'
+          : 'Model, assumptions, simulations, protocols, hypotheses, limits and sources of “Orquestación condicionada con decisión calibrada”. Preprint v4.2, not peer reviewed; experiments not run.',
       );
   }, [lang]);
 
@@ -203,8 +204,8 @@ function Research() {
           <h1>{L('Orquestación condicionada con decisión calibrada: método, supuestos y evidencia', 'Conditioned orchestration with calibrated decision: method, assumptions and evidence')}</h1>
           <p className="lead">
             {L(
-              `Todo el detalle técnico en un solo lugar: ecuaciones, simulaciones, protocolos, límites y fuentes. Manuscrito v${PREPRINT_VERSION} candidata editorial (${PREPRINT_DATE}): no depositado, sin DOI y sin revisión por pares. No hay resultados empíricos confirmatorios.`,
-              `All the technical detail in one place: equations, simulations, protocols, limits and sources. Manuscript v${PREPRINT_VERSION}, editorial candidate (${PREPRINT_DATE}): not deposited, no DOI, not peer reviewed. There are no confirmatory empirical results.`,
+              `Todo el detalle técnico en un solo lugar: ecuaciones, simulaciones, protocolos, límites y fuentes. v4.2, publicada en Zenodo (DOI 10.5281/zenodo.24095743); preprint, sin revisión por pares`,
+              `All the technical detail in one place: equations, simulations, protocols, limits and sources. v4.2, published on Zenodo (DOI 10.5281/zenodo.24095743); preprint, not peer-reviewed`,
             )}
           </p>
           {SHOW_PREPRINT_PDF && (
@@ -548,8 +549,7 @@ function Research() {
               </ul>
               <h3>{L('Estado del manuscrito', 'Status of the manuscript')}</h3>
               <ul>
-                <li>{L('La v4.2 es una candidata editorial: no es final ni está publicada.', 'v4.2 is an editorial candidate: neither final nor published.')}</li>
-                <li>{L('Falta el cotejo matemático interno de esta versión exacta sobre dos puntos: la idealización que iguala entender con ejecutar bien, y la línea de base del valor de la aclaración.', 'An internal mathematical check of this exact version is still pending on two points: the idealization that equates understanding with executing well, and the baseline of the value of clarification.')}</li>
+                <li>{L('v4.2, publicada en Zenodo (DOI 10.5281/zenodo.24095743); preprint, sin revisión por pares', 'v4.2, published on Zenodo (DOI 10.5281/zenodo.24095743); preprint, not peer-reviewed')}</li>
                 <li>{L('El diseño general no tiene preregistro propio y no está íntegramente congelado. El protocolo operativo se firmó localmente; no hay registro público verificable de esa fecha.', 'The general design has no preregistration of its own and is not fully frozen. The operational protocol was signed locally; there is no verifiable public record of that date.')}</li>
                 <li>{L('No se promete un depósito futuro de código ni de datos. El registro del piloto es personal y no se publica.', 'No future deposit of code or data is promised. The pilot log is personal and is not published.')}</li>
               </ul>
@@ -588,7 +588,7 @@ function Research() {
               </ol>
               <h3>{L('Cómo citar esta pieza', 'How to cite this piece')}</h3>
               <p className="cite mono">
-                Mora, G. (2026). {PREPRINT_TITLE} ({L('versión 4.2 candidata editorial', 'version 4.2, editorial candidate')}). {L('Preprint no revisado por pares.', 'Preprint, not peer reviewed.')} https://gustavomora.github.io/Calibratedagent/
+                Mora, G. (2026). {PREPRINT_TITLE} ({L('versión 4.2', 'version 4.2')}). {L('Preprint no revisado por pares.', 'Preprint, not peer reviewed.')} doi = {'{'}10.5281/zenodo.24095743{'}'}. https://gustavomora.github.io/Calibratedagent/
               </p>
               <details className="rs-bib">
                 <summary>BibTeX</summary>
@@ -596,7 +596,7 @@ function Research() {
               </details>
               <CopyBib lang={lang} />
               <p className="paper-pending">
-                <Tag k="pending">PREPRINT</Tag> {L('Manuscrito v4.2 candidata editorial. No está depositado, no tiene DOI y no fue revisado por pares.', 'Manuscript v4.2, editorial candidate. It is not deposited, has no DOI and has not been peer reviewed.')}
+                <Tag k="pending">PREPRINT</Tag> {L('v4.2, publicada en Zenodo (DOI 10.5281/zenodo.24095743); preprint, sin revisión por pares', 'v4.2, published on Zenodo (DOI 10.5281/zenodo.24095743); preprint, not peer-reviewed')}
               </p>
             </Section>
 
