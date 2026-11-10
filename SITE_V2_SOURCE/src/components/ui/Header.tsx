@@ -67,6 +67,11 @@ export function Header({ page }: Props) {
                 </li>
               ))}
               <li>
+                <a href={withLang(`${base || './'}laboratorio/`, lang)} onClick={() => setOpen(false)}>
+                  {t.nav.lab}
+                </a>
+              </li>
+              <li>
                 <a
                   className="nav-research"
                   href={withLang(page === 'explorar' ? './investigacion/' : './', lang)}
