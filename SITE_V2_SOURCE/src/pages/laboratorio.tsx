@@ -4,7 +4,7 @@ import '../styles/global.css';
 import './laboratorio.css';
 import { FROZEN, decide, fmt, regions, thresholds, utilities, type Action, type RiskClass } from '../domain/decisionModel';
 import { useT } from '../app/i18n';
-import { useStore } from '../store/navigation';
+import { useStore, withLang } from '../store/navigation';
 import { ActionChip } from '../components/ui/ActionChip';
 import { Gauge } from '../components/ui/Gauge';
 import { decideScenario } from '../simulation/requestFlow';
@@ -152,19 +152,31 @@ const copy = {
 function Utilities({ u, best, lang }: { u: Record<Action, number>; best: Action; lang: 'es' | 'en' }) {
   const names = lang === 'es' ? { act: 'Actuar', ask: 'Preguntar', abstain: 'Abstenerse' } : { act: 'Act', ask: 'Ask', abstain: 'Abstain' };
   const max = Math.max(1e-6, ...ACTS.map((a) => Math.abs(u[a])));
+  const zeroX = 268;
+  const half = 92;
+  const gap = 8;
   return (
-    <svg className="lab-bars" viewBox="0 0 360 120" role="img" aria-label={ACTS.map((a) => `${names[a]} ${fmt(u[a], 3, lang)}`).join(', ')}>
+    <svg className="lab-bars" viewBox="0 0 460 120" width="100%" height="auto" role="img" aria-label={ACTS.map((a) => `${names[a]} ${fmt(u[a], 3, lang)}`).join(', ')}>
+      <line x1={zeroX} y1="6" x2={zeroX} y2="114" className="lab-axis" />
       {ACTS.map((a, i) => {
-        const w = (Math.abs(u[a]) / max) * 220;
-        const y = 16 + i * 36;
+        const y = 14 + i * 36;
+        const val = Math.abs(u[a]) < 1e-12 ? 0 : u[a];
+        const mag = (Math.abs(val) / max) * half;
+        const chosen = a === best;
+        const mark = `lab-bar-${a}${chosen ? ' is-best' : ''}`;
+        const numX = val < 0 ? zeroX - mag - gap : zeroX + (val === 0 ? 12 : mag + gap);
         return (
           <g key={a}>
-            <text x="0" y={y + 14} className="lab-bar-label">
+            <text x="4" y={y + 14} className={`lab-bar-label${chosen ? ' is-best' : ''}`}>
               {names[a]}
             </text>
-            <rect x="108" y={y} width={w} height="18" className={`lab-bar lab-bar-${a}${a === best ? ' is-best' : ''}`} />
-            <text x={116 + w} y={y + 14} className="lab-bar-num">
-              {fmt(u[a], 3, lang)}
+            {val === 0 ? (
+              <circle cx={zeroX} cy={y + 9} r="5" className={`lab-zero ${mark}`} />
+            ) : (
+              <rect x={val < 0 ? zeroX - mag : zeroX} y={y} width={Math.max(mag, 0)} height="18" className={`lab-bar ${mark}`} />
+            )}
+            <text x={numX} y={y + 14} textAnchor={val < 0 ? 'end' : 'start'} className={`lab-bar-num${chosen ? ' is-best' : ''}`}>
+              {fmt(val, 3, lang)}
             </text>
           </g>
         );
@@ -215,7 +227,7 @@ export function LabView({
           <a className="brand" href="../">
             Calibrated Agent
           </a>
-          <a className="btn btn-sm" href="../#como-decide">
+          <a className="btn btn-sm" href={withLang('../#como-decide', lang)}>
             {t.back}
           </a>
         </div>
@@ -290,14 +302,16 @@ export function LabView({
                   </p>
                   {action === 'abstain' && <p>{t.abstainWhy}</p>}
                   <p>
-                    <a href="../investigacion/#modelo">{t.reopt}</a>
+                    <a href={withLang('../investigacion/#modelo', lang)}>{t.reopt}</a>
                   </p>
                   {veto && <p className="lab-veto">{t.veto}</p>}
                 </section>
 
                 <section className="card lab-block" aria-labelledby="lab-d">
                   <h2 id="lab-d">{t.instruments}</h2>
-                  <Gauge params={params} p={scenario.p} action={action} label={`${t.pName} ${fmt(scenario.p, 3, lang)}`} />
+                  <div className="lab-gauge-wrap">
+                    <Gauge params={params} p={scenario.p} action={action} label={`${t.pName} ${fmt(scenario.p, 3, lang)}`} ticks lang={lang} />
+                  </div>
                   <p>{t.pName}</p>
                   <ul>
                     {isFrontier(th.pStar, cuts) && (
@@ -334,7 +348,7 @@ export function LabView({
                 {i === 6 ? (
                   <>
                     {' '}
-                    <a href="../#evidencia">{t.evidenceLink}</a>
+                    <a href={withLang('../#evidencia', lang)}>{t.evidenceLink}</a>
                   </>
                 ) : null}
               </li>

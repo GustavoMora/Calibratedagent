@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useActiveSection } from '../../app/useActiveSection';
-import { useStore } from '../../store/navigation';
+import { useStore, withLang } from '../../store/navigation';
 import { useT } from '../../app/i18n';
 import { RingMark } from './RingMark';
 import './header.css';
@@ -40,7 +40,7 @@ export function Header({ page }: Props) {
     return () => window.removeEventListener('keydown', onKey);
   }, [open]);
 
-  const href = (id: string) => (page === 'explorar' ? `#${id}` : `${base}#${id}`);
+  const href = (id: string) => withLang(page === 'explorar' ? `#${id}` : `${base}#${id}`, lang);
 
   return (
     <>
@@ -49,7 +49,7 @@ export function Header({ page }: Props) {
       </a>
       <header className="site-header">
         <div className="hdr-inner">
-          <a className="brand" href={page === 'explorar' ? '#inicio' : base || './'}>
+          <a className="brand" href={withLang(page === 'explorar' ? '#inicio' : base || './', lang)}>
             <RingMark size={22} />
             <span>{t.brand}</span>
           </a>
@@ -69,7 +69,7 @@ export function Header({ page }: Props) {
               <li>
                 <a
                   className="nav-research"
-                  href={page === 'explorar' ? './investigacion/' : './'}
+                  href={withLang(page === 'explorar' ? './investigacion/' : './', lang)}
                   aria-current={page === 'investigacion' ? 'page' : undefined}
                   onClick={() => setOpen(false)}
                 >

@@ -10,17 +10,36 @@
   --muted: #8f8f8f;
   --accent: #ffffff;
   --on-accent: #0a0a0a;
+  --act: #3ddc84;
+  --ask: #ffb84d;
+  --abstain: #ff5a4f;
+  --act-g: #3ddc84;
+  --ask-g: #ffb84d;
+  --abstain-g: #ff5a4f;
   min-height: 100vh;
   background: var(--bg);
   color: var(--ink);
   color-scheme: dark;
+  overflow-x: clip;
+}
+.lab-main,
+.lab-grid,
+.lab-block {
+  min-width: 0;
+  max-width: 100%;
 }
 .lab-main {
   width: min(1100px, calc(100% - 2 * var(--gutter)));
   margin: 0 auto;
   padding: 24px 0 64px;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 16px;
+}
+.lab-main > *,
+.lab-root svg {
+  min-width: 0;
+  max-width: 100%;
 }
 .lab-band {
   margin: 0;
@@ -67,24 +86,92 @@
   border-left: 3px solid var(--ask);
   padding-left: 10px;
 }
-.lab-bars {
+.lab-gauge-wrap {
+  width: min(100%, 240px);
+  max-width: 100%;
+  margin: 0 auto 8px;
+}
+.lab-root .gauge {
+  display: block;
   width: 100%;
+  max-width: 100%;
   height: auto;
+  overflow: hidden;
+}
+.lab-root .gauge-zone {
+  fill: none;
+  stroke-width: 11;
+  stroke-linecap: butt;
+}
+.lab-root .gauge-act { stroke: var(--act-g); }
+.lab-root .gauge-ask { stroke: var(--ask-g); }
+.lab-root .gauge-abstain { stroke: var(--abstain-g); }
+.lab-root .gauge-star {
+  stroke: var(--ink);
+  stroke-width: 1.5;
+}
+.lab-root .gauge-tick {
+  fill: var(--ink);
+  font-size: 8px;
+  font-family: var(--mono, ui-monospace, monospace);
+}
+.lab-root .gauge-needle line {
+  stroke: var(--ink);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+}
+.lab-root .gauge-hub { fill: var(--ink); }
+.lab-root .gauge-tip {
+  fill: var(--ink);
+  stroke: var(--bg);
+  stroke-width: 1.5;
+}
+.lab-bars {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+.lab-axis {
+  stroke: var(--ink-2);
+  stroke-width: 1.5;
 }
 .lab-bar-label,
 .lab-bar-num {
   fill: var(--ink-2);
-  font-size: 12px;
+  font-size: 14px;
+  font-family: var(--sans, system-ui, sans-serif);
 }
-.lab-bar-act { fill: var(--act); }
-.lab-bar-ask { fill: var(--ask); }
-.lab-bar-abstain { fill: var(--abstain); }
-.lab-bar.is-best { stroke: var(--ink); stroke-width: 1.5; }
-.lab-foot,
+.lab-bar-label.is-best,
+.lab-bar-num.is-best {
+  fill: var(--ink);
+  font-weight: 700;
+}
+.lab-bar-act { fill: var(--act-g); }
+.lab-bar-ask { fill: var(--ask-g); }
+.lab-bar-abstain { fill: var(--abstain-g); }
+.lab-bar.is-best,
+.lab-zero.is-best {
+  stroke: var(--ink);
+  stroke-width: 1.5;
+}
+.lab-record,
 .lab-record pre {
+  max-width: 100%;
+}
+.lab-foot {
   overflow: auto;
 }
+.lab-record pre {
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
 @media (min-width: 900px) {
+  .lab-gauge-wrap {
+    width: min(100%, 320px);
+  }
   .lab-grid {
     grid-template-columns: 1fr 1fr;
   }

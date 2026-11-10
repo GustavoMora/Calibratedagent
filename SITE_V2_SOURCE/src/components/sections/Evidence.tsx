@@ -1,4 +1,5 @@
 import { useLang, useT } from '../../app/i18n';
+import { withLang } from '../../store/navigation';
 import { PILOT_EVALUABLE, PILOT_TOTAL, PREPRINT_DOI, PREPRINT_DOI_URL, PREPRINT_PDF, SHOW_PREPRINT_PDF } from '../../app/site';
 import { useReveal } from '../../app/useReveal';
 
@@ -52,11 +53,11 @@ export function Evidence() {
           </div>
         </div>
         <p>
-          <a className="btn" href="./laboratorio/">
+          <a className="btn" href={withLang('./laboratorio/', lang)}>
             {lang === 'es' ? 'Probar con situaciones nuevas' : 'Try new situations'} →
           </a>
         </p>
-        <a className="btn" href="./investigacion/#limites">
+        <a className="btn" href={withLang('./investigacion/#limites', lang)}>
           {t.evCta} →
         </a>
       </div>
@@ -66,6 +67,7 @@ export function Evidence() {
 
 export function Author({ page = 'explorar' }: { page?: 'explorar' | 'investigacion' }) {
   const t = useT();
+  const lang = useLang();
   const base = page === 'explorar' ? './' : '../';
   return (
     <footer className="author" id="autor">
@@ -111,7 +113,7 @@ export function Author({ page = 'explorar' }: { page?: 'explorar' | 'investigaci
               </>
             )}
             {page === 'explorar' && (
-              <a className="btn" href="./investigacion/">
+              <a className="btn" href={withLang('./investigacion/', lang)}>
                 {t.nav.research} →
               </a>
             )}

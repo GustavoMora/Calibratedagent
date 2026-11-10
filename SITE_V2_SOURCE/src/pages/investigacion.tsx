@@ -8,7 +8,7 @@ import { DataErrors } from '../components/ui/DataErrors';
 import { UtilityChart } from '../components/research/UtilityChart';
 import { AuditBands, DecisionMap, SplitBar } from '../components/research/Figures';
 import { PREPRINT_DOI, PREPRINT_DOI_URL, PREPRINT_PDF, PREPRINT_TITLE, SHOW_PREPRINT_PDF } from '../app/site';
-import { useStore } from '../store/navigation';
+import { useStore, withLang } from '../store/navigation';
 import { useLang } from '../app/i18n';
 import { FROZEN, fmt, pAbstain, pStar, pZero, type RiskClass } from '../domain/decisionModel';
 import { Author } from '../components/sections/Evidence';
@@ -197,7 +197,7 @@ function Research() {
       <main id="main" className="rs">
         <DataErrors />
         <div className="wrap rs-hero">
-          <a href="../" className="rs-back">
+          <a href={withLang('../', lang)} className="rs-back">
             ← {L('Volver a Explorar', 'Back to Explore')}
           </a>
           <span className="kicker">{L('Investigación completa', 'Full research')}</span>

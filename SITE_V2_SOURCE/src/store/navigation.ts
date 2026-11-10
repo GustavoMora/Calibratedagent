@@ -48,12 +48,27 @@ export function parentView(v: BrainView): BrainView {
   }
 }
 
+/** URL explícita gana; si no hay, vale lo guardado. */
+export function readLang(search: string, stored: string | null): Lang {
+  const q = new URLSearchParams(search.startsWith('?') ? search.slice(1) : search).get('lang');
+  if (q === 'en' || q === 'es') return q;
+  if (stored === 'en' || stored === 'es') return stored;
+  return 'es';
+}
+
+/** Añade ?lang=en a un enlace entre páginas. Un ancla de la misma página se deja igual. */
+export function withLang(href: string, lang: Lang): string {
+  if (lang !== 'en' || href.startsWith('#')) return href;
+  const hashAt = href.indexOf('#');
+  const hash = hashAt >= 0 ? href.slice(hashAt) : '';
+  const base = hashAt >= 0 ? href.slice(0, hashAt) : href;
+  if (/[?&]lang=/.test(base)) return href;
+  return `${base}${base.includes('?') ? '&' : '?'}lang=en${hash}`;
+}
+
 function initialLang(): Lang {
   try {
-    const q = new URLSearchParams(window.location.search).get('lang');
-    if (q === 'en' || q === 'es') return q;
-    const s = window.localStorage.getItem('ca-lang');
-    if (s === 'en' || s === 'es') return s;
+    return readLang(window.location.search, window.localStorage.getItem('ca-lang'));
   } catch {
     /* sin storage: default */
   }

@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useLang, useT } from '../../app/i18n';
 import { scenarioById } from '../../data';
 import { FROZEN, decide, fmt, thresholds, type Params } from '../../domain/decisionModel';
-import { useStore } from '../../store/navigation';
+import { useStore, withLang } from '../../store/navigation';
 import { ThresholdChart } from '../threshold/ThresholdChart';
 import { ActionChip } from '../ui/ActionChip';
 import '../threshold/threshold.css';
@@ -184,7 +184,7 @@ export function HowItDecides() {
               ↺ {t.thReset}
             </button>
             <p>
-              <a className="btn" href="./laboratorio/">
+              <a className="btn" href={withLang('./laboratorio/', lang)}>
                 {lang === 'es' ? 'Probar con situaciones nuevas' : 'Try new situations'} →
               </a>
             </p>
@@ -197,7 +197,7 @@ export function HowItDecides() {
                 <li key={s}>{s}</li>
               ))}
             </ul>
-            <a className="btn" href="./investigacion/#modelo">
+            <a className="btn" href={withLang('./investigacion/#modelo', lang)}>
               {t.assumeGo} →
             </a>
           </article>

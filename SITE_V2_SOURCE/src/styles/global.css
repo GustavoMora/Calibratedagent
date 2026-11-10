@@ -89,6 +89,11 @@ html {
   scroll-padding-top: calc(var(--header-h) + 12px);
   -webkit-text-size-adjust: 100%;
 }
+section[id],
+h1[id],
+h2[id] {
+  scroll-margin-top: var(--header-h);
+}
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
