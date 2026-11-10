@@ -21,9 +21,8 @@ const {chromium}=require('playwright');
   await page.screenshot({path:path.join(__dirname, `${lang}-${mobile?'mobile':'desktop'}.png`),fullPage:true});
   for(let level=1;level<=5;level++){
     await page.getByRole('combobox').selectOption(String(level));
-    await page.getByRole('button',{name:lang==='es'?'Generar situación':'Generate a situation',exact:true}).click();
-    if(await page.locator('.lab-record').count())throw Error('Generation did not reset reveal');
-    await page.getByRole('button',{name:lang==='es'?'Ver sin elegir':'See without choosing',exact:true}).click();
+    await page.getByRole('button',{name:lang==='es'?'Generar otra situación':'Generate another situation',exact:true}).click();
+    if(await page.locator('.lab-choices button[aria-pressed=true]').count())throw Error('Generation did not reset choice');
     const record=await page.locator('.lab-record pre').innerText();await page.reload();
     await page.locator('.lab-record pre').waitFor();
     if(await page.locator('.lab-record pre').innerText()!==record)throw Error('Reload mismatch');

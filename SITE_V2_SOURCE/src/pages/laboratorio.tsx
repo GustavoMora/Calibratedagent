@@ -58,10 +58,10 @@ const copy = {
     title: 'Laboratorio de decisiones · Calibrated Agent',
     band: 'Laboratorio de decisiones · ESCENARIOS SINTÉTICOS. Las situaciones y sus números son inventados por un generador con semilla. Sirven para entender la regla; no prueban que funcione ni que un agente real esté calibrado.',
     back: 'Volver a Cómo decide',
-    generate: 'Generar situación',
+    generate: 'Generar otra situación',
     seed: 'Semilla',
     warning: 'Este enlace se generó con otra versión del generador. No se reinterpreta.',
-    how: 'Primero se genera una situación con semilla. Después usted elige actuar, preguntar o abstenerse. Recién entonces aparece la decisión de la regla, el instrumento y la expectativa matemática.',
+    how: 'Explore una situación sintética lista para usar. Compare su elección con la regla, recorra el flujo o genere otra situación del nivel que prefiera.',
     situation: 'Situación',
     scenarioWord: 'Escenario',
     hypo: 'HIPOTÉTICO',
@@ -110,10 +110,10 @@ const copy = {
     title: 'Decision lab · Calibrated Agent',
     band: 'Decision lab · SYNTHETIC SCENARIOS. Situations and numbers are generated from a seed. They explain the rule; they do not show that it works or that any real agent is calibrated.',
     back: 'Back to How it decides',
-    generate: 'Generate a situation',
+    generate: 'Generate another situation',
     seed: 'Seed',
     warning: 'This link was generated with another version of the generator. It is not reinterpreted.',
-    how: 'First a seeded situation is generated. Then you choose to act, ask or abstain. Only then do the rule’s decision, the instrument and the mathematical expectation appear.',
+    how: 'Explore a ready-to-use synthetic situation. Compare your choice with the policy, step through the flow or generate another situation at your preferred level.',
     situation: 'Situation',
     scenarioWord: 'Scenario',
     hypo: 'HYPOTHETICAL',
@@ -302,9 +302,9 @@ export function LabView({
                   </button>
                 ))}
               </div>
-              <button type="button" className="btn btn-sm" onClick={onSkip}>
+              {!revealed && <button type="button" className="btn btn-sm" onClick={onSkip}>
                 {t.skip}
-              </button>
+              </button>}
               {choice && show && action && u && <DecisionFeedback choice={choice} best={action} u={u} lang={lang} />}
             </section>
 
@@ -394,16 +394,17 @@ function LabPage() {
   const lang = useStore((s) => s.lang);
   const setLang = useStore((s) => s.setLang);
   const [warning, setWarning] = useState(false);
-  const [scenario, setScenario] = useState<LabScenario | null>(null);
+  const [scenario, setScenario] = useState<LabScenario | null>(() => generateScenario(42, undefined, 2));
   const [choice, setChoice] = useState<Action | null>(null);
-  const [revealed, setRevealed] = useState(false);
+  const [revealed, setRevealed] = useState(true);
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     const parsed = parseLabSearch(window.location.search);
     setWarning(parsed.warning);
-    setScenario(parsed.scenario);
-    setRevealed(parsed.scenario !== null);
+    const initial = parsed.scenario ?? (parsed.warning ? null : generateScenario(42, undefined, 2));
+    setScenario(initial);
+    setRevealed(initial !== null);
     if (parsed.lang === 'en') setLang('en');
     document.title = copy[parsed.lang === 'en' ? 'en' : lang].title;
   }, [setLang, lang]);
@@ -414,7 +415,7 @@ function LabPage() {
     setScenario(next);
     setWarning(false);
     setChoice(null);
-    setRevealed(false);
+    setRevealed(true);
     setCopied(false);
   }
 

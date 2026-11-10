@@ -30,7 +30,7 @@
 .hdr-nav {
   margin-left: auto;
 }
-@media (max-width: 1020px) {
+@media (max-width: 1200px) {
   .hdr-tools {
     margin-left: auto;
   }
@@ -86,13 +86,15 @@
   min-height: 44px;
 }
 
-@media (max-width: 1020px) {
+@media (max-width: 1200px) {
   .menu-btn {
     display: inline-flex;
   }
   .hdr-nav {
     position: fixed;
     top: var(--header-h);
+    max-height: calc(100dvh - var(--header-h));
+    overflow-y: auto;
     left: 0;
     right: 0;
     background: color-mix(in srgb, var(--bg) 98%, transparent);

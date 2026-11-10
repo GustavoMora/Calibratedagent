@@ -4,7 +4,7 @@ import { useStore } from '../store/navigation';
 const es = {
   skip: 'Saltar al contenido',
   brand: 'Calibrated Agent',
-  nav: { home: 'Inicio', cases: 'Tres casos', how: 'Cómo decide', brain: 'Cerebro', evidence: 'Evidencia', research: 'Investigación completa' },
+  nav: { home: 'Inicio', cases: 'Tres casos', how: 'Cómo decide', brain: 'Cerebro', evidence: 'Evidencia', lab: 'Laboratorio', research: 'Investigación completa' },
   menu: 'Menú',
   close: 'Cerrar',
   langSwitch: 'English',
@@ -183,7 +183,7 @@ type Dict = typeof es;
 const en: Dict = {
   skip: 'Skip to content',
   brand: 'Calibrated Agent',
-  nav: { home: 'Home', cases: 'Three cases', how: 'How it decides', brain: 'Brain', evidence: 'Evidence', research: 'Full research' },
+  nav: { home: 'Home', cases: 'Three cases', how: 'How it decides', brain: 'Brain', evidence: 'Evidence', lab: 'Laboratory', research: 'Full research' },
   menu: 'Menu',
   close: 'Close',
   langSwitch: 'Español',

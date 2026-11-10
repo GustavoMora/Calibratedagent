@@ -30,8 +30,23 @@ export function LabExtras({ scenario: s, lang }: { scenario: LabScenario; lang: 
   return <>
     <section className="card lab-block"><h2>{es ? 'Recorrido hipotético de la regla' : 'Hypothetical policy flow'}</h2>
       <p>{es ? 'Derivado del mismo escenario y de los parámetros congelados. No representa ejecución ni calibración real. Los vetos se explican por separado.' : 'Derived from the same scenario and frozen parameters. It does not represent execution or real calibration. Vetoes are explained separately.'}</p>
-      <svg className="lab-flow" viewBox={`0 0 520 ${flow.steps.length * 56}`} role="img" aria-label={flow.steps.map(x=>labels[x.node]).join(' → ')}>
-        {flow.steps.map((step,i)=><g key={`${step.node}-${i}`}><line x1="28" y1={i*56+24} x2="28" y2={i*56+70} stroke="currentColor" visibility={i === flow.steps.length-1 ? 'hidden' : 'visible'}/><circle cx="28" cy={i*56+24} r="12" fill={i<=flow.index ? 'var(--act)' : 'var(--surface)'} stroke="currentColor"/><text x="55" y={i*56+30} fill="currentColor">{i+1}. {labels[step.node]}{i===flow.index ? ' ←' : ''}</text></g>)}
+      <svg className="lab-flow" viewBox="0 0 520 300" role="img" aria-label={`${es ? 'Esquema conceptual, no ejecución real' : 'Conceptual diagram, not real execution'}: ${flow.steps.map(x=>labels[x.node]).join(' → ')}`}>
+        <g fill="none" stroke="var(--muted)" strokeWidth="2">
+          <path d="M55 140 C120 140 125 65 200 65 S270 140 330 140 L450 140"/>
+          <path d="M55 140 C120 140 125 215 200 215 S270 140 330 140"/>
+          {flow.steps.length > 5 && <path d="M450 140 L450 250 L330 250"/>}
+        </g>
+        {flow.steps.map((step,i)=>{
+          const positions = [[55,140],[200,65],[200,215],[330,140],[450,140],[330,250]];
+          const [x,y] = positions[i]!;
+          const color = i === 3 ? 'var(--ask)' : i >= 4 ? `var(--${flow.outcome})` : 'var(--ink-2)';
+          return <g key={`${step.node}-${i}`}>
+            <circle cx={x} cy={y} r="27" fill={color} opacity={i <= flow.index ? '.18' : '.06'}/>
+            {i === flow.index && <circle cx={x} cy={y} r="30" fill="none" stroke={color} strokeWidth="2" strokeDasharray="5 5"/>}
+            <circle cx={x} cy={y} r="12" fill={color} opacity={i <= flow.index ? 1 : .4}/>
+            <text x={x} y={y! + (i===1 ? -35 : 40)} textAnchor="middle" fill="currentColor">{labels[step.node]}</text>
+          </g>;
+        })}
       </svg>
       <p aria-live="polite">{es ? 'Paso' : 'Step'} {flow.index+1}/{flow.steps.length}: {labels[flow.steps[flow.index]!.node]}</p>
       <div className="lab-choices"><button className="btn" disabled={flow.status==='done'} onClick={()=>setFlow(f=>stepFlow(f, SEGMENT_SECONDS))}>{es ? 'Siguiente paso' : 'Next step'}</button><button className="btn" onClick={()=>setFlow(makeFlow())}>{es ? 'Reiniciar recorrido' : 'Reset flow'}</button></div>
