@@ -40,6 +40,7 @@ export function Evidence() {
               {PILOT_EVALUABLE}
               <span className="note"> / {PILOT_TOTAL}</span>
             </p>
+            <p className="note">{t.pilotLabel}</p>
             <p className="pilot-legend note" aria-hidden="true">
               <span className="pilot-key is-on" /> {t.pilotLegend[0]}
               <span className="pilot-key" /> {t.pilotLegend[1]}
@@ -66,10 +67,21 @@ export function Author({ page = 'explorar' }: { page?: 'explorar' | 'investigaci
         <div>
           <span className="kicker">{t.authorKicker}</span>
           <h2 className="author-name">Gustavo Mora</h2>
+          <p className="note">{t.authorBioTitle}</p>
+          {t.authorBio.map((paragraph) => (
+            <p className="note" key={paragraph}>
+              {paragraph}
+            </p>
+          ))}
           <p className="note">{t.authorRole}</p>
           <p>
             <a href="https://orcid.org/0009-0004-5276-3066" target="_blank" rel="noopener noreferrer">
               ORCID 0009-0004-5276-3066 ↗
+            </a>
+          </p>
+          <p>
+            <a href="https://www.linkedin.com/in/gustavomora23/" target="_blank" rel="noopener noreferrer">
+              {t.authorLinkedIn}
             </a>
           </p>
           <p className="note">{t.authorTeam}</p>

@@ -344,6 +344,7 @@ export function Hero() {
             </a>
           </div>
           <p className="hero-status">{t.heroStatus}</p>
+          <p className="hero-status">{t.heroPolicy}</p>
         </div>
 
         <div className={`hero-viz ${gauge ? 'is-gauge' : ''}`}>

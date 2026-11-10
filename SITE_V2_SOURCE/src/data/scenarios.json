@@ -88,8 +88,8 @@
         "en": "High and irreversible: a signed document cannot be taken back."
       },
       "why": {
-        "es": "p = 0,40 queda debajo de pₐ = 0,548: con riesgo alto, preguntar aclara poco (r = 0,646) y actuar no compensa.",
-        "en": "p = 0.40 is below pₐ = 0.548: at high risk, asking clarifies little (r = 0.646) and acting does not pay off."
+        "es": "p = 0,40 queda debajo de pₐ = 0,548: con riesgo alto, preguntar aclara poco (r = 0,646, de la clase de riesgo, no de este pedido) y actuar no compensa.",
+        "en": "p = 0.40 is below pₐ = 0.548: at high risk, asking clarifies little (r = 0.646, of the risk class, not of this request) and acting does not pay off."
       },
       "consequence": {
         "es": "No se envía nada. La decisión vuelve a la persona.",

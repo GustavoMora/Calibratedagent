@@ -123,11 +123,6 @@ const BIB = `@article{pauker1980,
   title = {The Behavioral Credibility Trilemma: When Calibrated Autonomy Becomes Impossible},
   howpublished = {arXiv preprint arXiv:2605.25739}, doi = {10.48550/arXiv.2605.25739}
 }
-@misc{memolibuffa2026,
-  author = {Memoli Buffa, P. and Del Corro, L.}, year = {2026},
-  title = {Entropy Sentinel: Probing Entropy Traces for LLM Monitoring},
-  howpublished = {arXiv preprint arXiv:2601.09001}, doi = {10.48550/arXiv.2601.09001}
-}
 @misc{mora2026orquestacion,
   author = {Mora, Gustavo}, year = {2026},
   title = {Orquestaci{\\'o}n condicionada con decisi{\\'o}n calibrada: cu{\\'a}ndo actuar, preguntar, escalar, abstenerse o recordar},
@@ -207,7 +202,7 @@ function Research() {
           {SHOW_PREPRINT_PDF && (
             <p>
               <a className="btn btn-primary" href={`../${PREPRINT_PDF}`}>
-                {L('Leer el manuscrito (PDF, 22 páginas)', 'Read the manuscript (PDF, 22 pages, in Spanish)')} <span aria-hidden="true">↓</span>
+                {L('Leer el manuscrito (PDF, 22 páginas, en revisión)', 'Read the manuscript (PDF, 22 pages, under review)')} <span aria-hidden="true">↓</span>
               </a>
             </p>
           )}
@@ -258,8 +253,8 @@ function Research() {
               </ol>
               <p className="note">
                 {L(
-                  'Esta página desarrolla en detalle la regla actuar / preguntar / abstenerse y el protocolo PO430. Escalar y recordar están formalizadas en el manuscrito (§3.5) y no se simulan acá.',
-                  'This page develops in detail the act / ask / abstain rule and the PO430 protocol. Escalating and reminding are formalized in the manuscript (§3.5) and are not simulated here.',
+                  'Esta página desarrolla en detalle la regla actuar / preguntar / abstenerse. Escalar y recordar están formalizadas en el manuscrito (§3.5) y no se simulan aquí.',
+                  'This page develops in detail the act / ask / abstain rule. Escalating and reminding are formalized in the manuscript (§3.5) and are not simulated here.',
                 )}
               </p>
               <ul className="rs-status">
@@ -273,10 +268,10 @@ function Research() {
                   <Tag k="int">{L('FIJADO LOCALMENTE', 'FIXED LOCALLY')}</Tag> {L('Preregistro y plan de análisis, sin depósito público.', 'Preregistration and analysis plan, not publicly deposited.')}
                 </li>
                 <li>
-                  <Tag k="pilot">{L('OBSERVADO EN PILOTO', 'OBSERVED IN PILOT')}</Tag> {L('25 decisiones registradas, 8 evaluables. Exploratorio y autoevaluado.', '25 decisions recorded, 8 evaluable. Exploratory and self-evaluated.')}
+                  <Tag k="pilot">{L('OBSERVADO EN PILOTO', 'OBSERVED IN PILOT')}</Tag> {L('25 decisiones registradas. 8 evaluables · 17 fuera del análisis principal. Exploratorio y autoevaluado.', '25 decisions recorded. 8 evaluable · 17 outside the main analysis. Exploratory and self-evaluated.')}
                 </li>
                 <li>
-                  {PEND} {L('DG-E1 y PO430: no ejecutados.', 'DG-E1 and PO430: not run.')}
+                  {PEND} {L('El diseño general y el protocolo operativo no se ejecutaron.', 'The general design and the operational protocol have not been run.')}
                 </li>
               </ul>
             </Section>
@@ -367,7 +362,7 @@ function Research() {
                 )}
               </p>
               <p>
-                {L('Error de calibración (ECE) en la mitad de prueba: 0,131 con la p cruda y 0,109 con el calibrador.', 'Calibration error (ECE) on the test half: 0.131 with raw p and 0.109 with the calibrator.')} {SIM}
+                {L('ECE del calibrador sobre 200 casos de prueba (semilla 20261102): 0,131 con la p cruda y 0,109 con el calibrador. 0,131 mide el error de la confianza declarada; 0,109 mide el error después del calibrador.', 'Calibrator ECE on 200 test cases (seed 20261102): 0.131 with raw p and 0.109 with the calibrator. 0.131 measures the error of the declared confidence; 0.109 measures the error after the calibrator.')} {SIM}
               </p>
               <p className="note">
                 {L(
@@ -461,7 +456,7 @@ function Research() {
                 <table className="rs-table">
                   <thead>
                     <tr>
-                      <th scope="col">{L('Identificador', 'Identifier')}</th>
+                      <th scope="col">{L('Plan', 'Plan')}</th>
                       <th scope="col">{L('Objeto', 'Object')}</th>
                       <th scope="col">{L('Pregunta principal', 'Main question')}</th>
                       <th scope="col">{L('Escala', 'Scale')}</th>
@@ -469,13 +464,13 @@ function Research() {
                   </thead>
                   <tbody>
                     <tr>
-                      <th scope="row">DG-E1</th>
+                      <th scope="row">{L('Diseño general', 'General design')}</th>
                       <td>{L('Diseño general del paper', 'General design of the paper')}</td>
                       <td>{L('H1b: ¿la calibración reduce el regret con umbrales derivados de costos?', 'H1b: does calibration reduce regret with cost-derived thresholds?')}</td>
                       <td>{L('650–700 casos propuestos', '650–700 proposed cases')}</td>
                     </tr>
                     <tr>
-                      <th scope="row">PO430</th>
+                      <th scope="row">{L('Protocolo operativo', 'Operational protocol')}</th>
                       <td>{L('Protocolo operativo derivado', 'Derived operational protocol')}</td>
                       <td>{L('H1: ¿un incentivo de autonomía infla la confianza declarada?', 'H1: does an autonomy incentive inflate declared confidence?')}</td>
                       <td>{L('430 pedidos', '430 requests')}</td>
@@ -483,8 +478,8 @@ function Research() {
                   </tbody>
                 </table>
               </div>
-              <p className="note">{L('Ambos son planes. Ejecutar PO430 no valida por sí solo H1b, y ninguno produjo resultados confirmatorios.', 'Both are plans. Running PO430 does not by itself validate H1b, and neither has produced confirmatory results.')}</p>
-              <h3>{L('Diseño de PO430', 'PO430 design')}</h3>
+              <p className="note">{L('Ambos son planes. Ejecutar el protocolo operativo no valida por sí solo la pregunta de regret, y ninguno produjo resultados confirmatorios.', 'Both are plans. Running the operational protocol does not by itself validate the regret question, and neither has produced confirmatory results.')}</p>
+              <h3>{L('Diseño del protocolo operativo', 'Operational protocol design')}</h3>
               <ul>
                 <li>{L('430 pedidos con verdad conocida: 215 de ajuste del calibrador y 215 de prueba.', '430 requests with known ground truth: 215 for calibrator fitting and 215 for testing.')}</li>
                 <li>{L('Dos brazos sobre los mismos pedidos: control e incentivo; solo cambia la instrucción.', 'Two arms over the same requests: control and incentive; only the instruction changes.')}</li>
@@ -536,14 +531,14 @@ function Research() {
                 <li>{L('Los costos b, c y k son supuestos, no medidos.', 'The costs b, c and k are assumed, not measured.')}</li>
                 <li>{L('La inflación del experimento viene de una instrucción, no de entrenamiento: un nulo no descarta inflación por entrenamiento.', 'The experiment’s inflation comes from an instruction, not training: a null does not rule out training-induced inflation.')}</li>
                 <li>
-                  {L('Piloto: 25 decisiones registradas de un sistema personal del autor, 8 evaluables (7 éxitos). Es autoevaluado y no independiente. Ilustra; no valida ni generaliza.', 'Pilot: 25 decisions recorded from the author’s personal system, 8 evaluable (7 successes). Self-evaluated and not independent. It illustrates; it does not validate or generalize.')} <Tag k="pilot">{L('OBSERVADO EN PILOTO', 'OBSERVED IN PILOT')}</Tag>
+                  {L('Piloto: 25 decisiones registradas de un sistema personal del autor. 8 evaluables · 17 fuera del análisis principal (7 éxitos entre las evaluables). Entre las exclusiones está un criterio que nunca se activó. Es autoevaluado y no independiente. Ilustra; no valida ni generaliza.', 'Pilot: 25 decisions recorded from the author’s personal system. 8 evaluable · 17 outside the main analysis (7 successes among the evaluable ones). The exclusions include a criterion that never activated. Self-evaluated and not independent. It illustrates; it does not validate or generalize.')} <Tag k="pilot">{L('OBSERVADO EN PILOTO', 'OBSERVED IN PILOT')}</Tag>
                 </li>
               </ul>
               <h3>{L('Estado del manuscrito', 'Status of the manuscript')}</h3>
               <ul>
                 <li>{L('La v4.2 es una candidata editorial: no es final ni está publicada.', 'v4.2 is an editorial candidate: neither final nor published.')}</li>
                 <li>{L('Falta el cotejo matemático interno de esta versión exacta sobre dos puntos: la idealización que iguala entender con ejecutar bien, y la línea de base del valor de la aclaración.', 'An internal mathematical check of this exact version is still pending on two points: the idealization that equates understanding with executing well, and the baseline of the value of clarification.')}</li>
-                <li>{L('DG-E1 no tiene preregistro propio y su diseño no está íntegramente congelado. PO430 se firmó localmente; no hay registro público verificable de esa fecha.', 'DG-E1 has no preregistration of its own and its design is not fully frozen. PO430 was signed locally; there is no verifiable public record of that date.')}</li>
+                <li>{L('El diseño general no tiene preregistro propio y no está íntegramente congelado. El protocolo operativo se firmó localmente; no hay registro público verificable de esa fecha.', 'The general design has no preregistration of its own and is not fully frozen. The operational protocol was signed locally; there is no verifiable public record of that date.')}</li>
                 <li>{L('No se promete un depósito futuro de código ni de datos. El registro del piloto es personal y no se publica.', 'No future deposit of code or data is promised. The pilot log is personal and is not published.')}</li>
               </ul>
               <h3>{L('Pendientes estadísticos conocidos', 'Known statistical open issues')}</h3>
@@ -570,10 +565,6 @@ function Research() {
                 <li>
                   Lovén, L., Do, N., Mehmood, H., Sah, D. K., Tarkoma, S. (2026). The Behavioral Credibility Trilemma: When Calibrated Autonomy Becomes Impossible. arXiv:2605.25739.{' '}
                   <a href="https://doi.org/10.48550/arXiv.2605.25739">doi:10.48550/arXiv.2605.25739</a>
-                </li>
-                <li>
-                  Memoli Buffa, P., Del Corro, L. (2026). Entropy Sentinel: Probing Entropy Traces for LLM Monitoring. arXiv:2601.09001.{' '}
-                  <a href="https://doi.org/10.48550/arXiv.2601.09001">doi:10.48550/arXiv.2601.09001</a>
                 </li>
                 <li>
                   Mora, G. (2026). {L('Preregistro — Experimento 1, v1.0, enmiendas 1–3; plan de análisis; criterio de juicio.', 'Preregistration — Experiment 1, v1.0, amendments 1–3; analysis plan; judging criterion.')} {INT}

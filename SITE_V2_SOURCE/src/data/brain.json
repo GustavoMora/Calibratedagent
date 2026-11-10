@@ -158,13 +158,6 @@
       "url": "https://doi.org/10.48550/arXiv.2605.25739"
     },
     {
-      "id": "memoli", "region": "evidencia", "pos": [-0.95, 0.3, -0.25], "tag": "EXTERNAL",
-      "label": { "es": "Memoli Buffa y Del Corro (2026)", "en": "Memoli Buffa & Del Corro (2026)" },
-      "desc": { "es": "Entropy Sentinel: Probing Entropy Traces for LLM Monitoring (arXiv:2601.09001). Señales internas para monitorear modelos.", "en": "Entropy Sentinel: Probing Entropy Traces for LLM Monitoring (arXiv:2601.09001). Internal signals to monitor models." },
-      "example": { "es": "doi:10.48550/arXiv.2601.09001", "en": "doi:10.48550/arXiv.2601.09001" },
-      "url": "https://doi.org/10.48550/arXiv.2601.09001"
-    },
-    {
       "id": "prereg", "region": "evidencia", "pos": [-1.0, -0.15, 0.62], "tag": "INTERNAL",
       "label": { "es": "Preregistro", "en": "Preregistration" },
       "desc": { "es": "Experimento 1, versión 1.0, con enmiendas 1–3 y fe de erratas (01/11/2026). Fijado localmente antes de ver datos; sin depósito público.", "en": "Experiment 1, version 1.0, with amendments 1–3 and an erratum (2026-11-01). Fixed locally before seeing data; not publicly deposited." },
@@ -173,7 +166,7 @@
     {
       "id": "autor", "region": "construccion", "pos": [1.2, 0.15, 0.35], "tag": "INTERNAL",
       "label": { "es": "Gustavo Mora", "en": "Gustavo Mora" },
-      "desc": { "es": "Concepto, framework, dirección e investigación. Estadístico, consultor de transformación e IA. ORCID 0009-0004-5276-3066.", "en": "Concept, framework, direction and research. Statistician, transformation and AI consultant. ORCID 0009-0004-5276-3066." },
+      "desc": { "es": "Consultor de transformación e inteligencia artificial | Estadístico. Mi formación como estadístico me aporta rigor analítico y criterio para razonar sobre problemas, evaluar evidencia y tomar decisiones bajo incertidumbre. Combino esa base con una mirada de negocio para conectar la estrategia con el diseño de soluciones de datos e inteligencia artificial. Durante ocho años en el sector financiero trabajé en calidad, gobierno, ingeniería y analítica de datos, contribuyendo al diseño de controles y la automatización de validaciones. Esa experiencia me dio un conocimiento concreto de cómo funciona un banco, cómo circula la información entre áreas y qué hace falta para confiar en los datos que sostienen decisiones críticas. Me desenvuelvo entre la conversación con la alta dirección, la facilitación de talleres para audiencias amplias y el detalle técnico de los procesos de datos e IA. Mi foco está en plantear y estructurar modelos operativos que conecten objetivos de negocio, tecnología, responsabilidades, evaluación y supervisión humana. Orquestación calibrada es una línea de investigación y construcción propia sobre cuándo un agente debería actuar, preguntar o abstenerse. Conecta mi experiencia en datos con mi interés por las decisiones bajo incertidumbre.", "en": "Transformation and artificial intelligence consultant | Statistician. My training as a statistician gives me analytical rigor and judgment for reasoning about problems, weighing evidence, and deciding under uncertainty. I combine that foundation with a business view in order to connect strategy with the design of data and artificial intelligence solutions. For eight years in the financial sector I worked in data quality, governance, engineering, and analytics, contributing to the design of controls and the automation of validations. That experience gave me a concrete knowledge of how a bank works, how information moves between areas, and what it takes to trust the data that support critical decisions. I work across conversation with senior leadership, facilitation of workshops for broad audiences, and the technical detail of data and AI processes. My focus is on framing and structuring operating models that connect business objectives, technology, responsibilities, evaluation, and human supervision. Calibrated orchestration is a line of research and building of my own about when an agent should act, ask, or abstain. It connects my experience in data with my interest in decisions under uncertainty." },
       "example": { "es": "Investigador independiente · Buenos Aires.", "en": "Independent researcher · Buenos Aires." },
       "url": "https://orcid.org/0009-0004-5276-3066"
     },
@@ -213,7 +206,6 @@
     ["pauker", "regla"],
     ["chow", "regla"],
     ["loven", "auditoria"],
-    ["memoli", "agente"],
     ["prereg", "costos"],
     ["autor", "equipo"],
     ["equipo", "herramientas"],

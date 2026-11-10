@@ -542,6 +542,7 @@ export function BrainSection() {
           <span className="kicker">{t.brainKicker}</span>
           <h2 id="brain-h">{t.brainTitle}</h2>
           <p className="lead">{t.brainLead}</p>
+          <p className="lead">{t.brainMagnitudes}</p>
         </header>
       </div>
 
@@ -567,9 +568,13 @@ export function BrainSection() {
             onPointerCancel={endDrag}
             onPointerLeave={endDrag}
           >
-            <Suspense fallback={<div className="canvas-loading" />}>
-              <BrainCanvas safe={safe} orbit={orbit} labelLayer={labelLayer} active={inView} />
-            </Suspense>
+            {inView ? (
+              <Suspense fallback={<div className="canvas-loading" />}>
+                <BrainCanvas safe={safe} orbit={orbit} labelLayer={labelLayer} active />
+              </Suspense>
+            ) : (
+              <div className="canvas-loading" />
+            )}
             <Labels layer={labelLayer} />
             <div className="legend-mini note" aria-hidden="true">
               {t.brainLegend.map((l) => (
