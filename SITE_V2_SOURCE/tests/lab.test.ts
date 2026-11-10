@@ -9,7 +9,7 @@ import { buildBrainCloud } from '../src/components/brain/geometry';
 import brainRaw from '../src/data/brain.json';
 import type { BrainData } from '../src/data/types';
 import { LabView, parseLabSearch } from '../src/pages/laboratorio';
-import { LAB_VERSION, generateScenario, labDecision } from '../src/simulation/scenarioGenerator';
+import { LAB_VERSION, generateScenario, generateLegacyScenario, labDecision } from '../src/simulation/scenarioGenerator';
 
 const labSrc = [
   readFileSync(resolve(__dirname, '../src/pages/laboratorio.tsx'), 'utf8'),
@@ -60,7 +60,7 @@ describe('laboratorio', () => {
     const ok = parseLabSearch('?s=20261109&v=1&pol=manuscrito');
     expect(ok.warning).toBe(false);
     expect(ok.scenario?.version).toBe(LAB_VERSION);
-    expect(ok.scenario).toEqual(generateScenario(20261109));
+    expect(ok.scenario).toEqual(generateLegacyScenario(20261109));
   });
 
   it('la decisión renderizada lleva el chip de política', () => {

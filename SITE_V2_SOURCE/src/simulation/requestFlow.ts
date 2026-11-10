@@ -49,12 +49,12 @@ export function decideScenario(s: Pick<Scenario, 'p' | 'riskClass' | 'irreversib
   return { action: base, veto: false };
 }
 
-export function buildSteps(s: Scenario, stages: { id: string; node: string }[]): { steps: FlowStep[]; outcome: Action; veto: boolean } {
-  const { action, veto } = decideScenario(s);
+export function buildSteps(s: Pick<Scenario, 'id' | 'p' | 'riskClass' | 'irreversible'>, stages: { id: string; node: string }[], applyVeto = true): { steps: FlowStep[]; outcome: Action; veto: boolean } {
+  const { action, veto } = applyVeto ? decideScenario(s) : { action: decide(s.p, FROZEN[s.riskClass]), veto: false };
   const steps: FlowStep[] = [];
   for (const st of stages) {
     if (st.node === '$outcome') {
-      if (s.irreversible) steps.push({ stage: 'politica', node: 'veto' });
+      if (applyVeto && s.irreversible) steps.push({ stage: 'politica', node: 'veto' });
       steps.push({ stage: st.id, node: OUTCOME_NODE[action] });
       if (action !== 'act') steps.push({ stage: st.id, node: 'humano' });
     } else {
@@ -64,8 +64,8 @@ export function buildSteps(s: Scenario, stages: { id: string; node: string }[]):
   return { steps, outcome: action, veto };
 }
 
-export function startFlow(prev: FlowState, s: Scenario, stages: { id: string; node: string }[]): FlowState {
-  const { steps, outcome, veto } = buildSteps(s, stages);
+export function startFlow(prev: FlowState, s: Pick<Scenario, 'id' | 'p' | 'riskClass' | 'irreversible'>, stages: { id: string; node: string }[], applyVeto = true): FlowState {
+  const { steps, outcome, veto } = buildSteps(s, stages, applyVeto);
   return { ...prev, status: 'running', scenarioId: s.id, steps, index: 0, t: 0, outcome, vetoApplied: veto };
 }
 

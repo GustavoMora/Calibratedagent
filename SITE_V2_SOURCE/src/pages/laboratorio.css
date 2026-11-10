@@ -185,3 +185,12 @@
     animation: none !important;
   }
 }
+.lab-gen { flex-wrap: wrap; }
+.lab-gen select { max-width: 100%; padding: 10px; background: var(--surface); color: var(--ink); }
+.lab-flow { width: 100%; max-width: 520px; height: auto; font-size: 18px; }
+.lab-slider { display: grid; gap: 8px; margin: 16px 0; }
+.lab-slider input { width: 100%; }
+.lab-block summary { cursor: pointer; font-weight: 700; }
+.lab-block, .lab-record { padding: clamp(16px, 3vw, 28px); }
+.lab-block p { overflow-wrap: anywhere; }
+.lab-gen label { min-width: 0; }

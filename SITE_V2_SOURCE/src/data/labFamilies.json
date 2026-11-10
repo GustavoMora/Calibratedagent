@@ -1,0 +1,247 @@
+[
+  {
+    "id": "archivo",
+    "riskClass": "bajo",
+    "irreversible": false,
+    "label": {
+      "es": "Clasificar una factura",
+      "en": "File an invoice"
+    },
+    "request": {
+      "es": "Guardar una copia de la factura F-204 en el archivo mensual de Taller Sur. El original se conserva.",
+      "en": "Save a copy of invoice F-204 in Taller Sur’s monthly archive. The original is retained."
+    },
+    "dependencies": {
+      "es": "La carpeta depende del mes contable; no se inicia ningún pago.",
+      "en": "The folder depends on the accounting month; no payment is initiated."
+    },
+    "variants": [
+      {
+        "ambiguity": "clara",
+        "band": [
+          0.92,
+          0.99
+        ],
+        "knows": {
+          "es": "El registro aprobado indica septiembre y la carpeta existe.",
+          "en": "The approved ledger specifies September and the folder exists."
+        },
+        "missing": {
+          "es": "No falta ningún dato necesario para clasificar la copia.",
+          "en": "No required filing information is missing."
+        }
+      },
+      {
+        "ambiguity": "ambigua",
+        "band": [
+          0.4,
+          0.8
+        ],
+        "knows": {
+          "es": "La factura fue emitida en septiembre, pero el servicio se prestó en agosto.",
+          "en": "The invoice was issued in September, but the service was delivered in August."
+        },
+        "missing": {
+          "es": "Falta saber si el archivo usa mes de emisión o de servicio; contabilidad puede aclararlo.",
+          "en": "The filing rule may use issue or service month; accounting can clarify."
+        }
+      }
+    ]
+  },
+  {
+    "id": "agenda",
+    "riskClass": "bajo",
+    "irreversible": false,
+    "label": {
+      "es": "Reorganizar una reunión",
+      "en": "Reschedule a meeting"
+    },
+    "request": {
+      "es": "Preparar una propuesta de reunión de 30 minutos entre soporte y producto para revisar tres incidencias. No enviar invitaciones todavía.",
+      "en": "Draft a 30-minute meeting proposal between support and product to review three incidents. Do not send invitations yet."
+    },
+    "dependencies": {
+      "es": "La revisión requiere primero los registros de soporte y después la disponibilidad de ambos equipos.",
+      "en": "The review requires support logs first and then both teams’ availability."
+    },
+    "variants": [
+      {
+        "ambiguity": "clara",
+        "band": [
+          0.92,
+          0.99
+        ],
+        "knows": {
+          "es": "Los registros están listos y ambos equipos confirmaron el martes a las 10 UTC.",
+          "en": "The logs are ready and both teams confirmed Tuesday at 10 UTC."
+        },
+        "missing": {
+          "es": "Solo queda preparar el borrador.",
+          "en": "Only the draft remains to be prepared."
+        }
+      },
+      {
+        "ambiguity": "ambigua",
+        "band": [
+          0.4,
+          0.8
+        ],
+        "knows": {
+          "es": "Soporte propone martes a las 10 y producto respondió «por la mañana».",
+          "en": "Support proposes Tuesday at 10 and product replied “in the morning”."
+        },
+        "missing": {
+          "es": "Faltan zona horaria y disponibilidad exacta de producto; su coordinadora puede confirmarlas.",
+          "en": "Product’s time zone and exact availability are missing; its coordinator can confirm them."
+        }
+      }
+    ]
+  },
+  {
+    "id": "migracion",
+    "riskClass": "medio",
+    "irreversible": false,
+    "label": {
+      "es": "Coordinar una migración de prueba",
+      "en": "Coordinate a trial migration"
+    },
+    "request": {
+      "es": "Proponer el orden de migración de catálogo, inventario y buscador en un entorno de prueba con restauración disponible.",
+      "en": "Propose the migration order for catalog, inventory and search in a test environment with restoration available."
+    },
+    "dependencies": {
+      "es": "Inventario consume identificadores del catálogo; el buscador debe reindexarse después de ambos.",
+      "en": "Inventory consumes catalog identifiers; search must be reindexed after both."
+    },
+    "variants": [
+      {
+        "ambiguity": "clara",
+        "band": [
+          0.92,
+          0.99
+        ],
+        "knows": {
+          "es": "El mapa de dependencias y la compatibilidad de identificadores fueron confirmados por los responsables.",
+          "en": "Owners confirmed the dependency map and identifier compatibility."
+        },
+        "missing": {
+          "es": "No faltan datos para proponer el orden; ejecutar requiere una autorización separada.",
+          "en": "No data is missing for proposing the order; execution requires separate authorization."
+        }
+      },
+      {
+        "ambiguity": "ambigua",
+        "band": [
+          0.4,
+          0.8
+        ],
+        "knows": {
+          "es": "El catálogo cambia identificadores y el inventario conserva referencias anteriores.",
+          "en": "The catalog changes identifiers while inventory retains old references."
+        },
+        "missing": {
+          "es": "Falta la tabla de equivalencias; el equipo de datos puede entregarla antes de planificar.",
+          "en": "The mapping table is missing; the data team can provide it before planning."
+        }
+      }
+    ]
+  },
+  {
+    "id": "proyecto",
+    "riskClass": "medio",
+    "irreversible": false,
+    "label": {
+      "es": "Planificar un lanzamiento por etapas",
+      "en": "Plan a staged launch"
+    },
+    "request": {
+      "es": "Preparar un plan de seis semanas para lanzar reservas en tres sedes, con un piloto previo y presupuesto limitado a 120 unidades.",
+      "en": "Draft a six-week plan to launch reservations at three branches, with a prior pilot and a budget capped at 120 units."
+    },
+    "dependencies": {
+      "es": "La capacitación depende de la integración; ampliar a otras sedes depende de revisar el piloto. Se decide aprobar el borrador, no ejecutar el lanzamiento.",
+      "en": "Training depends on integration; expansion depends on reviewing the pilot. The decision is to approve the draft, not execute the launch."
+    },
+    "variants": [
+      {
+        "ambiguity": "clara",
+        "band": [
+          0.92,
+          0.99
+        ],
+        "knows": {
+          "es": "Integración estima dos semanas, capacitación una y el piloto dos; el costo total estimado es 105 unidades.",
+          "en": "Integration estimates two weeks, training one and the pilot two; total estimated cost is 105 units."
+        },
+        "missing": {
+          "es": "Las estimaciones están documentadas; el éxito de ejecución no está modelado.",
+          "en": "Estimates are documented; execution success is not modeled."
+        }
+      },
+      {
+        "ambiguity": "ambigua",
+        "band": [
+          0.4,
+          0.8
+        ],
+        "knows": {
+          "es": "La integración podría tardar entre dos y cinco semanas y no incluye el costo de soporte.",
+          "en": "Integration may take two to five weeks and excludes support costs."
+        },
+        "missing": {
+          "es": "Faltan capacidad del proveedor y costo de soporte; compras puede solicitar una estimación conjunta.",
+          "en": "Vendor capacity and support cost are missing; procurement can request a combined estimate."
+        }
+      }
+    ]
+  },
+  {
+    "id": "estrategia",
+    "riskClass": "alto",
+    "irreversible": true,
+    "label": {
+      "es": "Comprometer una expansión multietapa",
+      "en": "Commit to a staged expansion"
+    },
+    "request": {
+      "es": "Decidir si autorizar un anticipo no reembolsable para una expansión regional: validar demanda, abrir un centro piloto y luego ampliar distribución.",
+      "en": "Decide whether to authorize a non-refundable deposit for regional expansion: validate demand, open a pilot hub, then expand distribution."
+    },
+    "dependencies": {
+      "es": "El anticipo reserva el centro antes del piloto. La expansión posterior depende de demanda y permisos; esta decisión evalúa solo el compromiso inicial.",
+      "en": "The deposit reserves the hub before the pilot. Later expansion depends on demand and permits; this decision evaluates only the initial commitment."
+    },
+    "variants": [
+      {
+        "ambiguity": "clara",
+        "band": [
+          0.92,
+          0.99
+        ],
+        "knows": {
+          "es": "La dirección confirmó el alcance inicial, el anticipo y la secuencia; existe autorización presupuestaria documentada.",
+          "en": "Management confirmed initial scope, deposit and sequence; documented budget authorization exists."
+        },
+        "missing": {
+          "es": "No falta información sobre el pedido; demanda y ejecución futuras siguen siendo inciertas.",
+          "en": "No request information is missing; future demand and execution remain uncertain."
+        }
+      },
+      {
+        "ambiguity": "ambigua",
+        "band": [
+          0.15,
+          0.65
+        ],
+        "knows": {
+          "es": "Comercial pide reservar ya, pero finanzas condiciona el anticipo a permisos que aún no están definidos.",
+          "en": "Sales requests immediate reservation, but finance conditions the deposit on permits that are not yet defined."
+        },
+        "missing": {
+          "es": "Falta resolver qué autorización prevalece; dirección puede aclarar el mandato, sin garantizar los permisos.",
+          "en": "Which authorization prevails is unresolved; management can clarify the mandate without guaranteeing permits."
+        }
+      }
+    ]
+  }
+]
