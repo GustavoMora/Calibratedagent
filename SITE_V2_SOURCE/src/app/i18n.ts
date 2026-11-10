@@ -170,7 +170,8 @@ const es = {
   cite: 'Cómo citar',
   citeText: 'Mora, G. (2026). Orquestación condicionada con decisión calibrada: cuándo actuar, preguntar, escalar, abstenerse o recordar (versión 4.2 candidata editorial). Preprint no revisado por pares. https://gustavomora.github.io/Calibratedagent/',
   paper: 'Manuscrito v4.2 candidata editorial (07/11/2026). No está depositado, no tiene DOI y no fue revisado por pares; una revisión matemática interna sigue pendiente.',
-  paperPdf: 'Leer el manuscrito (PDF, 22 páginas, en revisión)',
+  paperPdf: 'Leer el manuscrito (PDF, 22 páginas)',
+  paperStatus: 'preprint, sin revisión por pares',
   footer: '© 2026 Gustavo Mora. three.js (MIT). Instrument Sans / Serif (SIL OFL 1.1).',
 
   dataErrorTitle: 'Hay un problema con los datos de esta página',
@@ -348,7 +349,8 @@ const en: Dict = {
   cite: 'How to cite',
   citeText: 'Mora, G. (2026). Orquestación condicionada con decisión calibrada: cuándo actuar, preguntar, escalar, abstenerse o recordar (version 4.2, editorial candidate). Preprint, not peer reviewed. https://gustavomora.github.io/Calibratedagent/',
   paper: 'Manuscript v4.2, editorial candidate (07/11/2026). It is not deposited, has no DOI and has not been peer reviewed; an internal mathematical review is still pending.',
-  paperPdf: 'Read the manuscript (PDF, 22 pages, under review)',
+  paperPdf: 'Read the manuscript (PDF, 22 pages)',
+  paperStatus: 'preprint, not peer-reviewed',
   footer: '© 2026 Gustavo Mora. three.js (MIT). Instrument Sans / Serif (SIL OFL 1.1).',
 
   dataErrorTitle: 'There is a problem with this page’s data',

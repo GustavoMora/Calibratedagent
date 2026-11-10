@@ -1,5 +1,5 @@
 import { useLang, useT } from '../../app/i18n';
-import { PILOT_EVALUABLE, PILOT_TOTAL, PREPRINT_PDF, SHOW_PREPRINT_PDF } from '../../app/site';
+import { PILOT_EVALUABLE, PILOT_TOTAL, PREPRINT_DOI, PREPRINT_DOI_URL, PREPRINT_PDF, SHOW_PREPRINT_PDF } from '../../app/site';
 import { useReveal } from '../../app/useReveal';
 
 const TAG: Record<string, string> = { derived: 'tag-int', simulated: 'tag-sim', protocol: 'tag-int', pending: 'tag-pending' };
@@ -100,9 +100,15 @@ export function Author({ page = 'explorar' }: { page?: 'explorar' | 'investigaci
           </p>
           <div className="author-ctas">
             {SHOW_PREPRINT_PDF && (
-              <a className="btn btn-primary" href={`${base}${PREPRINT_PDF}`}>
-                {t.paperPdf} <span aria-hidden="true">↓</span>
-              </a>
+              <>
+                <a className="btn btn-primary" href={`${base}${PREPRINT_PDF}`}>
+                  {t.paperPdf} <span aria-hidden="true">↓</span>
+                </a>
+                <span className="note">
+                  {t.paperStatus}{' '}
+                  <a href={PREPRINT_DOI_URL}>DOI: {PREPRINT_DOI}</a>
+                </span>
+              </>
             )}
             {page === 'explorar' && (
               <a className="btn" href="./investigacion/">

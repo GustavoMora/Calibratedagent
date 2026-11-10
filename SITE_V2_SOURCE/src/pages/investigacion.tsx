@@ -7,7 +7,7 @@ import { Header } from '../components/ui/Header';
 import { DataErrors } from '../components/ui/DataErrors';
 import { UtilityChart } from '../components/research/UtilityChart';
 import { AuditBands, DecisionMap, SplitBar } from '../components/research/Figures';
-import { PREPRINT_DATE, PREPRINT_PDF, PREPRINT_TITLE, PREPRINT_VERSION, SHOW_PREPRINT_PDF } from '../app/site';
+import { PREPRINT_DATE, PREPRINT_DOI, PREPRINT_DOI_URL, PREPRINT_PDF, PREPRINT_TITLE, PREPRINT_VERSION, SHOW_PREPRINT_PDF } from '../app/site';
 import { useStore } from '../store/navigation';
 import { useLang } from '../app/i18n';
 import { FROZEN, fmt, pAbstain, pStar, pZero, type RiskClass } from '../domain/decisionModel';
@@ -210,8 +210,12 @@ function Research() {
           {SHOW_PREPRINT_PDF && (
             <p>
               <a className="btn btn-primary" href={`../${PREPRINT_PDF}`}>
-                {L('Leer el manuscrito (PDF, 22 páginas, en revisión)', 'Read the manuscript (PDF, 22 pages, under review)')} <span aria-hidden="true">↓</span>
-              </a>
+                {L('Leer el manuscrito (PDF, 22 páginas)', 'Read the manuscript (PDF, 22 pages)')} <span aria-hidden="true">↓</span>
+              </a>{' '}
+              <span className="note">
+                {L('preprint, sin revisión por pares', 'preprint, not peer-reviewed')}{' '}
+                <a href={PREPRINT_DOI_URL}>DOI: {PREPRINT_DOI}</a>
+              </span>
             </p>
           )}
         </div>
