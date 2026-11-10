@@ -404,7 +404,7 @@ export function LabRoot() {
 
 if (typeof document !== 'undefined') {
   const el = document.getElementById('root');
-  if (el && el.childElementCount === 0) {
+  if (el) {
     createRoot(el).render(
       <StrictMode>
         <LabRoot />
