@@ -183,6 +183,11 @@ export function HowItDecides() {
             >
               ↺ {t.thReset}
             </button>
+            <p>
+              <a className="btn" href="./laboratorio/">
+                {lang === 'es' ? 'Probar con situaciones nuevas' : 'Try new situations'} →
+              </a>
+            </p>
           </article>
 
           <article id="how-assume" className="how-assume">

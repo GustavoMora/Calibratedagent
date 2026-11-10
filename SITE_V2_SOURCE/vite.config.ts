@@ -14,6 +14,7 @@ export default defineConfig({
       input: {
         explorar: resolve(__dirname, 'index.html'),
         investigacion: resolve(__dirname, 'investigacion/index.html'),
+        laboratorio: resolve(__dirname, 'laboratorio/index.html'),
       },
     },
     // three.js va en un chunk diferido (import() de BrainCanvas): no bloquea la primera lectura.

@@ -1,4 +1,4 @@
-import { useT } from '../../app/i18n';
+import { useLang, useT } from '../../app/i18n';
 import { PILOT_EVALUABLE, PILOT_TOTAL, PREPRINT_PDF, SHOW_PREPRINT_PDF } from '../../app/site';
 import { useReveal } from '../../app/useReveal';
 
@@ -7,6 +7,7 @@ const ICON: Record<string, string> = { derived: '∑', simulated: '≈', protoco
 
 export function Evidence() {
   const t = useT();
+  const lang = useLang();
   const [gridRef, seen] = useReveal<HTMLOListElement>();
   const [pilotRef, pilotSeen] = useReveal<HTMLDivElement>();
   return (
@@ -50,6 +51,11 @@ export function Evidence() {
             </p>
           </div>
         </div>
+        <p>
+          <a className="btn" href="./laboratorio/">
+            {lang === 'es' ? 'Probar con situaciones nuevas' : 'Try new situations'} →
+          </a>
+        </p>
         <a className="btn" href="./investigacion/#limites">
           {t.evCta} →
         </a>

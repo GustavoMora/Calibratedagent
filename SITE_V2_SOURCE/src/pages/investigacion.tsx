@@ -118,6 +118,14 @@ const BIB = `@article{pauker1980,
   journal = {IEEE Transactions on Information Theory}, volume = {16}, number = {1}, pages = {41--46},
   doi = {10.1109/TIT.1970.1054406}
 }
+@inproceedings{dong2026,
+  author = {Dong, Y. R. and Hu, T. and Hui, Z. and Zhang, C. and Vuli{\'c}, I. and Bobu, A. and Collier, N.},
+  year = {2026},
+  title = {Value of information: A framework for human--agent communication},
+  booktitle = {Proceedings of ACL 2026 (Long Papers)},
+  pages = {42879--42896},
+  url = {https://doi.org/10.18653/v1/2026.acl-long.1987}
+}
 @misc{loven2026,
   author = {Lov{\\'e}n, L. and Do, N. and Mehmood, H. and Sah, D. K. and Tarkoma, S.}, year = {2026},
   title = {The Behavioral Credibility Trilemma: When Calibrated Autonomy Becomes Impossible},
@@ -362,7 +370,7 @@ function Research() {
                 )}
               </p>
               <p>
-                {L('ECE del calibrador sobre 200 casos de prueba (semilla 20261102): 0,131 con la p cruda y 0,109 con el calibrador. 0,131 mide el error de la confianza declarada; 0,109 mide el error después del calibrador.', 'Calibrator ECE on 200 test cases (seed 20261102): 0.131 with raw p and 0.109 with the calibrator. 0.131 measures the error of the declared confidence; 0.109 measures the error after the calibrator.')} {SIM}
+                {L('ECE en 200 casos de prueba (semilla 20261102): 0,131 con la p cruda y 0,109 con el calibrador', 'ECE on 200 test cases (seed 20261102): 0.131 with raw p and 0.109 with the calibrator')} {SIM}
               </p>
               <p className="note">
                 {L(
@@ -565,6 +573,10 @@ function Research() {
                 <li>
                   Lovén, L., Do, N., Mehmood, H., Sah, D. K., Tarkoma, S. (2026). The Behavioral Credibility Trilemma: When Calibrated Autonomy Becomes Impossible. arXiv:2605.25739.{' '}
                   <a href="https://doi.org/10.48550/arXiv.2605.25739">doi:10.48550/arXiv.2605.25739</a>
+                </li>
+                <li>
+                  Dong, Y. R., Hu, T., Hui, Z., Zhang, C., Vulić, I., Bobu, A., y Collier, N. (2026). Value of information: A framework for human–agent communication. <em>Proceedings of ACL 2026 (Long Papers)</em>, 42879–42896.{' '}
+                  <a href="https://doi.org/10.18653/v1/2026.acl-long.1987">https://doi.org/10.18653/v1/2026.acl-long.1987</a>
                 </li>
                 <li>
                   Mora, G. (2026). {L('Preregistro — Experimento 1, v1.0, enmiendas 1–3; plan de análisis; criterio de juicio.', 'Preregistration — Experiment 1, v1.0, amendments 1–3; analysis plan; judging criterion.')} {INT}

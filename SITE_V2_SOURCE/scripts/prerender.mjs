@@ -20,12 +20,14 @@ try {
   for (const [page, file] of [
     ['explorar', 'dist/index.html'],
     ['investigacion', 'dist/investigacion/index.html'],
+    ['laboratorio', 'dist/laboratorio/index.html'],
   ]) {
     const path = resolve(root, file);
     const html = await readFile(path, 'utf8');
     if (!html.includes('<!--prerender-->')) throw new Error(`${file}: falta el marcador <!--prerender-->`);
     const body = await renderPage(page);
-    if (body.length < 2000) throw new Error(`${file}: el prerender salió vacío (${body.length} caracteres)`);
+    const min = page === 'laboratorio' ? 1400 : 2000;
+    if (body.length < min) throw new Error(`${file}: el prerender salió vacío (${body.length} caracteres)`);
     await writeFile(path, html.replace('<!--prerender-->', body));
     console.log(`prerender ${file}: ${body.length} caracteres`);
   }

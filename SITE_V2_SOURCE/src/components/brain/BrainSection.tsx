@@ -463,6 +463,7 @@ export function BrainSection() {
   const [webgl] = useState(() => hasWebGL());
   const [mode, setMode] = useState<'3d' | '2d'>(() => (hasWebGL() ? '3d' : '2d'));
   const [inView, setInView] = useState(false);
+  const [canvasMounted, setCanvasMounted] = useState(false);
 
   useFlowTicker(mode === '2d');
 
@@ -493,7 +494,11 @@ export function BrainSection() {
   useEffect(() => {
     const el = stageRef.current;
     if (!el) return;
-    const io = new IntersectionObserver(([e]) => setInView(!!e?.isIntersecting), { rootMargin: '200px' });
+    const io = new IntersectionObserver(([e]) => {
+      const visible = !!e?.isIntersecting;
+      setInView(visible);
+      if (visible) setCanvasMounted(true);
+    }, { rootMargin: '200px' });
     io.observe(el);
     return () => io.disconnect();
   }, []);
@@ -568,9 +573,9 @@ export function BrainSection() {
             onPointerCancel={endDrag}
             onPointerLeave={endDrag}
           >
-            {inView ? (
+            {canvasMounted ? (
               <Suspense fallback={<div className="canvas-loading" />}>
-                <BrainCanvas safe={safe} orbit={orbit} labelLayer={labelLayer} active />
+                <BrainCanvas safe={safe} orbit={orbit} labelLayer={labelLayer} active={inView} />
               </Suspense>
             ) : (
               <div className="canvas-loading" />
